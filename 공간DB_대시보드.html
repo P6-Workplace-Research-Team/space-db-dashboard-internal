@@ -439,10 +439,12 @@ function getUnit(key, def='평') { return unitStates[key] || def; }
 // RENDER: 탭 전환
 // ════════════════════════════════════════════
 function showSec(id, btn) {
+  activeSec = id;
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.nv').forEach(b=>b.classList.remove('on'));
   document.getElementById('sec-'+id).classList.add('on');
   btn.classList.add('on');
+  renderActiveSection();
 }
 
 // ════════════════════════════════════════════
