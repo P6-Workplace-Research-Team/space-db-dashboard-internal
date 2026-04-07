@@ -15,31 +15,61 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.5}
 /* HEADER */
-.hdr{background:#fff;border-bottom:1px solid var(--bd);padding:11px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:300;box-shadow:0 1px 6px rgba(107,79,160,.07)}
+.hdr{background:#fff;border-bottom:1px solid var(--bd);padding:11px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:300;box-shadow:0 1px 6px rgba(107,79,160,.07);gap:20px}
+.hdr-main{display:flex;align-items:center;gap:18px;min-width:0}
 .logo{font-size:17px;font-weight:900;letter-spacing:-0.5px;color:var(--p)}
 .logo em{color:var(--tx);font-style:normal;font-weight:600}
 .hdr-badges{display:flex;gap:8px;align-items:center}
 .badge{background:var(--pale);color:var(--p);font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.3px}
 .badge-yr{background:var(--p);color:#fff}
-/* FILTER BAR */
-.fbar{background:#fff;border-bottom:1px solid var(--bd);padding:9px 28px;position:sticky;top:49px;z-index:290;box-shadow:0 2px 8px rgba(107,79,160,.05)}
-.fbar-inner{max-width:1400px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
-.fbar-label{font-size:10px;font-weight:700;color:var(--p);letter-spacing:.5px;margin-right:4px}
-.fsel{padding:5px 9px;border:1.5px solid var(--bd);border-radius:20px;font-size:11px;font-weight:600;color:var(--mid);background:#fff;font-family:inherit;cursor:pointer;outline:none;transition:.15s;appearance:none}
-.fsel:hover,.fsel:focus{border-color:var(--p2);color:var(--p)}
-.fsel.on{border-color:var(--p);color:var(--p);background:var(--pale)}
-.fbar-div{width:1px;height:18px;background:var(--bd);margin:0 4px}
+/* FILTER SIDEBAR */
+.page-shell{padding:18px 24px 60px}
+.content-col{min-width:0;margin-left:360px;margin-right:224px;transition:margin-left .22s ease}
+.page-shell.sidebar-collapsed .content-col{margin-left:92px}
+.fbar{width:320px;background:#fff;border:1px solid var(--bd);border-radius:16px;padding:14px;position:fixed;left:24px;top:calc(var(--header-top,49px) + 18px);bottom:18px;z-index:240;box-shadow:0 8px 24px rgba(107,79,160,.08);overflow:auto;transition:width .22s ease,padding .22s ease}
+.page-shell.sidebar-collapsed .fbar{width:60px;padding:12px 8px;overflow:hidden}
+.fbar-inner{display:flex;flex-direction:column;gap:10px}
+.fbar-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.fbar-label{font-size:10px;font-weight:700;color:var(--p);letter-spacing:.5px}
+.fbar-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .fbar-cnt{font-size:11px;color:var(--mid)}
 .fbar-cnt b{color:var(--p);font-size:13px}
 .btn-rst{padding:4px 11px;border:1.5px solid var(--bd);border-radius:20px;background:#fff;font-size:11px;font-weight:600;color:var(--mid);cursor:pointer;font-family:inherit;transition:.15s}
 .btn-rst:hover{border-color:#E06060;color:#E06060}
+.btn-side{width:28px;height:28px;border:1.5px solid var(--bd);border-radius:999px;background:#fff;color:var(--p);font-size:16px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:.15s}
+.btn-side:hover{border-color:var(--p2);background:var(--pale)}
+.fbar-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.page-shell.sidebar-collapsed .fbar-label,
+.page-shell.sidebar-collapsed .fbar-meta,
+.page-shell.sidebar-collapsed .fcats{display:none}
+.page-shell.sidebar-collapsed .fbar-top{justify-content:center}
+.fcats{display:grid;grid-template-columns:1fr;gap:10px}
+.fcat{border:1px solid var(--bd);border-radius:12px;background:linear-gradient(180deg,#FCFBFE 0%,#F7F4FB 100%);padding:12px}
+.fcat-title{font-size:12px;font-weight:800;color:var(--tx);margin-bottom:10px}
+.fcat-fields{display:grid;grid-template-columns:1fr;gap:8px}
+.fdrop{position:relative}
+.fdrop[open]{z-index:20}
+.fdrop summary{list-style:none}
+.fdrop summary::-webkit-details-marker{display:none}
+.fdrop-sum{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border:1.5px solid var(--bd);border-radius:10px;background:#fff;cursor:pointer;transition:.15s}
+.fdrop:hover .fdrop-sum,.fdrop[open] .fdrop-sum{border-color:var(--p2);box-shadow:0 4px 14px rgba(107,79,160,.08)}
+.fdrop.active .fdrop-sum{border-color:var(--p);background:var(--pale)}
+.fdrop-name{font-size:11px;font-weight:700;color:var(--tx)}
+.fdrop-val{font-size:10px;color:var(--mid);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fdrop-menu{position:absolute;top:calc(100% + 6px);left:0;right:0;max-height:220px;overflow:auto;padding:8px;border:1px solid var(--bd);border-radius:12px;background:#fff;box-shadow:0 12px 28px rgba(107,79,160,.14)}
+.fopt{display:flex;align-items:center;gap:8px;padding:6px 4px;border-radius:8px;font-size:11px;color:var(--tx);cursor:pointer}
+.fopt:hover{background:var(--pale)}
+.fopt input{accent-color:var(--p)}
+.fopt-empty{font-size:11px;color:var(--lt);padding:6px 4px}
 /* NAV */
-.nav{background:#fff;border-bottom:1px solid var(--bd);display:flex;position:sticky;top:96px;z-index:280;overflow-x:auto;padding:0 24px}
+.nav-wrap{margin-bottom:18px;display:none}
+.nav{background:#fff;border:1px solid var(--bd);border-radius:14px;display:flex;position:relative;z-index:20;overflow-x:auto;padding:0 12px;box-shadow:0 6px 20px rgba(107,79,160,.05);min-width:0}
+.hdr .nav{border:none;box-shadow:none;padding:0;background:transparent}
 .nv{padding:12px 16px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--mid);border-bottom:3px solid transparent;white-space:nowrap;transition:.2s;font-family:inherit;display:flex;align-items:center;gap:6px}
 .nv.on,.nv:hover{color:var(--p);border-bottom-color:var(--p)}
 .nv .dot{width:8px;height:8px;border-radius:50%;opacity:.75}
 /* MAIN */
-.main{max-width:1400px;margin:0 auto;padding:22px 24px 60px}
+.main{padding:18px 0 0}
 .sec{display:none}.sec.on{display:block}
 .sec-hd{margin-bottom:18px}.sec-hd h2{font-size:18px;font-weight:800;color:var(--p)}.sec-hd p{font-size:12px;color:var(--lt);margin-top:2px}
 /* KPI ROW */
@@ -58,7 +88,7 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
 .full{margin-bottom:16px}
 /* CARD */
-.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px;transition:.15s;position:relative}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px;transition:.15s;position:relative;scroll-margin-top:calc(var(--header-top,49px) + 18px)}
 .card:hover{box-shadow:0 3px 16px rgba(107,79,160,.07)}
 .ct{font-size:13px;font-weight:700;color:var(--tx);margin-bottom:2px}
 .cs{font-size:11px;color:var(--lt);margin-bottom:14px}
@@ -73,6 +103,8 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 .tbl td{padding:6px 10px;border-bottom:1px solid var(--pale2);color:var(--tx)}
 .tbl tr:last-child td{border-bottom:none}
 .tbl .key{color:var(--p);font-weight:600}.tbl .hi{color:var(--p2);font-weight:700}
+.tbl-wrap{overflow:auto}
+.tbl td.num,.tbl th.num{text-align:right}
 /* TOGGLE */
 .toggle{display:flex;gap:0;margin-bottom:10px;border:1.5px solid var(--bd);border-radius:8px;overflow:hidden;width:fit-content}
 .tgl{padding:4px 12px;border:none;background:#fff;font-size:11px;font-weight:600;color:var(--mid);cursor:pointer;font-family:inherit;transition:.15s}
@@ -83,12 +115,42 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 .empty{display:flex;align-items:center;justify-content:center;height:160px;color:var(--lt);font-size:13px}
 /* SECTION DIVIDER */
 .sdiv{height:1px;background:var(--pale2);margin:20px 0}
+.cw.auto{height:auto}
+.cw.xl{height:360px}
+.range-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.range-card{border:1px solid var(--bd);border-radius:12px;background:linear-gradient(180deg,#FCFBFE 0%,#F7F4FB 100%);padding:14px}
+.range-title{font-size:12px;font-weight:800;color:var(--p);margin-bottom:8px}
+.range-line{font-size:11px;color:var(--tx);line-height:1.7}
+.range-line b{color:var(--p2)}
+.summary-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:12px}
+.summary-pill{border:1px solid var(--bd);border-radius:10px;background:var(--pale);padding:8px 10px}
+.summary-pill .sp-title{font-size:11px;font-weight:800;color:var(--p);margin-bottom:3px}
+.summary-pill .sp-line{font-size:10px;color:var(--mid);line-height:1.5}
+.heat-cell{font-weight:700;border-radius:8px}
+.toc-panel{width:216px;position:fixed;right:24px;top:calc(var(--header-top,49px) + 18px);bottom:18px;z-index:180;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);border:1px solid var(--bd);border-radius:18px;padding:14px 12px;box-shadow:0 10px 30px rgba(107,79,160,.08);overflow:auto}
+.toc-title{font-size:11px;font-weight:800;color:var(--p);margin:0 0 12px 4px}
+.toc-list{display:flex;flex-direction:column;gap:8px}
+.toc-item{border-radius:12px;transition:.15s}
+.toc-link{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;color:var(--mid);text-decoration:none;font-size:11px;font-weight:700;line-height:1.45;border-radius:12px;transition:.15s}
+.toc-link::before{content:'';width:8px;height:8px;flex:0 0 8px;border-radius:999px;background:#CFC6E2;margin-top:4px;transition:.15s}
+.toc-item:hover .toc-link,.toc-item.active .toc-link{background:var(--pale);color:var(--p)}
+.toc-item:hover .toc-link::before,.toc-item.active .toc-link::before{background:var(--p)}
 </style>
 </head>
 <body>
 
 <header class="hdr">
-  <div class="logo">Purple<sup>6</sup>Studio <em>오피스 공간DB</em></div>
+  <div class="hdr-main">
+    <div class="logo">Purple<sup>6</sup>Studio <em>오피스 공간DB</em></div>
+    <nav class="nav">
+      <button class="nv on" onclick="showSec('A',this)"><span class="dot" style="background:var(--p)"></span>개괄</button>
+      <button class="nv" onclick="showSec('B',this)"><span class="dot" style="background:var(--업무)"></span>업무공간 : 일반</button>
+      <button class="nv" onclick="showSec('C',this)"><span class="dot" style="background:var(--임원)"></span>업무공간 : 임원</button>
+      <button class="nv" onclick="showSec('D',this)"><span class="dot" style="background:var(--회의)"></span>회의공간</button>
+      <button class="nv" onclick="showSec('E',this)"><span class="dot" style="background:var(--소셜)"></span>소셜공간</button>
+      <button class="nv" onclick="showSec('F',this)"><span class="dot" style="background:var(--지원)"></span>지원공간</button>
+    </nav>
+  </div>
   <div class="hdr-badges">
     <div class="badge badge-yr">2025 DB</div>
     <div class="badge">총 540건 도면</div>
@@ -96,58 +158,29 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
   </div>
 </header>
 
-<div class="fbar">
-<div class="fbar-inner">
-  <span class="fbar-label">필터</span>
-  <select class="fsel" id="f-인원구간" onchange="applyFilter('인원구간',this)">
-    <option value="">인원 규모 전체</option>
-    <option value="- 49인">- 49인</option><option value="50 - 99인">50 - 99인</option><option value="100 - 149인">100 - 149인</option><option value="150 - 199인">150 - 199인</option><option value="200인 -">200인 -</option>
-  </select>
-  <select class="fsel" id="f-가용면적구간" onchange="applyFilter('가용면적구간',this)">
-    <option value="">면적 구간 전체</option>
-    <option value="100평 미만">100평 미만</option><option value="100~200평 미만">100~200평 미만</option><option value="200~300평 미만">200~300평 미만</option><option value="300~400평 미만">300~400평 미만</option><option value="400~500평 미만">400~500평 미만</option><option value="500~600평 미만">500~600평 미만</option><option value="600평 이상">600평 이상</option>
-  </select>
-  <select class="fsel" id="f-연도" onchange="applyFilter('연도',this)">
-    <option value="">연도 전체</option>
-    <option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option>
-  </select>
-  <div class="fbar-div"></div>
-  <select class="fsel" id="f-주소" onchange="applyFilter('주소',this)">
-    <option value="">지역 전체</option>
-    <option value="강원도">강원도</option><option value="경기/인천">경기/인천</option><option value="경상도">경상도</option><option value="서울">서울</option><option value="세종">세종</option><option value="알 수 없음">알 수 없음</option><option value="전라도">전라도</option><option value="충청도">충청도</option>
-  </select>
-  <select class="fsel" id="f-권역" onchange="applyFilter('권역',this)">
-    <option value="">권역 전체</option>
-    <option value="BBD (분당권역_판교.분당)">BBD (분당권역_판교.분당)</option><option value="CBD (도심권역_광화문.종로)">CBD (도심권역_광화문.종로)</option><option value="GBD (강남권역)">GBD (강남권역)</option><option value="YBD (여의도권역)">YBD (여의도권역)</option><option value="과천">과천</option><option value="구로/가산">구로/가산</option><option value="마곡">마곡</option><option value="성수">성수</option><option value="용산">용산</option><option value="잠실/송파">잠실/송파</option><option value="해당 없음/알 수 없음">해당 없음/알 수 없음</option>
-  </select>
-  <select class="fsel" id="f-업종" onchange="applyFilter('업종',this)">
-    <option value="">업종 전체</option>
-    <option value="IT/통신">IT/통신</option><option value="건설/시공">건설/시공</option><option value="교육/출판">교육/출판</option><option value="금융/보험">금융/보험</option><option value="기관/협회">기관/협회</option><option value="기타">기타</option><option value="미디어/광고">미디어/광고</option><option value="서비스">서비스</option><option value="유통/판매">유통/판매</option><option value="제조/생산">제조/생산</option><option value="지주회사">지주회사</option><option value="호텔/리조트">호텔/리조트</option>
-  </select>
-  <select class="fsel" id="f-대기업여부" onchange="applyFilter('대기업여부',this)">
-    <option value="">기업 규모 전체</option>
-    <option value="O">대기업</option>
-    <option value="X">일반기업</option>
-  </select>
-  <select class="fsel" id="f-사업장유형" onchange="applyFilter('사업장유형',this)">
-    <option value="">사업장 유형 전체</option>
-    <option value="본사/중앙조직">본사/중앙조직</option><option value="사업장/생산시설">사업장/생산시설</option><option value="연구소">연구소</option><option value="지점오피스">지점오피스</option>
-  </select>
-  <div class="fbar-div"></div>
-  <span class="fbar-cnt">분석 도면 <b id="cnt">540</b>건</span>
-  <button class="btn-rst" onclick="resetFilters()">초기화</button>
-</div>
-</div>
+<div class="page-shell">
+<aside class="fbar">
+  <div class="fbar-inner">
+    <div class="fbar-top">
+      <div class="fbar-head">
+        <span class="fbar-label">필터</span>
+      </div>
+      <div class="fbar-meta">
+        <span class="fbar-cnt">분석 도면 <b id="cnt">540</b>건</span>
+        <button class="btn-rst" onclick="resetFilters()">초기화</button>
+      </div>
+      <button class="btn-side" id="sidebar-toggle" type="button" onclick="toggleSidebar()" aria-label="필터 패널 접기">‹</button>
+    </div>
+    <div class="fcats" id="filter-groups"></div>
+  </div>
+</aside>
 
-<nav class="nav">
-  <button class="nv on" onclick="showSec('A',this)"><span class="dot" style="background:var(--p)"></span>개괄</button>
-  <button class="nv" onclick="showSec('B',this)"><span class="dot" style="background:var(--업무)"></span>업무공간 : 일반</button>
-  <button class="nv" onclick="showSec('C',this)"><span class="dot" style="background:var(--임원)"></span>업무공간 : 임원</button>
-  <button class="nv" onclick="showSec('D',this)"><span class="dot" style="background:var(--회의)"></span>회의공간</button>
-  <button class="nv" onclick="showSec('E',this)"><span class="dot" style="background:var(--소셜)"></span>소셜공간</button>
-  <button class="nv" onclick="showSec('F',this)"><span class="dot" style="background:var(--지원)"></span>지원공간</button>
-</nav>
+<aside class="toc-panel">
+  <div class="toc-title">바로가기</div>
+  <div class="toc-list" id="toc-links"></div>
+</aside>
 
+<div class="content-col">
 <div class="main">
 
 <!-- ═══ A. 개괄 ═══ -->
@@ -160,14 +193,14 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
     <div class="kpi"><div class="kl">평균 인당 면적</div><div class="kv" id="kA-ppa">—<span>평</span></div><div class="ks" id="kA-ppa-m2">—m²</div></div>
   </div>
   <div class="g2">
-    <div class="card"><div class="ct">인원 구간별 도면 수</div><div class="cs">연도별 수집 도면의 인원 규모 분포</div><div class="cw t"><canvas id="cA1"></canvas></div></div>
-    <div class="card"><div class="ct">가용 면적 구간별 도면 수</div><div class="cs">연도별 수집 도면의 면적 분포</div><div class="cw t"><canvas id="cA2"></canvas></div></div>
+    <div class="card"><div class="ct">인원 구간별 도면 수</div><div class="cs">연도 x 인원 구간 기준 도면 수 표</div><div class="cw auto" id="cA1"></div></div>
+    <div class="card"><div class="ct">가용 면적 구간별 도면 수</div><div class="cs">연도 x 가용 면적 구간 기준 도면 수 표</div><div class="cw auto" id="cA2"></div></div>
   </div>
   <div class="g2">
-    <div class="card"><div class="ct">인원 구간별 가용 면적 분포</div><div class="cs">박스: Q1–Q3, 선: 중앙값, 수염: 전체 범위</div><div class="cw"><canvas id="cA3"></canvas></div></div>
-    <div class="card"><div class="ct">가용 면적 구간별 인원 분포</div><div class="cs">박스: Q1–Q3, 선: 중앙값, 수염: 전체 범위</div><div class="cw"><canvas id="cA4"></canvas></div></div>
+    <div class="card"><div class="ct">인원 구간별 가용 면적 범위</div><div class="cs">표와 박스플롯을 함께 제공, 중앙값을 강조 표시</div><div class="cw auto" id="cA3-table"></div><div class="cw" style="margin-top:10px"><canvas id="cA3"></canvas></div></div>
+    <div class="card"><div class="ct">가용 면적 구간별 인원 범위</div><div class="cs">표와 박스플롯을 함께 제공, 중앙값을 강조 표시</div><div class="cw auto" id="cA4-table"></div><div class="cw" style="margin-top:10px"><canvas id="cA4"></canvas></div></div>
   </div>
-  <div class="full card"><div class="ct">연도별 오피스 공간 프로그램 구성 비율 추이</div><div class="cs">도면별 가용면적 대비 프로그램 구성 비율의 연도별 평균</div><div class="cw t"><canvas id="cA5"></canvas></div>
+  <div class="full card"><div class="ct">오피스 공간 프로그램 구성 비율 추이</div><div class="cs">전체 도면 1개 행 + 연도별(2025 → 2020) 구성 비율, 막대 중앙 값 표시</div><div class="cw xl"><canvas id="cA5"></canvas></div>
     <div class="leg" id="leg-A5"></div>
   </div>
 </section>
@@ -346,32 +379,183 @@ function meanPositive(idxArr, fn) {
 // ════════════════════════════════════════════
 // FILTER STATE
 // ════════════════════════════════════════════
-const F = { 인원구간:'', 가용면적구간:'', 연도:'', 주소:'', 권역:'', 업종:'', 대기업여부:'', 사업장유형:'' };
+const FILTER_GROUPS = [
+  {
+    title:'도면 관련 필터링',
+    fields:[
+      { key:'연도', label:'연도' },
+      { key:'가용면적구간', label:'가용면적구간' },
+      { key:'인원구간', label:'인원 구간' },
+      { key:'프라임오피스', label:'프라임 오피스' },
+      { key:'참고도면', label:'참고도면' }
+    ]
+  },
+  {
+    title:'위치 관련 필터',
+    fields:[
+      { key:'주소', label:'주소' },
+      { key:'권역', label:'권역' }
+    ]
+  },
+  {
+    title:'기업 관련 필터',
+    fields:[
+      { key:'업종', label:'산업군' },
+      { key:'사업장유형', label:'사업장 유형' },
+      { key:'대기업여부', label:'대기업 여부' },
+      { key:'소속대기업', label:'소속 대기업' }
+    ]
+  }
+];
+const FILTER_KEYS = FILTER_GROUPS.flatMap(group => group.fields.map(field => field.key));
+const FILTER_VALUE_LABELS = {
+  대기업여부: { O:'대기업', X:'일반기업' },
+  참고도면: { O:'참고도면', X:'일반 도면' }
+};
+const FILTER_OPTION_ORDERS = {
+  연도: YEARS.map(String),
+  가용면적구간: 면적ORDER,
+  인원구간: 인원ORDER,
+  주소: ['서울','경기/인천','경상도','충청도','전라도','강원도','세종','알 수 없음'],
+  권역: ['CBD (도심권역_광화문.종로)','GBD (강남권역)','YBD (여의도권역)','BBD (분당권역_판교.분당)','과천','구로/가산','마곡','성수','용산','잠실/송파','해당 없음/알 수 없음'],
+  업종: ['IT/통신','건설/시공','교육/출판','금융/보험','기관/협회','기타','미디어/광고','서비스','유통/판매','제조/생산','지주회사','호텔/리조트'],
+  사업장유형: ['본사/중앙조직','사업장/생산시설','연구소','지점오피스'],
+  대기업여부: ['O','X'],
+  프라임오피스: ['O','X','사옥'],
+  참고도면: ['O','X']
+};
+const F = Object.fromEntries(FILTER_KEYS.map(key => [key, []]));
+let sidebarCollapsed = false;
 let unitStates = {};
 
-function applyFilter(key, sel) {
-  F[key] = sel.value;
-  sel.classList.toggle('on', !!sel.value);
+function normalizeFlag(v) {
+  return String(v ?? '').trim() === 'O' ? 'O' : 'X';
+}
+function getFilterValue(d, key) {
+  if (key === '대기업여부' || key === '참고도면') return normalizeFlag(d[key]);
+  if (key === '프라임오피스') {
+    const value = String(d[key] ?? '').trim();
+    return value || '';
+  }
+  if (key === '소속대기업') {
+    const value = d[key];
+    if (value == null || value === 0) return '';
+    return String(value).trim();
+  }
+  if (key === '연도') return String(d[key]);
+  const value = d[key];
+  if (value == null || value === 0) return '';
+  return String(value).trim();
+}
+function getFilterOptions(key) {
+  const ordered = FILTER_OPTION_ORDERS[key] || [];
+  const valueSet = new Set(DRAWINGS.map(d => getFilterValue(d, key)).filter(Boolean));
+  if (ordered.length) {
+    const orderedValues = ordered.filter(v => valueSet.has(v));
+    const extraValues = [...valueSet].filter(v => !ordered.includes(v)).sort((a,b) => a.localeCompare(b, 'ko'));
+    return [...orderedValues, ...extraValues];
+  }
+  return [...valueSet].sort((a,b) => a.localeCompare(b, 'ko'));
+}
+function formatFilterValue(key, value) {
+  return FILTER_VALUE_LABELS[key]?.[value] || value;
+}
+function summarizeFilter(key) {
+  const selected = F[key];
+  if (!selected.length) return '전체';
+  if (selected.length === 1) return formatFilterValue(key, selected[0]);
+  return `${formatFilterValue(key, selected[0])} 외 ${selected.length - 1}`;
+}
+function optionId(key, value) {
+  return `opt-${key}-${encodeURIComponent(value)}`;
+}
+function renderFilterGroups() {
+  const host = document.getElementById('filter-groups');
+  if (!host) return;
+  host.innerHTML = FILTER_GROUPS.map(group => `
+    <section class="fcat">
+      <div class="fcat-title">${group.title}</div>
+      <div class="fcat-fields">
+        ${group.fields.map(field => {
+          const options = getFilterOptions(field.key);
+          return `
+            <details class="fdrop" data-key="${field.key}">
+              <summary class="fdrop-sum">
+                <span class="fdrop-name">${field.label}</span>
+                <span class="fdrop-val" id="sum-${field.key}">전체</span>
+              </summary>
+              <div class="fdrop-menu">
+                ${options.length ? options.map(value => `
+                  <label class="fopt" for="${optionId(field.key, value)}">
+                    <input type="checkbox" id="${optionId(field.key, value)}" data-filter-key="${field.key}" value="${value}">
+                    <span>${formatFilterValue(field.key, value)}</span>
+                  </label>
+                `).join('') : '<div class="fopt-empty">선택 가능한 값이 없습니다.</div>'}
+              </div>
+            </details>
+          `;
+        }).join('')}
+      </div>
+    </section>
+  `).join('');
+  host.querySelectorAll('input[data-filter-key]').forEach(input => {
+    input.addEventListener('change', event => applyFilterValue(event.target.dataset.filterKey, event.target.value, event.target.checked));
+  });
+  host.querySelectorAll('.fdrop').forEach(drop => {
+    drop.addEventListener('toggle', () => {
+      if (!drop.open) return;
+      host.querySelectorAll('.fdrop').forEach(other => {
+        if (other !== drop) other.open = false;
+      });
+    });
+  });
+  updateFilterUi();
+}
+function updateFilterUi() {
+  FILTER_KEYS.forEach(key => {
+    const summary = document.getElementById(`sum-${key}`);
+    if (summary) summary.textContent = summarizeFilter(key);
+    const drop = document.querySelector(`.fdrop[data-key="${key}"]`);
+    if (drop) drop.classList.toggle('active', F[key].length > 0);
+    document.querySelectorAll(`input[data-filter-key="${key}"]`).forEach(input => {
+      input.checked = F[key].includes(input.value);
+    });
+  });
+}
+function applyFilterValue(key, value, checked) {
+  const next = new Set(F[key]);
+  if (checked) next.add(value);
+  else next.delete(value);
+  F[key] = [...next];
+  updateFilterUi();
   refresh();
 }
 function resetFilters() {
-  Object.keys(F).forEach(k => F[k]='');
-  document.querySelectorAll('.fsel').forEach(s => { s.value=''; s.classList.remove('on'); });
+  Object.keys(F).forEach(k => F[k]=[]);
+  updateFilterUi();
+  document.querySelectorAll('.fdrop').forEach(drop => { drop.open = false; });
   refresh();
+}
+function setSidebarCollapsed(collapsed) {
+  sidebarCollapsed = collapsed;
+  const shell = document.querySelector('.page-shell');
+  const toggle = document.getElementById('sidebar-toggle');
+  if (shell) shell.classList.toggle('sidebar-collapsed', collapsed);
+  if (toggle) {
+    toggle.textContent = collapsed ? '›' : '‹';
+    toggle.setAttribute('aria-label', collapsed ? '필터 패널 펼치기' : '필터 패널 접기');
+    toggle.title = collapsed ? '필터 패널 펼치기' : '필터 패널 접기';
+  }
+}
+function toggleSidebar() {
+  setSidebarCollapsed(!sidebarCollapsed);
 }
 
 function getFilteredIdx() {
   const idx = [];
   for (let i=0; i<DRAWINGS.length; i++) {
     const d = DRAWINGS[i];
-    if (F.인원구간 && d['인원구간'] !== F.인원구간) continue;
-    if (F.가용면적구간 && d['가용면적구간'] !== F.가용면적구간) continue;
-    if (F.연도 && String(d['연도']) !== F.연도) continue;
-    if (F.주소 && d['주소'] !== F.주소) continue;
-    if (F.권역 && d['권역'] !== F.권역) continue;
-    if (F.업종 && d['업종'] !== F.업종) continue;
-    if (F.대기업여부 && d['대기업여부'] !== F.대기업여부) continue;
-    if (F.사업장유형 && d['사업장유형'] !== F.사업장유형) continue;
+    if (FILTER_KEYS.some(key => F[key].length && !F[key].includes(getFilterValue(d, key)))) continue;
     idx.push(i);
   }
   return idx;
@@ -423,6 +607,124 @@ function barCfg(labels, datasets, extra={}) {
 function lineCfg(labels, datasets, extra={}) {
   return deepMerge({ type:'line', data:{labels,datasets}, options: deepMerge(baseOpts,extra) }, {});
 }
+function tableHtml(headers, rows) {
+  return `
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>${headers.map(h => `<th class="${h.num ? 'num' : ''}">${h.label}</th>`).join('')}</tr>
+        </thead>
+        <tbody>
+          ${rows.map(row => `
+            <tr>${row.map((cell, idx) => {
+              const isObj = typeof cell === 'object' && cell !== null;
+              const text = isObj ? cell.label : cell;
+              const extra = isObj && cell.className ? ` ${cell.className}` : '';
+              return `<td class="${headers[idx]?.num ? 'num' : ''}${extra}">${text}</td>`;
+            }).join('')}</tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+function heatmapColor(value, max) {
+  const ratio = max > 0 ? value / max : 0;
+  const alpha = 0.08 + ratio * 0.32;
+  return `rgba(107,79,160,${alpha.toFixed(3)})`;
+}
+function heatmapTableHtml(headers, rows) {
+  const max = Math.max(0, ...rows.flatMap(row => row.slice(1).map(cell => Number(cell.value) || 0)));
+  return `
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>${headers.map(h => `<th class="${h.num ? 'num' : ''}">${h.label}</th>`).join('')}</tr>
+        </thead>
+        <tbody>
+          ${rows.map(row => `
+            <tr>
+              ${row.map((cell, idx) => {
+                if (idx === 0) return `<td>${cell}</td>`;
+                return `<td class="num heat-cell" style="background:${heatmapColor(cell.value, max)}">${cell.label}</td>`;
+              }).join('')}
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+function rangeCardHtml(items) {
+  return `<div class="range-grid">${items.map(item => `
+    <div class="range-card">
+      <div class="range-title">${item.title}</div>
+      <div class="range-line">적정 값: <b>${item.mid}</b></div>
+      <div class="range-line">적정 최대값: <b>${item.max}</b></div>
+      <div class="range-line">적정 최소값: <b>${item.min}</b></div>
+    </div>
+  `).join('')}</div>`;
+}
+function slugify(text) {
+  return text.toLowerCase().replace(/[^a-z0-9가-힣]+/g, '-').replace(/^-+|-+$/g, '');
+}
+let activeSec = 'A';
+let tocObserver = null;
+function setupCardAnchors() {
+  document.querySelectorAll('.sec').forEach(sec => {
+    const sectionId = sec.id.replace('sec-', '');
+    sec.querySelectorAll('.card').forEach((card, idx) => {
+      const title = card.querySelector('.ct')?.textContent?.trim() || `card-${idx+1}`;
+      card.id = `jump-${sectionId}-${idx+1}-${slugify(title)}`;
+    });
+  });
+}
+function setActiveTocItem(cardId) {
+  const host = document.getElementById('toc-links');
+  if (!host) return;
+  host.querySelectorAll('.toc-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.target === cardId);
+  });
+}
+function observeCurrentCards() {
+  if (tocObserver) tocObserver.disconnect();
+  const sec = document.getElementById(`sec-${activeSec}`);
+  if (!sec) return;
+  const cards = [...sec.querySelectorAll('.card')];
+  if (!cards.length) return;
+  tocObserver = new IntersectionObserver(entries => {
+    const visible = entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (visible?.target?.id) setActiveTocItem(visible.target.id);
+  }, {
+    root: null,
+    rootMargin: '-20% 0px -55% 0px',
+    threshold: [0.15, 0.35, 0.6]
+  });
+  cards.forEach(card => tocObserver.observe(card));
+  setActiveTocItem(cards[0].id);
+}
+function renderToc() {
+  const host = document.getElementById('toc-links');
+  const sec = document.getElementById(`sec-${activeSec}`);
+  if (!host || !sec) return;
+  const cards = [...sec.querySelectorAll('.card')];
+  host.innerHTML = cards.map((card, idx) => {
+    const title = card.querySelector('.ct')?.textContent?.trim() || `지표 ${idx+1}`;
+    return `
+      <div class="toc-item${idx===0 ? ' active' : ''}" data-target="${card.id}">
+        <a class="toc-link" href="#${card.id}">${title}</a>
+      </div>
+    `;
+  }).join('');
+  host.querySelectorAll('.toc-link').forEach(link => {
+    link.addEventListener('click', () => {
+      setActiveTocItem(link.getAttribute('href').slice(1));
+    });
+  });
+  observeCurrentCards();
+}
 
 // ════════════════════════════════════════════
 // TOGGLE
@@ -444,7 +746,7 @@ function showSec(id, btn) {
   document.querySelectorAll('.nv').forEach(b=>b.classList.remove('on'));
   document.getElementById('sec-'+id).classList.add('on');
   btn.classList.add('on');
-  renderActiveSection();
+  renderToc();
 }
 
 // ════════════════════════════════════════════
@@ -463,74 +765,98 @@ function renderA(dd, sp) {
   document.getElementById('kA-ppa').innerHTML = `${fmt1(avgPPA*M2_TO_PYEONG)}<span>평</span>`;
   document.getElementById('kA-ppa-m2').textContent = fmt1(avgPPA)+'m²';
 
-  // A1: 인원구간별 도면 수 (by year stacked bar)
   const byYr = groupBy(dd, d=>d['연도']);
-  const A1sets = 인원ORDER.map((cat,i) => ({
-    label: cat,
-    data: TREND_YEARS.map(y => (byYr[y]||[]).filter(d=>d['인원구간']===cat).length),
-    backgroundColor: [`#6B4FA0CC`,`#8B6FC0CC`,`#A88DCACC`,`#C0ABDBCC`,`#D8C9ECCC`][i],
-    borderRadius: 2, borderSkipped: false
-  }));
-  mkChart('cA1', {type:'bar', data:{labels:TREND_YEARS.map(String), datasets:A1sets}, options:deepMerge(baseOpts,{plugins:{legend:{display:true,position:'bottom',labels:{font:{...baseFont,size:10},boxWidth:10,color:'#6677AA'}}},scales:{x:{stacked:true},y:{stacked:true}}})  });
 
-  // A2: 면적구간별 도면 수
-  const A2sets = 면적ORDER.map((cat,i) => ({
-    label: cat,
-    data: TREND_YEARS.map(y => (byYr[y]||[]).filter(d=>d['가용면적구간']===cat).length),
-    backgroundColor: [`#45B8ACCC`,`#5CAB6ACC`,`#7FBF50CC`,`#A8CC40CC`,`#CFD840CC`,`#E0C030CC`,`#E09040CC`][i],
-    borderRadius: 2, borderSkipped: false
-  }));
-  mkChart('cA2', {type:'bar', data:{labels:TREND_YEARS.map(String), datasets:A2sets}, options:deepMerge(baseOpts,{plugins:{legend:{display:true,position:'bottom',labels:{font:{...baseFont,size:10},boxWidth:10,color:'#6677AA'}}},scales:{x:{stacked:true},y:{stacked:true}}})  });
+  // A1: 인원구간 x 연도 표
+  document.getElementById('cA1').innerHTML = heatmapTableHtml(
+    [{label:'연도'}, ...인원ORDER.map(label => ({label, num:true}))],
+    TREND_YEARS.map(y => {
+      const yearRows = byYr[y] || [];
+      return [String(y), ...인원ORDER.map(cat => {
+        const value = yearRows.filter(d => d['인원구간'] === cat).length;
+        return { value, label: String(value) };
+      })];
+    })
+  );
 
-  // A3: 인원구간별 가용면적 분포 (floating bar = Q1-Q3, scatter = median)
-  const A3float = [], A3med = [], A3min = [], A3max = [];
-  인원ORDER.forEach((cat,i) => {
+  // A2: 가용면적구간 x 연도 표
+  document.getElementById('cA2').innerHTML = heatmapTableHtml(
+    [{label:'연도'}, ...면적ORDER.map(label => ({label, num:true}))],
+    TREND_YEARS.map(y => {
+      const yearRows = byYr[y] || [];
+      return [String(y), ...면적ORDER.map(cat => {
+        const value = yearRows.filter(d => d['가용면적구간'] === cat).length;
+        return { value, label: String(value) };
+      })];
+    })
+  );
+
+  // A3: 인원구간별 가용면적 범위 표
+  const A3stats = 인원ORDER.map(cat => {
     const vals = dd.filter(d=>d['인원구간']===cat).map(d=>d['가용면적']*M2_TO_PYEONG).filter(v=>v>0);
-    A3float.push(vals.length ? [percentile(vals,25), percentile(vals,75)] : [0,0]);
-    A3med.push(vals.length ? percentile(vals,50) : null);
-    A3min.push(vals.length ? Math.min(...vals) : null);
-    A3max.push(vals.length ? Math.max(...vals) : null);
+    return {
+      title: cat,
+      q1: vals.length ? percentile(vals,25) : 0,
+      q2: vals.length ? percentile(vals,50) : 0,
+      q3: vals.length ? percentile(vals,75) : 0,
+      min: vals.length ? Math.min(...vals) : 0,
+      max: vals.length ? Math.max(...vals) : 0
+    };
   });
+  document.getElementById('cA3-table').innerHTML = tableHtml(
+    [{label:'인원 구간'}, {label:'중앙값', num:true}, {label:'적정 최소값(Q1)', num:true}, {label:'적정 최대값(Q3)', num:true}],
+    A3stats.map(s => [s.title, {label:`${fmt1(s.q2)}평`, className:'hi'}, `${fmt1(s.q1)}평`, `${fmt1(s.q3)}평`])
+  );
   mkChart('cA3', {
-    data:{ labels: 인원ORDER.map(v=>v.replace(' 인','')),
+    data:{ labels: 인원ORDER,
       datasets:[
-        {type:'bar', data:A3float, backgroundColor:'rgba(107,79,160,.25)', borderColor:'rgba(107,79,160,.5)', borderWidth:1, borderSkipped:false, label:'IQR (Q1–Q3)'},
-        {type:'scatter', data:A3med.map((y,i)=>y!=null?{x:i,y}:null).filter(Boolean), borderColor:C.p, backgroundColor:C.p, pointStyle:'line', pointRadius:18, pointBorderWidth:3, label:'중앙값'},
-        {type:'scatter', data:A3min.map((y,i)=>y!=null?{x:i,y}:null).filter(Boolean), borderColor:'rgba(107,79,160,.4)', backgroundColor:'rgba(0,0,0,0)', pointStyle:'line', pointRadius:10, pointBorderWidth:1.5, label:'최솟값'},
-        {type:'scatter', data:A3max.map((y,i)=>y!=null?{x:i,y}:null).filter(Boolean), borderColor:'rgba(107,79,160,.4)', backgroundColor:'rgba(0,0,0,0)', pointStyle:'line', pointRadius:10, pointBorderWidth:1.5, label:'최댓값'},
+        {type:'bar', data:A3stats.map(s => [s.q1, s.q3]), backgroundColor:'rgba(107,79,160,.22)', borderColor:'rgba(107,79,160,.45)', borderWidth:1, borderSkipped:false, label:'IQR (Q1–Q3)'},
+        {type:'scatter', data:A3stats.map((s,i)=>({x:i,y:s.q2})), borderColor:C.p, backgroundColor:C.p, pointStyle:'line', pointRadius:18, pointBorderWidth:3, label:'중앙값'},
+        {type:'scatter', data:A3stats.map((s,i)=>({x:i,y:s.min})), borderColor:'rgba(107,79,160,.35)', backgroundColor:'rgba(0,0,0,0)', pointStyle:'line', pointRadius:10, pointBorderWidth:1.5, label:'최솟값'},
+        {type:'scatter', data:A3stats.map((s,i)=>({x:i,y:s.max})), borderColor:'rgba(107,79,160,.35)', backgroundColor:'rgba(0,0,0,0)', pointStyle:'line', pointRadius:10, pointBorderWidth:1.5, label:'최댓값'},
       ]
     },
     options:deepMerge(baseOpts,{plugins:{legend:{display:true,position:'bottom',labels:{font:{...baseFont,size:10},boxWidth:12,color:'#6677AA'}}},scales:{x:{type:'category'},y:{title:{display:true,text:'가용면적 (평)',font:baseFont,color:'#6677AA'}}}})
   });
 
-  // A4: 가용면적구간별 인원 분포
-  const A4float = [], A4med = [], A4min = [], A4max = [];
-  면적ORDER.forEach(cat => {
+  // A4: 가용면적구간별 인원 범위 표
+  const A4stats = 면적ORDER.map(cat => {
     const vals = dd.filter(d=>d['가용면적구간']===cat).map(d=>d['인원수']).filter(v=>v>0);
-    A4float.push(vals.length ? [percentile(vals,25), percentile(vals,75)] : [0,0]);
-    A4med.push(vals.length ? percentile(vals,50) : null);
-    A4min.push(vals.length ? Math.min(...vals) : null);
-    A4max.push(vals.length ? Math.max(...vals) : null);
+    return {
+      title: cat,
+      q1: vals.length ? percentile(vals,25) : 0,
+      q2: vals.length ? percentile(vals,50) : 0,
+      q3: vals.length ? percentile(vals,75) : 0,
+      min: vals.length ? Math.min(...vals) : 0,
+      max: vals.length ? Math.max(...vals) : 0
+    };
   });
-  const A4labels = 면적ORDER.map(v=>v.replace('~200평','–200').replace('100평','100').replace(' 미만','↓').replace('평 이상','↑').replace('평',''));
+  document.getElementById('cA4-table').innerHTML = tableHtml(
+    [{label:'가용 면적 구간'}, {label:'중앙값', num:true}, {label:'적정 최소값(Q1)', num:true}, {label:'적정 최대값(Q3)', num:true}],
+    A4stats.map(s => [s.title, {label:`${fmt0(s.q2)}인`, className:'hi'}, `${fmt0(s.q1)}인`, `${fmt0(s.q3)}인`])
+  );
   mkChart('cA4', {
-    data:{ labels:A4labels,
+    data:{ labels: 면적ORDER,
       datasets:[
-        {type:'bar', data:A4float, backgroundColor:'rgba(69,184,172,.25)', borderColor:'rgba(69,184,172,.5)', borderWidth:1, borderSkipped:false, label:'IQR (Q1–Q3)'},
-        {type:'scatter', data:A4med.map((y,i)=>y!=null?{x:i,y}:null).filter(Boolean), borderColor:C.회의, backgroundColor:C.회의, pointStyle:'line', pointRadius:18, pointBorderWidth:3, label:'중앙값'},
-        {type:'scatter', data:A4min.map((y,i)=>y!=null?{x:i,y}:null).filter(Boolean), borderColor:'rgba(69,184,172,.4)', backgroundColor:'rgba(0,0,0,0)', pointStyle:'line', pointRadius:10, pointBorderWidth:1.5, label:'최솟값'},
-        {type:'scatter', data:A4max.map((y,i)=>y!=null?{x:i,y}:null).filter(Boolean), borderColor:'rgba(69,184,172,.4)', backgroundColor:'rgba(0,0,0,0)', pointStyle:'line', pointRadius:10, pointBorderWidth:1.5, label:'최댓값'},
+        {type:'bar', data:A4stats.map(s => [s.q1, s.q3]), backgroundColor:'rgba(69,184,172,.22)', borderColor:'rgba(69,184,172,.45)', borderWidth:1, borderSkipped:false, label:'IQR (Q1–Q3)'},
+        {type:'scatter', data:A4stats.map((s,i)=>({x:i,y:s.q2})), borderColor:C.회의, backgroundColor:C.회의, pointStyle:'line', pointRadius:18, pointBorderWidth:3, label:'중앙값'},
+        {type:'scatter', data:A4stats.map((s,i)=>({x:i,y:s.min})), borderColor:'rgba(69,184,172,.35)', backgroundColor:'rgba(0,0,0,0)', pointStyle:'line', pointRadius:10, pointBorderWidth:1.5, label:'최솟값'},
+        {type:'scatter', data:A4stats.map((s,i)=>({x:i,y:s.max})), borderColor:'rgba(69,184,172,.35)', backgroundColor:'rgba(0,0,0,0)', pointStyle:'line', pointRadius:10, pointBorderWidth:1.5, label:'최댓값'},
       ]
     },
     options:deepMerge(baseOpts,{plugins:{legend:{display:true,position:'bottom',labels:{font:{...baseFont,size:10},boxWidth:12,color:'#6677AA'}}},scales:{x:{type:'category'},y:{title:{display:true,text:'인원수 (인)',font:baseFont,color:'#6677AA'}}}})
   });
 
-  // A5: 연도별 공간 프로그램 구성 비율 (도면별 프로그램 비율의 연도 평균)
+  // A5: 전체 + 연도별 공간 프로그램 구성 비율 추이 (가로 누적 막대)
   const PROGS = ['업무','임원','회의','공용','지원','통로 및 여유면적'];
   const PROG_COLORS = [C.업무, C.임원, C.회의, C.소셜, C.지원, C.통로];
-  const A5data = TREND_YEARS.map(y => {
-    const yearIdx = filteredIdx.filter(i=>DRAWINGS[i]['연도']===y);
-    if (!yearIdx.length) return null;
+  const A5years = [...TREND_YEARS].sort((a,b) => b - a);
+  const A5rows = ['전체', ...A5years.map(String)];
+  const A5data = A5rows.map(label => {
+    const yearIdx = label === '전체'
+      ? filteredIdx
+      : filteredIdx.filter(i => DRAWINGS[i]['연도'] === Number(label));
+    if (!yearIdx.length) return PROGS.map(() => 0);
     return PROGS.map(prog => {
       const ratios = yearIdx.map(i => {
         const denom = DRAWINGS[i]['가용면적'];
@@ -538,19 +864,32 @@ function renderA(dd, sp) {
         const progArea = sum(sp.filter(s=>s[S_DID]===i && s[S_PROG]===prog).map(s=>s[S_AREA]||0));
         return progArea / denom * 100;
       }).filter(v => v != null && isFinite(v));
-      return ratios.length ? Math.round(mean(ratios) * 10) / 10 : null;
+      return ratios.length ? Math.round(mean(ratios) * 100) / 100 : 0;
     });
   });
-  const A5labels = TREND_YEARS.map(String);
   const A5sets = PROGS.map((prog,pi) => ({
     label: prog==='통로 및 여유면적'?'기타':(prog==='공용'?'소셜':prog),
-    data: A5data.map(d=>d?d[pi]:null),
+    data: A5data.map(d => d[pi]),
     backgroundColor: PROG_COLORS[pi]+'CC',
     borderRadius:0, borderSkipped:false
   }));
-  mkChart('cA5', {type:'bar', data:{labels:A5labels, datasets:A5sets}, options:deepMerge(baseOpts,{
-    plugins:{legend:{display:true,position:'bottom',labels:{font:{...baseFont,size:10},boxWidth:12,color:'#6677AA'}}},
-    scales:{x:{stacked:true},y:{stacked:true,max:100,ticks:{callback:v=>v+'%'}}}
+  mkChart('cA5', {type:'bar', data:{labels:A5rows, datasets:A5sets}, options:deepMerge(baseOpts,{
+    indexAxis:'y',
+    plugins:{
+      legend:{display:true,position:'bottom',labels:{font:{...baseFont,size:10},boxWidth:12,color:'#6677AA'}},
+      datalabels:{
+        display:true,
+        color:'#fff',
+        font:{...baseFont,size:10,weight:'700'},
+        anchor:'center',
+        align:'center',
+        formatter:v => v >= 4 ? `${v.toFixed(2)}%` : ''
+      }
+    },
+    scales:{
+      x:{stacked:true,max:100,ticks:{callback:v=>v+'%'}},
+      y:{stacked:true}
+    }
   })});
 }
 
@@ -1079,9 +1418,21 @@ function refresh() {
   renderF(dd, sp);
 }
 
+function updateStickyOffsets() {
+  const hdr = document.querySelector('.hdr');
+  if (!hdr) return;
+  document.documentElement.style.setProperty('--header-top', `${hdr.offsetHeight}px`);
+}
+
 // INIT
 Chart.register(ChartDataLabels);
+renderFilterGroups();
+setSidebarCollapsed(false);
 refresh();
+setupCardAnchors();
+renderToc();
+updateStickyOffsets();
+window.addEventListener('resize', updateStickyOffsets);
 </script>
 </body>
 </html>
