@@ -86,6 +86,7 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.g6{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:16px}
 .full{margin-bottom:16px}
 /* CARD */
 .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px;transition:.15s;position:relative;scroll-margin-top:calc(var(--header-top,49px) + 18px)}
@@ -122,6 +123,16 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 .range-title{font-size:12px;font-weight:800;color:var(--p);margin-bottom:8px}
 .range-line{font-size:11px;color:var(--tx);line-height:1.7}
 .range-line b{color:var(--p2)}
+.subgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.subcard{border:1px solid var(--bd);border-radius:12px;padding:12px;background:linear-gradient(180deg,#FCFBFE 0%,#F7F4FB 100%)}
+.subcard .st{font-size:11px;font-weight:800;color:var(--p);margin-bottom:8px}
+.rank-list{display:flex;flex-direction:column;gap:8px}
+.rank-item{display:flex;justify-content:space-between;gap:12px;padding:8px 10px;border:1px solid var(--bd);border-radius:10px;background:#fff;font-size:11px}
+.rank-item b{color:var(--p)}
+.value-panel{display:flex;align-items:center;justify-content:center;min-height:160px;font-size:34px;font-weight:800;color:var(--p)}
+.value-panel span{font-size:16px;font-weight:600;margin-left:4px}
+.gap-card{min-height:220px}
+.gap-card .rank-list{min-height:160px;justify-content:center}
 .summary-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:12px}
 .summary-pill{border:1px solid var(--bd);border-radius:10px;background:var(--pale);padding:8px 10px}
 .summary-pill .sp-title{font-size:11px;font-weight:800;color:var(--p);margin-bottom:3px}
@@ -208,32 +219,37 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 <!-- ═══ B. 업무공간:일반 ═══ -->
 <section class="sec" id="sec-B">
   <div class="sec-hd"><h2>업무공간 : 일반</h2><p>인당 면적, 데스크 형태·너비, 배치 간격, 팀장석, 자율좌석제</p></div>
-  <div class="krow">
-    <div class="kpi hl"><div class="kl">평균 인당 면적</div><div class="kv" id="kB-ppa">—<span>평</span></div><div class="ks" id="kB-ppa-m2">—m²</div></div>
-    <div class="kpi"><div class="kl">자율좌석제 비중</div><div class="kv" id="kB-flex">—<span>%</span></div><div class="ks">전체 도면 기준</div></div>
-    <div class="kpi"><div class="kl">그룹업무공간 보유</div><div class="kv" id="kB-grp">—<span>%</span></div><div class="ks">전체 도면 기준</div></div>
+  <div class="g6">
+    <div class="kpi hl"><div class="kl">업무 공간 비중</div><div class="kv" id="kB-work">—<span>%</span></div><div class="ks">전체 가용면적 대비</div></div>
+    <div class="kpi"><div class="kl">평균 인당 면적</div><div class="kv" id="kB-ppa">—<span>평</span></div><div class="ks" id="kB-ppa-m2">—m²</div></div>
+    <div class="kpi"><div class="kl">주요 등간격(일자형)</div><div class="kv" id="kB-gap-st" style="font-size:16px">—</div><div class="ks" id="kB-gap-st-pct">—</div></div>
+    <div class="kpi"><div class="kl">주요 등간격(L자형)</div><div class="kv" id="kB-gap-l" style="font-size:16px">—</div><div class="ks" id="kB-gap-l-pct">—</div></div>
     <div class="kpi"><div class="kl">주요 데스크 형태</div><div class="kv" id="kB-dtop" style="font-size:16px">—</div><div class="ks" id="kB-dtop-pct">—</div></div>
+    <div class="kpi"><div class="kl">주요 데스크 너비</div><div class="kv" id="kB-wtop" style="font-size:16px">—</div><div class="ks" id="kB-wtop-pct">—</div></div>
   </div>
   <div class="g2">
     <div class="card">
-      <div class="ct">인당 면적 (연도별)</div><div class="cs">※임원수에 따라 오차가 있을 수 있음</div>
+      <div class="ct">인당 면적</div><div class="cs">전체 평균값과 연도별 추세를 함께 제공합니다.</div>
       <div class="toggle"><button class="tgl on" onclick="toggleUnit('B-ppa','평',this)">평</button><button class="tgl" onclick="toggleUnit('B-ppa','m2',this)">m²</button></div>
       <div class="cw"><canvas id="cB1"></canvas></div>
     </div>
-    <div class="card"><div class="ct">데스크 형태별 사용 비중</div><div class="cs">도면별 데스크 형태 인원 비중의 평균 (연도별)</div><div class="cw t"><canvas id="cB2"></canvas></div></div>
+    <div class="card"><div class="ct">자율좌석제 시행 비중</div><div class="cs">전체 비중은 값으로, 연도별 추세는 그래프로 제공합니다.</div><div class="subgrid"><div class="subcard"><div class="st">전체 도면 기준</div><div class="value-panel" id="cB7a"></div></div><div class="subcard"><div class="st">연도별 추세</div><div class="cw t"><canvas id="cB7"></canvas></div></div></div></div>
   </div>
   <div class="g2">
-    <div class="card"><div class="ct">데스크 너비별 사용 비중</div><div class="cs">도면별 너비 인원 비중의 평균 (연도별)</div><div class="cw t"><canvas id="cB3"></canvas></div></div>
-    <div class="card"><div class="ct">팀장석 구성 유형</div><div class="cs">전체 도면 중 각 팀장석 유형 비중</div><div class="cw"><canvas id="cB4"></canvas></div></div>
+    <div class="card">
+      <div class="ct">데스크 형태별 사용 비중</div><div class="cs">전체 도면 기준과 연도별 평균 추세를 하나의 그래프로 제공합니다.</div>
+      <div class="cw t"><canvas id="cB2"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="ct">데스크 너비별 사용 비중</div><div class="cs">전체 도면 기준과 연도별 평균 추세를 하나의 그래프로 제공합니다.</div>
+      <div class="cw t"><canvas id="cB3"></canvas></div>
+    </div>
   </div>
   <div class="g2">
-    <div class="card"><div class="ct">등간격 분포 — 일자형</div><div class="cs">일자형 책상 등간격 구간별 도면 수</div><div class="cw"><canvas id="cB5"></canvas></div></div>
-    <div class="card"><div class="ct">등간격 분포 — L자형</div><div class="cs">L자형 책상 등간격 구간별 도면 수</div><div class="cw"><canvas id="cB6"></canvas></div></div>
+    <div class="card"><div class="ct">팀장석 구성 유형</div><div class="cs">전체 도면 기준 비중과 연도별 추세를 함께 제공합니다.</div><div class="subgrid"><div class="subcard"><div class="st">전체 도면 기준</div><div class="cw s"><canvas id="cB4"></canvas></div></div><div class="subcard"><div class="st">연도별 추세</div><div class="cw t"><canvas id="cB4y"></canvas></div></div></div></div>
+    <div class="card"><div class="ct">등간격 선택 순위</div><div class="cs">가장 많이 사용하는 등간격 구간과 2순위, 3순위를 함께 제공합니다.</div><div class="subgrid"><div class="subcard gap-card"><div class="st">일자형</div><div class="rank-list" id="cB5"></div></div><div class="subcard gap-card"><div class="st">L자형</div><div class="rank-list" id="cB6"></div></div></div></div>
   </div>
-  <div class="g2">
-    <div class="card"><div class="ct">자율좌석제 시행 여부</div><div class="cs">연도별 자율좌석제 도면 비중 추이</div><div class="cw"><canvas id="cB7"></canvas></div></div>
-    <div class="card"><div class="ct">그룹업무공간 유무</div><div class="cs">연도별 그룹업무공간 보유 도면 비중</div><div class="cw"><canvas id="cB8"></canvas></div></div>
-  </div>
+  <div class="card"><div class="ct">그룹업무공간 보유 비중</div><div class="cs">전체 값과 연도별 값을 구분해 제공합니다.</div><div class="subgrid"><div class="subcard"><div class="st">전체 도면 기준</div><div class="value-panel" id="kB-grp">—<span>%</span></div></div><div class="subcard"><div class="st">연도별 값</div><div class="cw t"><canvas id="cB8"></canvas></div></div></div></div>
 </section>
 
 <!-- ═══ C. 업무공간:임원 ═══ -->
@@ -897,157 +913,171 @@ function renderA(dd, sp) {
 // 섹션 B: 업무공간:일반
 // ════════════════════════════════════════════
 function renderB(dd, sp) {
-  // KPI
   const ppas = dd.map(d=>(d['가용면적']&&d['인원수'])?d['가용면적']/d['인원수']:null).filter(v=>v);
   const avgPPA = mean(ppas);
+  const byYr = groupBy(dd, d=>d['연도']);
+  const DT_KEYS = ['일자형','L자형','120도형','비정형'];
+  const DT_COLS = [C.p+'CC','#F0A040CC','#E06060CC','#45B8ACCC'];
+  const DW_KEYS = [1200, 1400, 1600, 1800];
+  const DW_COLS = ['#F3F0FA','#C0ABDB','#8B6FC0','#6B4FA0'];
+  const TJ_TYPES = ['유니버설','T자형','독립형'];
+  const TJ_COLS = ['#6B4FA0','#9370C8','#C0ABDB'];
+
+  function deskTypeCounts(d) {
+    return {
+      '일자형': (d['일자형_1200 사용 인원']||0)+(d['일자형_1400 사용 인원']||0)+(d['일자형_1600 사용 인원']||0)+(d['일자형_1800 사용 인원']||0),
+      'L자형': (d['L자형_1400 사용 인원']||0)+(d['L자형_1600 사용 인원']||0)+(d['L자형_1800 사용 인원']||0),
+      '120도형': d['120도형_1800 사용 인원']||0,
+      '비정형': d['비정형_1200 사용 인원']||0
+    };
+  }
+  function deskWidthCounts(d) {
+    return {
+      1200: (d['비정형_1200 사용 인원']||0)+(d['일자형_1200 사용 인원']||0),
+      1400: (d['L자형_1400 사용 인원']||0)+(d['일자형_1400 사용 인원']||0),
+      1600: (d['L자형_1600 사용 인원']||0)+(d['일자형_1600 사용 인원']||0),
+      1800: (d['L자형_1800 사용 인원']||0)+(d['일자형_1800 사용 인원']||0)+(d['120도형_1800 사용 인원']||0)
+    };
+  }
+  function dominantKey(counts) {
+    const entries = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+    return entries[0] && entries[0][1] > 0 ? entries[0][0] : null;
+  }
+  function gapBins(vals) {
+    const bins = {'1600이하':0,'1601-1750':0,'1751-1900':0,'1901-2050':0,'2051-2200':0,'2201이상':0};
+    vals.forEach(v => {
+      if (v<=1600) bins['1600이하']++;
+      else if (v<=1750) bins['1601-1750']++;
+      else if (v<=1900) bins['1751-1900']++;
+      else if (v<=2050) bins['1901-2050']++;
+      else if (v<=2200) bins['2051-2200']++;
+      else bins['2201이상']++;
+    });
+    return bins;
+  }
+  function topRanksHtml(bins) {
+    const total = Object.values(bins).reduce((a,b)=>a+b,0);
+    return Object.entries(bins)
+      .sort((a,b)=>b[1]-a[1])
+      .filter(([,v])=>v>0)
+      .slice(0,3)
+      .map(([k,v],idx)=>`<div class="rank-item"><span>${idx+1}순위 <b>${k}</b></span><span>${pct(v,total).toFixed(2)}%</span></div>`)
+      .join('') || '<div class="rank-item"><span>데이터 없음</span><span>—</span></div>';
+  }
+
+  const workRatio = mean(filteredIdx.map(i => {
+    const denom = DRAWINGS[i]['가용면적'];
+    if (!denom) return null;
+    const area = sum(sp.filter(s=>s[S_DID]===i && s[S_PROG]==='업무').map(s=>s[S_AREA]||0));
+    return area/denom*100;
+  }).filter(v=>v!=null && isFinite(v)));
+
+  const dominantTypeCounts = DT_KEYS.reduce((acc,k)=>({ ...acc, [k]:0 }),{});
+  const dominantWidthCounts = DW_KEYS.reduce((acc,k)=>({ ...acc, [k]:0 }),{});
+  dd.forEach(d => {
+    const topType = dominantKey(deskTypeCounts(d));
+    const topWidth = dominantKey(deskWidthCounts(d));
+    if (topType) dominantTypeCounts[topType]++;
+    if (topWidth) dominantWidthCounts[topWidth]++;
+  });
+  const topDT = Object.entries(dominantTypeCounts).sort((a,b)=>b[1]-a[1])[0];
+  const topDW = Object.entries(dominantWidthCounts).sort((a,b)=>b[1]-a[1])[0];
+
+  const straightBins = gapBins(dd.map(d=>d['등간격_일자형']).filter(v=>v&&v>0));
+  const lBins = gapBins(dd.map(d=>d['등간격_L자형']).filter(v=>v&&v>0));
+  const topStraight = Object.entries(straightBins).sort((a,b)=>b[1]-a[1])[0];
+  const topL = Object.entries(lBins).sort((a,b)=>b[1]-a[1])[0];
+  const straightTot = sum(Object.values(straightBins));
+  const lTot = sum(Object.values(lBins));
+
   const flexCnt = dd.filter(d=>d['자율좌석제']==='O').length;
-  const grpSubs = new Set(['그룹업무공간']);
-  const dIdx = new Set(filteredIdx);
   const grpCnt = filteredIdx.filter(i => sp.some(s=>s[S_DID]===i&&s[S_SUB]==='그룹업무공간')).length;
 
-  // Desk type proportions via drawing-level person columns
-  const dtypes = {'일자형':0,'L자형':0,'120도형':0,'비정형':0};
-  let totalDt = 0;
-  dd.forEach(d => {
-    dtypes['일자형'] += (d['일자형_1200 사용 인원']||0)+(d['일자형_1400 사용 인원']||0)+(d['일자형_1600 사용 인원']||0)+(d['일자형_1800 사용 인원']||0);
-    dtypes['L자형'] += (d['L자형_1400 사용 인원']||0)+(d['L자형_1600 사용 인원']||0)+(d['L자형_1800 사용 인원']||0);
-    dtypes['120도형'] += d['120도형_1800 사용 인원']||0;
-    dtypes['비정형'] += d['비정형_1200 사용 인원']||0;
-  });
-  totalDt = Object.values(dtypes).reduce((a,b)=>a+b,0);
-  const topDT = Object.entries(dtypes).sort((a,b)=>b[1]-a[1])[0];
-
+  document.getElementById('kB-work').innerHTML = `${fmt1(workRatio)}<span>%</span>`;
   document.getElementById('kB-ppa').innerHTML = `${fmt1(avgPPA*M2_TO_PYEONG)}<span>평</span>`;
-  document.getElementById('kB-ppa-m2').textContent = fmt1(avgPPA)+'m²';
-  document.getElementById('kB-flex').innerHTML = `${fmt1(pct(flexCnt,dd.length))}<span>%</span>`;
-  document.getElementById('kB-grp').innerHTML = `${fmt1(pct(grpCnt,filteredIdx.length))}<span>%</span>`;
-  document.getElementById('kB-dtop').textContent = topDT?topDT[0]:'—';
-  document.getElementById('kB-dtop-pct').textContent = totalDt?pct(topDT[1],totalDt)+'%':'—';
+  document.getElementById('kB-ppa-m2').textContent = `${fmt1(avgPPA)}m²`;
+  document.getElementById('kB-gap-st').textContent = topStraight ? topStraight[0] : '—';
+  document.getElementById('kB-gap-st-pct').textContent = topStraight ? `${pct(topStraight[1], straightTot).toFixed(2)}%` : '—';
+  document.getElementById('kB-gap-l').textContent = topL ? topL[0] : '—';
+  document.getElementById('kB-gap-l-pct').textContent = topL ? `${pct(topL[1], lTot).toFixed(2)}%` : '—';
+  document.getElementById('kB-dtop').textContent = topDT ? topDT[0] : '—';
+  document.getElementById('kB-dtop-pct').textContent = topDT ? `${pct(topDT[1], dd.length).toFixed(2)}%의 도면` : '—';
+  document.getElementById('kB-wtop').textContent = topDW ? `${topDW[0]}mm` : '—';
+  document.getElementById('kB-wtop-pct').textContent = topDW ? `${pct(topDW[1], dd.length).toFixed(2)}%의 도면` : '—';
+  document.getElementById('kB-grp').innerHTML = `${pct(grpCnt, filteredIdx.length).toFixed(2)}<span>%</span>`;
 
-  // B1: 인당 면적 연도별
   const unit_B1 = getUnit('B-ppa');
-  const byYr = groupBy(dd, d=>d['연도']);
   const B1data = TREND_YEARS.map(y => {
     const ypp = (byYr[y]||[]).map(d=>(d['가용면적']&&d['인원수'])?d['가용면적']/d['인원수']:null).filter(v=>v);
     const v = mean(ypp);
     return v ? (unit_B1==='평'? v*M2_TO_PYEONG : v) : null;
   });
+  const b1Vals = B1data.filter(v=>v!=null);
+  const b1Max = Math.max(...b1Vals, 0);
+  const b1Min = Math.min(...b1Vals, 0);
   mkChart('cB1', lineCfg(TREND_YEARS.map(String), [{
     label:`인당 면적 (${unit_B1})`, data:B1data,
-    borderColor:C.p, backgroundColor:C.p+'33', fill:true, tension:.3, pointRadius:4, pointBackgroundColor:C.p
-  }], {scales:{y:{title:{display:true,text:unit_B1,font:baseFont,color:'#6677AA'}}}}));
+    borderColor:C.p, backgroundColor:C.p+'18', fill:false, tension:.3, pointRadius:4, pointBackgroundColor:C.p
+  }], {plugins:{datalabels:{display:true,color:C.p,font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:8,clamp:true,formatter:v=>v?`${v.toFixed(2)}${unit_B1}`:''}},scales:{y:{title:{display:true,text:unit_B1,font:baseFont,color:'#6677AA'},min:Math.max(0,b1Min*0.85),suggestedMax:b1Max*1.22}}}));
 
-  // B2: 데스크 형태별 비중 (도면별 비중의 연도 평균)
-  const DT_KEYS = ['일자형','L자형','120도형','비정형'];
-  const DT_COLS = [C.p+'CC','#F0A040CC','#E06060CC','#45B8ACCC'];
-  const B2data = TREND_YEARS.map(y => {
-    const yd = (byYr[y]||[]);
+  const B2rows = ['전체', ...TREND_YEARS.map(String)];
+  const B2data = B2rows.map(label => {
+    const yd = label === '전체' ? dd : (byYr[Number(label)]||[]);
     if (!yd.length) return null;
     return DT_KEYS.map(k => {
       const ratios = yd.map(d => {
-        const dt = {
-          '일자형': (d['일자형_1200 사용 인원']||0)+(d['일자형_1400 사용 인원']||0)+(d['일자형_1600 사용 인원']||0)+(d['일자형_1800 사용 인원']||0),
-          'L자형': (d['L자형_1400 사용 인원']||0)+(d['L자형_1600 사용 인원']||0)+(d['L자형_1800 사용 인원']||0),
-          '120도형': d['120도형_1800 사용 인원']||0,
-          '비정형': d['비정형_1200 사용 인원']||0
-        };
+        const dt = deskTypeCounts(d);
         const tot = Object.values(dt).reduce((a,b)=>a+b,0);
         return tot ? dt[k] / tot * 100 : null;
       }).filter(v => v != null && isFinite(v));
-      return ratios.length ? Math.round(mean(ratios) * 10) / 10 : null;
+      return ratios.length ? Math.round(mean(ratios) * 100) / 100 : null;
     });
   });
-  mkChart('cB2', {type:'bar', data:{
-    labels:TREND_YEARS.map(String),
-    datasets: DT_KEYS.map((k,i)=>({label:k, data:B2data.map(d=>d?d[i]:null), backgroundColor:DT_COLS[i], borderRadius:0, borderSkipped:false}))
-  }, options:deepMerge(baseOpts,{plugins:{legend:{display:true,position:'bottom',labels:{font:{...baseFont,size:10},boxWidth:10}}},scales:{x:{stacked:true},y:{stacked:true,max:100,ticks:{callback:v=>v+'%'}}}})});
+  mkChart('cB2', {type:'bar', data:{labels:B2rows,datasets:DT_KEYS.map((k,i)=>({label:k,data:B2data.map(d=>d?d[i]:null),backgroundColor:DT_COLS[i],borderRadius:0,borderSkipped:false}))}, options:deepMerge(baseOpts,{plugins:{legend:{display:true,position:'bottom',labels:{font:{...baseFont,size:10},boxWidth:10}},datalabels:{display:true,color:'#fff',font:{...baseFont,size:9,weight:'700'},formatter:v=>v>=10?`${v.toFixed(2)}%`:''}},scales:{x:{stacked:true,grid:{color:(ctx)=>ctx.index===1?'rgba(107,79,160,.35)':'rgba(0,0,0,.04)',lineWidth:(ctx)=>ctx.index===1?2:1}},y:{stacked:true,max:100,ticks:{callback:v=>v+'%'}}}})});
 
-  // B3: 데스크 너비별 비중 (도면별 비중의 연도 평균)
-  const DW_KEYS = [1200, 1400, 1600, 1800];
-  const DW_COLS = ['#F3F0FA','#C0ABDB','#8B6FC0','#6B4FA0'];
-  const B3data = TREND_YEARS.map(y => {
-    const yd = (byYr[y]||[]);
+  const B3rows = ['전체', ...TREND_YEARS.map(String)];
+  const B3data = B3rows.map(label => {
+    const yd = label === '전체' ? dd : (byYr[Number(label)]||[]);
     if (!yd.length) return null;
     return DW_KEYS.map(k => {
       const ratios = yd.map(d => {
-        const dw = {
-          1200: (d['비정형_1200 사용 인원']||0)+(d['일자형_1200 사용 인원']||0),
-          1400: (d['L자형_1400 사용 인원']||0)+(d['일자형_1400 사용 인원']||0),
-          1600: (d['L자형_1600 사용 인원']||0)+(d['일자형_1600 사용 인원']||0),
-          1800: (d['L자형_1800 사용 인원']||0)+(d['일자형_1800 사용 인원']||0)+(d['120도형_1800 사용 인원']||0)
-        };
+        const dw = deskWidthCounts(d);
         const tot = Object.values(dw).reduce((a,b)=>a+b,0);
         return tot ? dw[k] / tot * 100 : null;
       }).filter(v => v != null && isFinite(v));
-      return ratios.length ? Math.round(mean(ratios) * 10) / 10 : null;
+      return ratios.length ? Math.round(mean(ratios) * 100) / 100 : null;
     });
   });
-  mkChart('cB3', {type:'bar', data:{
-    labels:TREND_YEARS.map(String),
-    datasets: DW_KEYS.map((k,i)=>({label:k+'mm', data:B3data.map(d=>d?d[i]:null), backgroundColor:DW_COLS[i], borderColor:'#ccc', borderWidth:0.5, borderRadius:0, borderSkipped:false}))
-  }, options:deepMerge(baseOpts,{plugins:{legend:{display:true,position:'bottom',labels:{font:{...baseFont,size:10},boxWidth:10}}},scales:{x:{stacked:true},y:{stacked:true,max:100,ticks:{callback:v=>v+'%'}}}})});
+  mkChart('cB3', {type:'bar', data:{labels:B3rows,datasets:DW_KEYS.map((k,i)=>({label:k+'mm',data:B3data.map(d=>d?d[i]:null),backgroundColor:DW_COLS[i],borderColor:'#ccc',borderWidth:0.5,borderRadius:0,borderSkipped:false}))}, options:deepMerge(baseOpts,{plugins:{legend:{display:true,position:'bottom',labels:{font:{...baseFont,size:10},boxWidth:10}},datalabels:{display:true,color:'#fff',font:{...baseFont,size:9,weight:'700'},formatter:v=>v>=10?`${v.toFixed(2)}%`:''}},scales:{x:{stacked:true,grid:{color:(ctx)=>ctx.index===1?'rgba(107,79,160,.35)':'rgba(0,0,0,.04)',lineWidth:(ctx)=>ctx.index===1?2:1}},y:{stacked:true,max:100,ticks:{callback:v=>v+'%'}}}})});
 
-  // B4: 팀장석 유형
-  const TJ_TYPES = ['유니버설','T자형','독립형'];
-  const TJ_COLS = ['#6B4FA0','#9370C8','#C0ABDB'];
   const tjCnts = TJ_TYPES.map(t => dd.filter(d=>d['팀장석유형']===t).length);
   const tjTot = sum(tjCnts);
-  mkChart('cB4', {type:'doughnut', data:{
-    labels:TJ_TYPES,
-    datasets:[{data:tjCnts, backgroundColor:TJ_COLS, borderWidth:2, borderColor:'#fff'}]
-  }, options:{responsive:true, maintainAspectRatio:false,
-    plugins:{legend:{display:true,position:'right',labels:{font:baseFont,boxWidth:12}},
-      tooltip:{callbacks:{label:c=>`${c.label}: ${pct(c.raw,tjTot)}% (${c.raw}건)`}},
-      datalabels:{display:true, color:'#fff', font:{...baseFont,weight:'bold'}, formatter:(v)=>v>0?pct(v,tjTot)+'%':''}
-    }
-  }});
+  mkChart('cB4', {type:'doughnut', data:{labels:TJ_TYPES,datasets:[{data:tjCnts, backgroundColor:TJ_COLS, borderWidth:2, borderColor:'#fff'}]}, options:{responsive:true, maintainAspectRatio:false,plugins:{legend:{display:true,position:'right',labels:{font:baseFont,boxWidth:12}},tooltip:{callbacks:{label:c=>`${c.label}: ${pct(c.raw,tjTot).toFixed(2)}% (${c.raw}건)`}},datalabels:{display:true,color:'#fff',font:{...baseFont,weight:'700'},formatter:(v,ctx)=>v>0?`${pct(v,tjTot).toFixed(2)}%`:''}}}});
+  const tjYearData = TREND_YEARS.map(y => {
+    const yd = (byYr[y]||[]);
+    return TJ_TYPES.map(t => yd.length ? pct(yd.filter(d=>d['팀장석유형']===t).length, yd.length) : null);
+  });
+  mkChart('cB4y', {type:'bar', data:{labels:TREND_YEARS.map(String),datasets:TJ_TYPES.map((t,i)=>({label:t,data:tjYearData.map(d=>d?d[i]:null),backgroundColor:TJ_COLS[i],borderRadius:0,borderSkipped:false}))}, options:deepMerge(baseOpts,{plugins:{legend:{display:true,position:'bottom',labels:{font:{...baseFont,size:10},boxWidth:10}},datalabels:{display:true,color:'#fff',font:{...baseFont,size:9,weight:'700'},formatter:v=>v>=12?`${v.toFixed(2)}%`:''}},scales:{x:{stacked:true},y:{stacked:true,max:100,ticks:{callback:v=>v+'%'}}}})});
 
-  // B5, B6: 등간격 분포
-  function renderGapChart(id, col) {
-    const vals = dd.map(d=>d[col]).filter(v=>v&&v>0);
-    const bins = {'1600이하':0,'1700':0,'1800':0,'1900':0,'2000':0,'2100':0,'2200':0,'2300이상':0};
-    vals.forEach(v => {
-      if (v<=1600) bins['1600이하']++;
-      else if (v===1700) bins['1700']++;
-      else if (v===1800) bins['1800']++;
-      else if (v===1900) bins['1900']++;
-      else if (v===2000) bins['2000']++;
-      else if (v===2100) bins['2100']++;
-      else if (v===2200) bins['2200']++;
-      else bins['2300이상']++;
-    });
-    const keys = Object.keys(bins);
-    mkChart(id, barCfg(keys, [{
-      label:'도면 수', data:keys.map(k=>bins[k]),
-      backgroundColor:C.p+'99', borderRadius:4, borderSkipped:false
-    }], {plugins:{datalabels:{display:true,color:'#6677AA',font:baseFont,anchor:'end',align:'end'}},scales:{y:{title:{display:true,text:'도면 수',font:baseFont,color:'#6677AA'}}}}));
-  }
-  renderGapChart('cB5','등간격_일자형');
-  renderGapChart('cB6','등간격_L자형');
+  document.getElementById('cB5').innerHTML = topRanksHtml(straightBins);
+  document.getElementById('cB6').innerHTML = topRanksHtml(lBins);
 
-  // B7: 자율좌석제 연도별
-  const B7data = TREND_YEARS.map(y => {
+  const B7year = TREND_YEARS.map(y => {
     const yd = (byYr[y]||[]);
     return yd.length ? pct(yd.filter(d=>d['자율좌석제']==='O').length, yd.length) : null;
   });
-  mkChart('cB7', lineCfg(TREND_YEARS.map(String), [{
-    label:'자율좌석제 비중(%)', data:B7data,
-    borderColor:C.소셜, backgroundColor:C.소셜+'33', fill:true, tension:.3, pointRadius:4, pointBackgroundColor:C.소셜
-  }], {scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}}));
+  const flexOverall = pct(flexCnt, dd.length);
+  document.getElementById('cB7a').innerHTML = `${flexOverall.toFixed(2)}<span>%</span>`;
+  mkChart('cB7', {type:'bar', data:{labels:TREND_YEARS.map(String),datasets:[{label:'자율좌석제 비중',data:B7year,backgroundColor:TREND_YEARS.map(()=>C.소셜+'AA'),borderRadius:8,borderSkipped:false}]}, options:deepMerge(baseOpts,{plugins:{legend:{display:false},datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'700'},anchor:'end',align:'end',formatter:v=>`${(v||0).toFixed(2)}%`}},scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}})});
 
-  // B8: 그룹업무공간 유무 연도별
-  const grpByYr = groupBy(sp.filter(s=>s[S_SUB]==='그룹업무공간'), s=>DRAWINGS[s[S_DID]]['연도']);
-  const B8data = TREND_YEARS.map(y => {
+  const B8year = TREND_YEARS.map(y => {
     const yd = (byYr[y]||[]);
     if (!yd.length) return null;
     const yIdx2 = new Set(filteredIdx.filter(i=>DRAWINGS[i]['연도']===y));
-    const hasGrp = new Set((sp.filter(s=>yIdx2.has(s[S_DID])&&s[S_SUB]==='그룹업무공간')).map(s=>s[S_DID]));
+    const hasGrp = new Set(sp.filter(s=>yIdx2.has(s[S_DID])&&s[S_SUB]==='그룹업무공간').map(s=>s[S_DID]));
     return pct(hasGrp.size, yd.length);
   });
-  mkChart('cB8', lineCfg(TREND_YEARS.map(String), [{
-    label:'그룹업무공간 보유 비중(%)', data:B8data,
-    borderColor:C.업무, backgroundColor:C.업무+'33', fill:true, tension:.3, pointRadius:4, pointBackgroundColor:C.업무
-  }], {scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}}));
+  mkChart('cB8', {type:'bar', data:{labels:TREND_YEARS.map(String),datasets:[{label:'그룹업무공간 보유 비중',data:B8year,backgroundColor:TREND_YEARS.map(()=>C.업무+'AA'),borderRadius:8,borderSkipped:false}]}, options:deepMerge(baseOpts,{plugins:{legend:{display:false},datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'700'},anchor:'end',align:'end',formatter:v=>`${(v||0).toFixed(2)}%`}},scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}})});
 }
 
 // ════════════════════════════════════════════
