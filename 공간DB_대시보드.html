@@ -138,6 +138,19 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 .summary-pill .sp-title{font-size:11px;font-weight:800;color:var(--p);margin-bottom:3px}
 .summary-pill .sp-line{font-size:10px;color:var(--mid);line-height:1.5}
 .heat-cell{font-weight:700;border-radius:8px}
+.mini-table{display:flex;flex-direction:column;gap:8px}
+.mini-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 10px;border:1px solid var(--bd);border-radius:10px;background:#fff;font-size:11px}
+.mini-row .label{color:var(--mid);font-weight:700}
+.mini-row .value{color:var(--p);font-weight:800}
+.mini-row .value span{font-size:10px;font-weight:700;margin-left:2px}
+.metric-grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.metric-block{border:1px solid var(--bd);border-radius:12px;background:linear-gradient(180deg,#FCFBFE 0%,#F7F4FB 100%);padding:14px}
+.metric-block .mb-title{font-size:11px;font-weight:800;color:var(--p);margin-bottom:10px}
+.metric-block .mb-main{font-size:24px;font-weight:800;color:var(--tx);line-height:1.1;margin-bottom:6px}
+.metric-block .mb-main span{font-size:12px;font-weight:700;margin-left:2px;color:var(--mid)}
+.metric-block .mb-sub{font-size:11px;color:var(--mid)}
+.view-panel{display:block}
+.view-panel.hide{display:none}
 .toc-panel{width:216px;position:fixed;right:24px;top:calc(var(--header-top,49px) + 18px);bottom:18px;z-index:180;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);border:1px solid var(--bd);border-radius:18px;padding:14px 12px;box-shadow:0 10px 30px rgba(107,79,160,.08);overflow:auto}
 .toc-title{font-size:11px;font-weight:800;color:var(--p);margin:0 0 12px 4px}
 .toc-list{display:flex;flex-direction:column;gap:8px}
@@ -254,18 +267,31 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 
 <!-- ═══ C. 업무공간:임원 ═══ -->
 <section class="sec" id="sec-C">
-  <div class="sec-hd"><h2>업무공간 : 임원</h2><p>오픈 임원석 비율, 가구 구성 비율, 가구 구성별 평균 면적</p></div>
-  <div class="krow">
-    <div class="kpi hl"><div class="kl">오픈 임원석 보유 비율</div><div class="kv" id="kC-open">—<span>%</span></div><div class="ks">전체 도면 기준</div></div>
-    <div class="kpi"><div class="kl">임원석 최다 구성 (실형)</div><div class="kv" id="kC-top" style="font-size:15px">—</div><div class="ks" id="kC-top-pct">—</div></div>
-    <div class="kpi"><div class="kl">임원실 평균 면적 (실형)</div><div class="kv" id="kC-area">—<span>평</span></div><div class="ks">책상+회의테이블 기준</div></div>
-    <div class="kpi"><div class="kl">임원실 평균 면적 (오픈)</div><div class="kv" id="kC-area-open">—<span>평</span></div><div class="ks">책상+회의테이블 기준</div></div>
+  <div class="sec-hd"><h2>업무공간 : 임원</h2><p>오픈 임원석 보유 비율, 실형/오픈형 가구 구성, 가구 구성별 평균 면적</p></div>
+  <div class="g3">
+    <div class="kpi hl"><div class="kl">임원석 최다 구성 (실형)</div><div class="kv" id="kC-top" style="font-size:15px">—</div><div class="ks" id="kC-top-pct">—</div></div>
+    <div class="kpi hl"><div class="kl">임원실 평균 면적 (실형)</div><div class="kv" id="kC-area">—<span>평</span></div><div class="ks">책상 + 회의테이블실 기준</div></div>
+    <div class="kpi"><div class="kl">오픈 임원석 보유 도면 비율</div><div class="kv" id="kC-open">—<span>%</span></div><div class="ks">임원공간 보유 도면 중 오픈 임원석 보유 도면 비율</div></div>
   </div>
   <div class="g2">
-    <div class="card"><div class="ct">오픈 임원석 보유 비율 추이</div><div class="cs">연도별 오픈형 임원석을 가진 도면의 비중</div><div class="cw"><canvas id="cC1"></canvas></div></div>
-    <div class="card"><div class="ct">임원 가구 구성 비율</div><div class="cs">프로그램=임원인 공간의 세부유형별 개수 비중 (오픈/실형)</div><div class="cw"><canvas id="cC2"></canvas></div></div>
+    <div class="card"><div class="ct">오픈 임원석 보유 비율 추이</div><div class="cs">연도별 임원공간 보유 도면 중 오픈 임원석 네모를 가진 도면의 비중, 값 직접 표시</div><div class="summary-strip"><div class="summary-pill"><div class="sp-title">전체 오픈 임원석 보유 도면 비율</div><div class="sp-line" id="kC-open-overall">—</div></div></div><div class="cw"><canvas id="cC1"></canvas></div></div>
+    <div class="card">
+      <div class="ct">임원 가구 구성 비율</div><div class="cs">실형/오픈형을 구분해 전체 구성과 연도별 추세를 확인합니다.</div>
+      <div class="subgrid">
+        <div class="subcard"><div class="st">전체 구성 비율 · 실형</div><div class="cw s"><canvas id="cC2allr"></canvas></div></div>
+        <div class="subcard"><div class="st">전체 구성 비율 · 오픈형</div><div class="cw s"><canvas id="cC2allo"></canvas></div></div>
+        <div class="subcard"><div class="st">연도별 구성 비율 · 실형</div><div class="cw t"><canvas id="cC2yearr"></canvas></div></div>
+        <div class="subcard"><div class="st">연도별 구성 비율 · 오픈형</div><div class="cw t"><canvas id="cC2yearo"></canvas></div></div>
+      </div>
+    </div>
   </div>
-  <div class="full card"><div class="ct">임원 가구 구성별 평균 면적</div><div class="cs">오픈형 vs 실형 × 세부 유형별 평균 면적 (평)</div><div class="cw"><canvas id="cC3"></canvas></div></div>
+  <div class="full card">
+    <div class="ct">임원 가구 구성별 평균 면적</div><div class="cs">실형과 오픈형을 구분하여 세부 유형별 평균 면적을 값으로 제공합니다.</div>
+    <div class="subgrid">
+      <div class="subcard"><div class="st">실형 평균 면적</div><div id="cC3r" class="mini-table"></div></div>
+      <div class="subcard"><div class="st">오픈형 평균 면적</div><div id="cC3o" class="mini-table"></div></div>
+    </div>
+  </div>
 </section>
 
 <!-- ═══ D. 회의공간 ═══ -->
@@ -282,13 +308,11 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
     <div class="card"><div class="ct">인원 구간별 회의실 평균 개소</div><div class="cs">해당 구간에서 회의실이 있는 도면만 평균 포함</div><div class="cw"><canvas id="cD2"></canvas></div></div>
     <div class="card"><div class="ct">면적 구간별 회의실 평균 개소</div><div class="cs">해당 구간에서 회의실이 있는 도면만 평균 포함</div><div class="cw"><canvas id="cD3"></canvas></div></div>
   </div>
-  <div class="g2">
-    <div class="card"><div class="ct">회의실 규모별 평균 개소</div><div class="cs">회의실이 있는 도면을 기준으로 규모별 평균 개소 집계</div><div class="cw"><canvas id="cD4"></canvas></div></div>
-    <div class="card"><div class="ct">회의실 규모별 평균 면적</div><div class="cs">세부 유형별 평균 면적 (평)</div><div class="cw"><canvas id="cD5"></canvas></div></div>
-  </div>
-  <div class="g2">
+  <div class="full card"><div class="ct">회의실 규모별 평균 개소 및 평균 면적</div><div class="cs">회의실이 있는 도면을 기준으로 규모별 평균 개소와 평균 면적을 함께 제공합니다.</div><div class="metric-grid4" id="cD45"></div></div>
+  <div class="g3">
     <div class="card"><div class="ct">회의실 가구 스타일 비중</div><div class="cs">정형 / 비정형 / Flexible 개수 비중</div><div class="cw"><canvas id="cD6"></canvas></div></div>
-    <div class="card"><div class="ct">연도별 오픈 회의 비중</div><div class="cs">회의 전체 면적 중 오픈형 비중 추이</div><div class="cw"><canvas id="cD7"></canvas></div></div>
+    <div class="card"><div class="ct">회의실 규모별 가구 스타일 비중</div><div class="cs">4인 이하, 5-8인실, 9-16인실, 17인 이상실 기준 정형 / 비정형 / Flexible 비중</div><div class="cw t"><canvas id="cD6s"></canvas></div></div>
+    <div class="card"><div class="ct">연도별 오픈 회의 비중</div><div class="cs">회의 전체 면적 중 오픈형 비중 추이</div><div class="summary-strip"><div class="summary-pill"><div class="sp-title">전체 오픈 회의 비중</div><div class="sp-line" id="kD-open-overall">—</div></div></div><div class="cw"><canvas id="cD7"></canvas></div></div>
   </div>
 </section>
 
@@ -443,6 +467,7 @@ const FILTER_OPTION_ORDERS = {
 const F = Object.fromEntries(FILTER_KEYS.map(key => [key, []]));
 let sidebarCollapsed = false;
 let unitStates = {};
+let viewStates = { 'C-furniture':'overall' };
 
 function normalizeFlag(v) {
   return String(v ?? '').trim() === 'O' ? 'O' : 'X';
@@ -621,7 +646,11 @@ function barCfg(labels, datasets, extra={}) {
   return deepMerge({ type:'bar', data:{labels,datasets}, options: deepMerge(baseOpts,extra) }, {});
 }
 function lineCfg(labels, datasets, extra={}) {
-  return deepMerge({ type:'line', data:{labels,datasets}, options: deepMerge(baseOpts,extra) }, {});
+  return deepMerge({ type:'line', data:{labels,datasets}, options: deepMerge(baseOpts,{
+    layout:{padding:{left:18,right:12,top:28,bottom:4}},
+    plugins:{datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'bold'},align:'top',anchor:'end',offset:4,clamp:true,formatter:v=>v==null?'':Number(v).toFixed(2)}},
+    scales:{x:{offset:true,ticks:{padding:8}},y:{beginAtZero:true,grace:'8%'}}
+  }) }, deepMerge({options:extra},{}) );
 }
 function tableHtml(headers, rows) {
   return `
@@ -752,6 +781,13 @@ function toggleUnit(key, unit, btn) {
   refresh();
 }
 function getUnit(key, def='평') { return unitStates[key] || def; }
+function toggleView(key, value, btn) {
+  viewStates[key] = value;
+  btn.closest('.toggle').querySelectorAll('.tgl').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  refresh();
+}
+function getView(key, def='overall') { return viewStates[key] || def; }
 
 // ════════════════════════════════════════════
 // RENDER: 탭 전환
@@ -1084,25 +1120,19 @@ function renderB(dd, sp) {
 // 섹션 C: 업무공간:임원
 // ════════════════════════════════════════════
 function renderC(dd, sp) {
-  const byYr = groupBy(dd, d=>d['연도']);
-  const exec = sp.filter(s=>s[S_PROG]==='임원');
-
-  // 오픈임원석 보유 도면 비율
-  const hasOpen = new Set(exec.filter(s=>s[S_OPEN]==='오픈').map(s=>s[S_DID]));
-  const openRatio = pct(hasOpen.size, filteredIdx.length);
-
-  // 가구구성 비율 (실형 기준)
   const EXEC_SUBS = ['책상','책상+소파','책상+회의테이블','책상+소파+회의테이블'];
   const EXEC_SUB_ROOM = {'책상':'책상실','책상+소파':'책상+소파실','책상+회의테이블':'책상+회의테이블실','책상+소파+회의테이블':'책상+소파+회의테이블실'};
   const EXEC_SUB_OPEN = {'책상':'책상오픈','책상+소파':'책상+소파오픈','책상+회의테이블':'책상+회의테이블오픈','책상+소파+회의테이블':'책상+소파+회의테이블오픈'};
-  const execRoom = exec.filter(s=>s[S_OPEN]==='실');
-  const execOpen = exec.filter(s=>s[S_OPEN]==='오픈');
+  const exec = sp.filter(s=>s[S_PROG]==='임원');
+  const execRoom = exec.filter(s=>s[S_OPEN]==='실' && Object.values(EXEC_SUB_ROOM).includes(s[S_SUB]));
+  const execOpen = exec.filter(s=>s[S_OPEN]==='오픈' && Object.values(EXEC_SUB_OPEN).includes(s[S_SUB]));
+
   const subCntRoom = EXEC_SUBS.map(sub => execRoom.filter(s=>s[S_SUB]===EXEC_SUB_ROOM[sub]).length);
   const subCntOpen = EXEC_SUBS.map(sub => execOpen.filter(s=>s[S_SUB]===EXEC_SUB_OPEN[sub]).length);
-  const topSubRoom = EXEC_SUBS[subCntRoom.indexOf(Math.max(...subCntRoom))];
-  const topSubRoomPct = pct(Math.max(...subCntRoom), sum(subCntRoom));
+  const topRoomIdx = subCntRoom.indexOf(Math.max(...subCntRoom, 0));
+  const topSubRoom = subCntRoom.some(v=>v>0) ? EXEC_SUBS[topRoomIdx] : null;
+  const topSubRoomPct = subCntRoom.some(v=>v>0) ? pct(subCntRoom[topRoomIdx], sum(subCntRoom)) : null;
 
-  // 가구구성별 평균면적
   const subAreaRoom = EXEC_SUBS.map(sub => {
     const vs = execRoom.filter(s=>s[S_SUB]===EXEC_SUB_ROOM[sub]).map(s=>s[S_AREA]).filter(v=>v>0);
     return vs.length ? mean(vs)*M2_TO_PYEONG : null;
@@ -1112,47 +1142,160 @@ function renderC(dd, sp) {
     return vs.length ? mean(vs)*M2_TO_PYEONG : null;
   });
 
-  // KPI
+  const execDrawingIds = new Set(exec.map(s=>s[S_DID]));
+  const hasOpenSeat = new Set(execOpen.map(s=>s[S_DID]));
+  const openRatio = pct(hasOpenSeat.size, execDrawingIds.size);
+
   document.getElementById('kC-open').innerHTML = `${fmt1(openRatio)}<span>%</span>`;
-  document.getElementById('kC-top').textContent = topSubRoom||'—';
-  document.getElementById('kC-top-pct').textContent = topSubRoomPct ? topSubRoomPct+'%' : '—';
+  document.getElementById('kC-open-overall').innerHTML = `<b>${fmt1(openRatio)}%</b> · ${hasOpenSeat.size}개 / ${execDrawingIds.size}개 도면`;
+  document.getElementById('kC-top').textContent = topSubRoom || '—';
+  document.getElementById('kC-top-pct').textContent = topSubRoomPct != null ? `${fmt1(topSubRoomPct)}%` : '—';
   const deskArea = subAreaRoom[EXEC_SUBS.indexOf('책상+회의테이블')];
   document.getElementById('kC-area').innerHTML = `${fmt1(deskArea)}<span>평</span>`;
-  const deskAreaOpen = subAreaOpen[EXEC_SUBS.indexOf('책상+회의테이블')];
-  document.getElementById('kC-area-open').innerHTML = `${fmt1(deskAreaOpen)}<span>평</span>`;
 
-  // C1: 오픈임원석 비율 연도별
   const C1data = TREND_YEARS.map(y => {
-    const yIdx2 = new Set(filteredIdx.filter(i=>DRAWINGS[i]['연도']===y));
-    if (!yIdx2.size) return null;
-    const yExec = exec.filter(s=>yIdx2.has(s[S_DID])&&s[S_OPEN]==='오픈');
-    const hasO = new Set(yExec.map(s=>s[S_DID]));
-    return pct(hasO.size, yIdx2.size);
+    const yIdx = filteredIdx.filter(i=>DRAWINGS[i]['연도']===y);
+    if (!yIdx.length) return null;
+    const ySet = new Set(yIdx);
+    const yExecDrawings = new Set(exec.filter(s=>ySet.has(s[S_DID])).map(s=>s[S_DID]));
+    if (!yExecDrawings.size) return null;
+    const hasYOpen = new Set(execOpen.filter(s=>ySet.has(s[S_DID])).map(s=>s[S_DID]));
+    return pct(hasYOpen.size, yExecDrawings.size);
   });
+  const c1Max = Math.max(...C1data.filter(v=>v!=null), 0);
   mkChart('cC1', lineCfg(TREND_YEARS.map(String), [{
-    label:'오픈임원석 비율(%)', data:C1data,
-    borderColor:C.임원, backgroundColor:C.임원+'33', fill:true, tension:.3, pointRadius:4, pointBackgroundColor:C.임원
-  }], {scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}}));
+    label:'오픈 임원석 보유 도면 비율',
+    data:C1data,
+    borderColor:C.임원,
+    backgroundColor:C.임원+'18',
+    fill:false,
+    tension:.28,
+    pointRadius:4,
+    pointHoverRadius:5,
+    pointBackgroundColor:C.임원,
+    pointBorderWidth:2
+  }], {
+    plugins:{
+      legend:{display:false},
+      datalabels:{
+        display:true,
+        color:C.임원,
+        font:{...baseFont,weight:'bold'},
+        align:'top',
+        anchor:'end',
+        offset:4,
+        formatter:v=>v==null?'':`${v.toFixed(2)}%`
+      }
+    },
+    scales:{y:{min:0,suggestedMax:Math.max(25, c1Max+8),ticks:{callback:v=>v+'%'}}}
+  }));
 
-  // C2: 가구구성 비율 (실형/오픈 grouped bar)
-  const C2totRoom = sum(subCntRoom)||1, C2totOpen = sum(subCntOpen)||1;
-  mkChart('cC2', barCfg(EXEC_SUBS.map(s=>s.replace('책상+','+')), [
-    {label:'실형', data:subCntRoom.map(v=>pct(v,C2totRoom)), backgroundColor:C.임원+'CC', borderRadius:4, borderSkipped:false},
-    {label:'오픈형', data:subCntOpen.map(v=>pct(v,C2totOpen)), backgroundColor:C.임원+'55', borderRadius:4, borderSkipped:false}
-  ], {plugins:{legend:{display:true,position:'top',labels:{font:baseFont,boxWidth:12}}},scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}}));
+  const prettyExecLabel = s => ({
+    '책상':'책상',
+    '책상+소파':'책상 + 소파',
+    '책상+회의테이블':'책상 + 회의테이블',
+    '책상+소파+회의테이블':'책상 + 소파 + 회의테이블'
+  }[s] || s);
+  const shortLabels = EXEC_SUBS.map(prettyExecLabel);
+  const roomPctData = subCntRoom.map(v=>pct(v, sum(subCntRoom)));
+  const openPctData = subCntOpen.map(v=>pct(v, sum(subCntOpen)));
+  const execCols = [C.임원+'CC', C.임원+'99', C.임원+'66', C.임원+'33'];
+  mkChart('cC2allr', {
+    type:'bar',
+    data:{labels:shortLabels,datasets:[
+      {label:'실형', data:roomPctData, backgroundColor:C.임원+'CC', borderRadius:6, borderSkipped:false}
+    ]},
+    options:deepMerge(baseOpts,{
+      plugins:{
+        legend:{display:false},
+        datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'bold'},anchor:'end',align:'end',formatter:v=>v?`${v.toFixed(2)}%`:''}
+      },
+      scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}
+    })
+  });
+  mkChart('cC2allo', {
+    type:'bar',
+    data:{labels:shortLabels,datasets:[
+      {label:'오픈형', data:openPctData, backgroundColor:C.임원+'66', borderRadius:6, borderSkipped:false}
+    ]},
+    options:deepMerge(baseOpts,{
+      plugins:{
+        legend:{display:false},
+        datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'bold'},anchor:'end',align:'end',formatter:v=>v?`${v.toFixed(2)}%`:''}
+      },
+      scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}
+    })
+  });
 
-  // C3: 가구구성별 평균면적 (실형/오픈)
-  mkChart('cC3', barCfg(EXEC_SUBS.map(s=>s.replace('책상+','+')), [
-    {label:'실형 평균면적(평)', data:subAreaRoom, backgroundColor:C.임원+'CC', borderRadius:4, borderSkipped:false},
-    {label:'오픈형 평균면적(평)', data:subAreaOpen, backgroundColor:C.임원+'55', borderRadius:4, borderSkipped:false}
-  ], {plugins:{legend:{display:true,position:'top',labels:{font:baseFont,boxWidth:12}},datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'bold'},anchor:'end',align:'end',formatter:v=>v?v.toFixed(2)+'평':''}},scales:{y:{title:{display:true,text:'평',font:baseFont,color:'#6677AA'}}}}));
+  const yearlyRoomData = EXEC_SUBS.map((sub, i) => ({
+    label:shortLabels[i],
+    backgroundColor:execCols[i],
+    borderRadius:4,
+    borderSkipped:false,
+    data:TREND_YEARS.map(y => {
+      const ySet = new Set(filteredIdx.filter(idx=>DRAWINGS[idx]['연도']===y));
+      const yRoom = execRoom.filter(s=>ySet.has(s[S_DID]));
+      const total = yRoom.length;
+      if (!total) return null;
+      return pct(yRoom.filter(s=>s[S_SUB]===EXEC_SUB_ROOM[sub]).length, total);
+    })
+  }));
+  const yearlyOpenData = EXEC_SUBS.map((sub, i) => ({
+    label:shortLabels[i],
+    backgroundColor:execCols[i],
+    borderRadius:4,
+    borderSkipped:false,
+    data:TREND_YEARS.map(y => {
+      const ySet = new Set(filteredIdx.filter(idx=>DRAWINGS[idx]['연도']===y));
+      const yOpen = execOpen.filter(s=>ySet.has(s[S_DID]));
+      const total = yOpen.length;
+      if (!total) return null;
+      return pct(yOpen.filter(s=>s[S_SUB]===EXEC_SUB_OPEN[sub]).length, total);
+    })
+  }));
+  mkChart('cC2yearr', {
+    type:'bar',
+    data:{labels:TREND_YEARS.map(String),datasets:yearlyRoomData},
+    options:deepMerge(baseOpts,{
+      plugins:{
+        legend:{display:true,position:'bottom',labels:{font:baseFont,boxWidth:10}},
+        datalabels:{display:false}
+      },
+      scales:{
+        x:{stacked:true,ticks:{font:{...baseFont,size:10},maxRotation:0,minRotation:0,color:'#6677AA'}},
+        y:{stacked:true,min:0,max:100,ticks:{callback:v=>v+'%'}}
+      }
+    })
+  });
+  mkChart('cC2yearo', {
+    type:'bar',
+    data:{labels:TREND_YEARS.map(String),datasets:yearlyOpenData},
+    options:deepMerge(baseOpts,{
+      plugins:{
+        legend:{display:true,position:'bottom',labels:{font:baseFont,boxWidth:10}},
+        datalabels:{display:false}
+      },
+      scales:{
+        x:{stacked:true,ticks:{font:{...baseFont,size:10},maxRotation:0,minRotation:0,color:'#6677AA'}},
+        y:{stacked:true,min:0,max:100,ticks:{callback:v=>v+'%'}}
+      }
+    })
+  });
+
+  const areaRowsHtml = (labels, values) => labels.map((label, i) => `
+    <div class="mini-row">
+      <span class="label">${prettyExecLabel(label)}</span>
+      <span class="value">${values[i] != null ? values[i].toFixed(2) : '—'}${values[i] != null ? '<span>평</span>' : ''}</span>
+    </div>
+  `).join('');
+  document.getElementById('cC3r').innerHTML = areaRowsHtml(EXEC_SUBS, subAreaRoom);
+  document.getElementById('cC3o').innerHTML = areaRowsHtml(EXEC_SUBS, subAreaOpen);
 }
 
 // ════════════════════════════════════════════
 // 섹션 D: 회의공간
 // ════════════════════════════════════════════
 function renderD(dd, sp) {
-  const byYr = groupBy(dd, d=>d['연도']);
   const isMeetingSpace = s => s[S_PROG]==='회의' && s[S_SUB] !== '기타회의공간';
   const isMeetingRoom = s => isMeetingSpace(s) && s[S_OPEN] === '실';
   const meetRoom = sp.filter(isMeetingRoom);
@@ -1160,8 +1303,8 @@ function renderD(dd, sp) {
   const meetingRoomCount = i => sp.filter(s=>s[S_DID]===i && isMeetingRoom(s)).length;
   const meetingSubtypeCount = (i, sub) => sp.filter(s=>s[S_DID]===i && isMeetingRoom(s) && s[S_SUB]===sub).length;
   const meetingDrawingIdx = filteredIdx.filter(i => meetingRoomCount(i) > 0);
+  const MEET_SUBS = ['4인이하실','5-8인실','9-16인실','17인이상실'];
 
-  // KPI
   const avgMeet = meanPositive(filteredIdx, meetingRoomCount);
   const sm4 = meetRoom.filter(s=>s[S_SUB]==='4인이하실');
   const avgSm = mean(sm4.map(s=>s[S_AREA]).filter(v=>v>0))*M2_TO_PYEONG;
@@ -1173,8 +1316,8 @@ function renderD(dd, sp) {
   document.getElementById('kD-sm').innerHTML = `${fmt1(avgSm)}<span>평</span>`;
   document.getElementById('kD-open-pct').innerHTML = `${fmt1(pct(openMeetArea,totalMeetArea))}<span>%</span>`;
   document.getElementById('kD-formal').innerHTML = `${fmt1(formalPct)}<span>%</span>`;
+  document.getElementById('kD-open-overall').innerHTML = `<b>${fmt1(pct(openMeetArea,totalMeetArea))}%</b> · 전체 회의 면적 기준`;
 
-  // D1: 연도별 회의실 평균 개소
   const D1data = TREND_YEARS.map(y => {
     const yIdx2 = new Set(filteredIdx.filter(i=>DRAWINGS[i]['연도']===y));
     if (!yIdx2.size) return null;
@@ -1182,51 +1325,42 @@ function renderD(dd, sp) {
   });
   mkChart('cD1', lineCfg(TREND_YEARS.map(String), [{
     label:'평균 회의실 개소', data:D1data,
-    borderColor:C.회의, backgroundColor:C.회의+'33', fill:true, tension:.3, pointRadius:4, pointBackgroundColor:C.회의
-  }], {scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
+    borderColor:C.회의, backgroundColor:C.회의+'33', fill:false, tension:.3, pointRadius:4, pointBackgroundColor:C.회의
+  }], {plugins:{datalabels:{formatter:v=>v==null?'':`${Number(v).toFixed(2)}`}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
 
-  // D2: 인원구간별 회의실 평균 개소
   const D2data = 인원ORDER.map(cat => {
     const catIdx = filteredIdx.filter(i=>DRAWINGS[i]['인원구간']===cat);
     if (!catIdx.length) return null;
     return meanPositive(catIdx, meetingRoomCount);
   });
-  mkChart('cD2', barCfg(인원ORDER, [{
+  mkChart('cD2', lineCfg(인원ORDER, [{
     label:'평균 회의실 개소', data:D2data,
-    backgroundColor:C.회의+'AA', borderRadius:6, borderSkipped:false
-  }], {plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?v.toFixed(2):''}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
+    borderColor:C.회의, backgroundColor:C.회의+'22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:C.회의
+  }], {plugins:{datalabels:{formatter:v=>v==null?'':`${Number(v).toFixed(2)}`}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
 
-  // D3: 면적구간별 회의실 평균 개소
   const D3data = 면적ORDER.map(cat => {
     const catIdx = filteredIdx.filter(i=>DRAWINGS[i]['가용면적구간']===cat);
     if (!catIdx.length) return null;
     return meanPositive(catIdx, meetingRoomCount);
   });
-  mkChart('cD3', barCfg(면적ORDER.map(s=>s.replace('~200평',' -200').replace(' 미만','↓').replace('평 이상','↑').replace('100평 미만','100↓')), [{
+  mkChart('cD3', lineCfg(면적ORDER.map(s=>s.replace('~200평',' -200').replace(' 미만','↓').replace('평 이상','↑').replace('100평 미만','100↓')), [{
     label:'평균 회의실 개소', data:D3data,
-    backgroundColor:C.회의+'99', borderRadius:6, borderSkipped:false
-  }], {plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?v.toFixed(2):''}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
+    borderColor:C.회의, backgroundColor:C.회의+'22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:C.회의
+  }], {plugins:{datalabels:{formatter:v=>v==null?'':`${Number(v).toFixed(2)}`}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
 
-  // D4 & D5: 회의실 규모별 평균 개소 & 면적
-  const MEET_SUBS = ['4인이하실','5-8인실','9-16인실','17인이상실'];
-  const MEET_COLS = ['#C0ABDB','#8B6FC0','#6B4FA0','#4A2E80'];
-  const D4data = MEET_SUBS.map(sub => {
-    return mean(meetingDrawingIdx.map(i => meetingSubtypeCount(i, sub)));
-  });
+  const D4data = MEET_SUBS.map(sub => mean(meetingDrawingIdx.map(i => meetingSubtypeCount(i, sub))));
   const D5data = MEET_SUBS.map(sub => {
     const vs = meetRoom.filter(s=>s[S_SUB]===sub).map(s=>s[S_AREA]).filter(v=>v>0);
     return vs.length ? mean(vs)*M2_TO_PYEONG : null;
   });
-  mkChart('cD4', barCfg(MEET_SUBS, [{
-    label:'평균 개소', data:D4data,
-    backgroundColor:MEET_COLS, borderRadius:6, borderSkipped:false
-  }], {plugins:{datalabels:{display:true,color:'#fff',font:{...baseFont,weight:'bold'},anchor:'center',align:'center',formatter:v=>v?v.toFixed(2):''}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
-  mkChart('cD5', barCfg(MEET_SUBS, [{
-    label:'평균 면적(평)', data:D5data,
-    backgroundColor:MEET_COLS, borderRadius:6, borderSkipped:false
-  }], {plugins:{datalabels:{display:true,color:'#fff',font:{...baseFont,weight:'bold'},anchor:'center',align:'center',formatter:v=>v?v.toFixed(2)+'평':''}},scales:{y:{title:{display:true,text:'평',font:baseFont,color:'#6677AA'}}}}));
+  document.getElementById('cD45').innerHTML = MEET_SUBS.map((sub, i) => `
+    <div class="metric-block">
+      <div class="mb-title">${sub}</div>
+      <div class="mb-main">${D4data[i] != null ? D4data[i].toFixed(2) : '—'}<span>개소</span></div>
+      <div class="mb-sub">평균 면적 ${D5data[i] != null ? D5data[i].toFixed(2) : '—'}평</div>
+    </div>
+  `).join('');
 
-  // D6: 회의실 가구 스타일
   const styles = {'정형':0,'비정형':0,'FLEXIBLE':0};
   meetRoom.forEach(s => { if (s[S_DT] in styles) styles[s[S_DT]]++; });
   const stTot = sum(Object.values(styles))||1;
@@ -1240,7 +1374,34 @@ function renderD(dd, sp) {
     }
   }});
 
-  // D7: 연도별 오픈회의 비중
+  const styleKeys = ['정형','비정형','FLEXIBLE'];
+  const sizeStyleSets = styleKeys.map((style, i) => ({
+    label:style === 'FLEXIBLE' ? 'Flexible' : style,
+    data:MEET_SUBS.map(sub => {
+      const rows = meetRoom.filter(s=>s[S_SUB]===sub && styleKeys.includes(s[S_DT]));
+      const total = meetRoom.filter(s=>s[S_SUB]===sub && styleKeys.includes(s[S_DT])).length;
+      if (!total) return null;
+      return pct(rows.filter(s=>s[S_DT]===style).length, total);
+    }),
+    backgroundColor:[C.회의+'CC', C.회의+'88', C.회의+'44'][i],
+    borderRadius:4,
+    borderSkipped:false
+  }));
+  mkChart('cD6s', {
+    type:'bar',
+    data:{labels:MEET_SUBS,datasets:sizeStyleSets},
+    options:deepMerge(baseOpts,{
+      plugins:{
+        legend:{display:true,position:'bottom',labels:{font:baseFont,boxWidth:10}},
+        datalabels:{display:false}
+      },
+      scales:{
+        x:{stacked:true,ticks:{font:{...baseFont,size:10},maxRotation:0,minRotation:0,color:'#6677AA'}},
+        y:{stacked:true,min:0,max:100,ticks:{callback:v=>v+'%'}}
+      }
+    })
+  });
+
   const D7data = TREND_YEARS.map(y => {
     const yIdx2 = new Set(filteredIdx.filter(i=>DRAWINGS[i]['연도']===y));
     if (!yIdx2.size) return null;
@@ -1251,8 +1412,8 @@ function renderD(dd, sp) {
   });
   mkChart('cD7', lineCfg(TREND_YEARS.map(String), [{
     label:'오픈회의 면적 비중(%)', data:D7data,
-    borderColor:C.회의, backgroundColor:C.회의+'33', fill:true, tension:.3, pointRadius:4, pointBackgroundColor:C.회의
-  }], {scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}}));
+    borderColor:C.회의, backgroundColor:C.회의+'33', fill:false, tension:.3, pointRadius:4, pointBackgroundColor:C.회의
+  }], {plugins:{datalabels:{formatter:v=>v==null?'':`${Number(v).toFixed(2)}%`}},scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}}));
 }
 
 // ════════════════════════════════════════════
