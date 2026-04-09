@@ -84,6 +84,7 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 .ks{font-size:10px;color:var(--lt);margin-top:3px}
 /* GRID */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.g2.social-bottom{grid-template-columns:.8fr 1.2fr;align-items:start}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
 .g6{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:16px}
@@ -149,16 +150,34 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 .metric-block .mb-main{font-size:24px;font-weight:800;color:var(--tx);line-height:1.1;margin-bottom:6px}
 .metric-block .mb-main span{font-size:12px;font-weight:700;margin-left:2px;color:var(--mid)}
 .metric-block .mb-sub{font-size:11px;color:var(--mid)}
+.treemap{display:grid;grid-template-columns:repeat(14,1fr);grid-auto-rows:22px;gap:2px;min-height:220px}
+.tree-tile{border-radius:0;display:flex;align-items:flex-start;justify-content:flex-start;padding:10px;background:#8ec7cf;color:#fff;overflow:hidden}
+.tree-inner{display:flex;flex-direction:column;gap:4px;min-width:0}
+.tree-name{font-size:11px;font-weight:800;line-height:1.15;word-break:break-word}
+.tree-val{font-size:12px;font-weight:900;line-height:1.1}
+.tree-tile.lg .tree-name{font-size:16px}
+.tree-tile.lg .tree-val{font-size:28px}
+.tree-tile.md .tree-name{font-size:13px}
+.tree-tile.md .tree-val{font-size:18px}
+.tree-tile.sm{padding:7px}
+.tree-tile.sm .tree-name{font-size:9px}
+.tree-tile.sm .tree-val{font-size:11px}
+.tree-tile.xs{padding:6px}
+.tree-tile.xs .tree-name{font-size:8px;line-height:1.05}
+.tree-tile.xs .tree-val{font-size:10px}
+.tree-tile .tree-name,.tree-tile .tree-val{text-shadow:0 1px 1px rgba(0,0,0,.08)}
 .view-panel{display:block}
 .view-panel.hide{display:none}
-.toc-panel{width:216px;position:fixed;right:24px;top:calc(var(--header-top,49px) + 18px);bottom:18px;z-index:180;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);border:1px solid var(--bd);border-radius:18px;padding:14px 12px;box-shadow:0 10px 30px rgba(107,79,160,.08);overflow:auto}
-.toc-title{font-size:11px;font-weight:800;color:var(--p);margin:0 0 12px 4px}
-.toc-list{display:flex;flex-direction:column;gap:8px}
-.toc-item{border-radius:12px;transition:.15s}
-.toc-link{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;color:var(--mid);text-decoration:none;font-size:11px;font-weight:700;line-height:1.45;border-radius:12px;transition:.15s}
-.toc-link::before{content:'';width:8px;height:8px;flex:0 0 8px;border-radius:999px;background:#CFC6E2;margin-top:4px;transition:.15s}
-.toc-item:hover .toc-link,.toc-item.active .toc-link{background:var(--pale);color:var(--p)}
-.toc-item:hover .toc-link::before,.toc-item.active .toc-link::before{background:var(--p)}
+.toc-panel{width:216px;position:fixed;right:24px;top:calc(var(--header-top,49px) + 18px);bottom:18px;z-index:180;background:transparent;border:none;border-radius:0;padding:0 6px;box-shadow:none;overflow:auto}
+.toc-title{font-size:11px;font-weight:800;color:var(--p);margin:0 0 14px 42px}
+.toc-list{position:relative;display:flex;flex-direction:column;gap:18px;padding:6px 0 18px}
+.toc-list::before{content:'';position:absolute;left:18px;top:0;bottom:0;width:6px;border-radius:999px;background:linear-gradient(180deg,#E5DEEF 0%,#D8D0E8 100%)}
+.toc-item{position:relative;min-height:58px;padding-left:42px;transition:.18s}
+.toc-item::before{content:'';position:absolute;left:7px;top:6px;width:28px;height:28px;border-radius:999px;background:#D7D1E3;border:4px solid #F5F3FA;box-shadow:0 0 0 1px rgba(107,79,160,.08);transition:.18s}
+.toc-link{display:block;padding:4px 0;color:var(--mid);text-decoration:none;font-size:12px;font-weight:700;line-height:1.45;transition:.18s}
+.toc-link::before{display:none}
+.toc-item:hover .toc-link,.toc-item.active .toc-link{color:var(--p)}
+.toc-item:hover::before,.toc-item.active::before{background:var(--p);transform:scale(1.06)}
 </style>
 </head>
 <body>
@@ -320,14 +339,12 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 <section class="sec" id="sec-E">
   <div class="sec-hd"><h2>소셜공간</h2><p>라운지·탕비 현황, 라운지 유형별 면적, 프로그램 구성</p></div>
   <div class="krow">
-    <div class="kpi hl"><div class="kl">라운지 계획 비율</div><div class="kv" id="kE-lounge">—<span>%</span></div><div class="ks">라운지 보유 도면 기준</div></div>
+    <div class="kpi hl"><div class="kl">라운지 계획 비율</div><div class="kv" id="kE-lounge">—<span>%</span></div><div class="ks">전체 도면 중 라운지 보유 비율</div></div>
     <div class="kpi"><div class="kl">탕비 평균 면적</div><div class="kv" id="kE-tang">—<span>평</span></div><div class="ks" id="kE-tang-m2">—m²</div></div>
-    <div class="kpi"><div class="kl">소셜 중 라운지 비중</div><div class="kv" id="kE-lounge-ratio">—<span>%</span></div><div class="ks">소셜공간 면적 기준</div></div>
-    <div class="kpi"><div class="kl">소셜 중 탕비 비중</div><div class="kv" id="kE-tang-ratio">—<span>%</span></div><div class="ks">소셜공간 면적 기준</div></div>
   </div>
   <div class="g2">
     <div class="card"><div class="ct">연도별 소셜공간 유형 구성 비율</div><div class="cs">소셜공간 면적 내 세부유형별 비중 추이</div><div class="cw t"><canvas id="cE1"></canvas></div></div>
-    <div class="card"><div class="ct">연도별 라운지 계획 여부</div><div class="cs">라운지 보유 도면 비중 연도별 추이</div><div class="cw"><canvas id="cE2"></canvas></div></div>
+    <div class="card"><div class="ct">연도별 라운지 계획 여부</div><div class="cs">라운지 보유 도면 비중 연도별 추이</div><div class="summary-strip"><div class="summary-pill"><div class="sp-title">전체 라운지 계획 비율</div><div class="sp-line" id="kE-lounge-overall">—</div></div></div><div class="cw"><canvas id="cE2"></canvas></div></div>
   </div>
   <div class="g2">
     <div class="card"><div class="ct">인원 구간별 탕비 평균 면적</div><div class="cs">소셜공간 내 탕비(세부유형=탕비) 기준</div>
@@ -339,9 +356,11 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
       <div class="cw"><canvas id="cE4"></canvas></div>
     </div>
   </div>
-  <div class="g2">
-    <div class="card"><div class="ct">라운지 유형별 평균 면적</div><div class="cs">라운지유형에 따른 라운지(세부유형=라운지) 평균 면적</div><div class="cw"><canvas id="cE5"></canvas></div></div>
-    <div class="card"><div class="ct">라운지 내 세부 프로그램 선택 비율</div><div class="cs">라운지 보유 도면 중 해당 프로그램 선택 비중</div><div class="cw"><canvas id="cE6"></canvas></div></div>
+  <div class="g2 social-bottom">
+    <div class="card"><div class="ct">라운지 유형별 평균 면적</div><div class="cs">라운지유형에 따른 라운지(세부유형=라운지) 평균 면적</div>
+      <div class="toggle"><button class="tgl on" onclick="toggleUnit('E-lounge','평',this)">평</button><button class="tgl" onclick="toggleUnit('E-lounge','m2',this)">m²</button></div>
+      <div class="metric-grid4" id="cE5"></div></div>
+    <div class="card"><div class="ct">라운지 내 세부 프로그램 선택 비율</div><div class="cs">라운지 보유 도면 중 해당 프로그램 선택 비중</div><div class="cw auto"><div id="cE6" class="treemap"></div></div></div>
   </div>
 </section>
 
@@ -350,9 +369,8 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
   <div class="sec-hd"><h2>지원공간</h2><p>폰부스·선택업무공간, OA 공간 현황</p></div>
   <div class="krow">
     <div class="kpi hl"><div class="kl">폰부스+선택업무_실 조성</div><div class="kv" id="kF-pb">—<span>%</span></div><div class="ks">보유 도면 비중</div></div>
-    <div class="kpi"><div class="kl">선택업무공간_실 평균 개소</div><div class="kv" id="kF-sw">—<span>개소</span></div><div class="ks">보유 도면 기준</div></div>
+    <div class="kpi"><div class="kl">폰부스+선택업무_실 평균 개소</div><div class="kv" id="kF-sw">—<span>개소</span></div><div class="ks">보유 도면 기준</div></div>
     <div class="kpi"><div class="kl">OA 평균 개소</div><div class="kv" id="kF-oa">—<span>개소</span></div><div class="ks">보유 도면 기준</div></div>
-    <div class="kpi"><div class="kl">폰부스 평균 개소</div><div class="kv" id="kF-phone">—<span>개소</span></div><div class="ks">보유 도면 기준</div></div>
   </div>
   <div class="g2">
     <div class="card"><div class="ct">연도별 폰부스+선택업무공간_실 조성 비율</div><div class="cs">보유 도면 비중 추이</div><div class="cw"><canvas id="cF1"></canvas></div></div>
@@ -652,6 +670,87 @@ function lineCfg(labels, datasets, extra={}) {
     scales:{x:{offset:true,ticks:{padding:8}},y:{beginAtZero:true,grace:'8%'}}
   }) }, deepMerge({options:extra},{}) );
 }
+function percentAxisAuto(values, minSpan=12) {
+  const nums = (values || []).filter(v => v != null && isFinite(v));
+  if (!nums.length) return { min: 0, max: 100, ticks: { callback:v=>v+'%' } };
+  let min = Math.min(...nums);
+  let max = Math.max(...nums);
+  const span = Math.max(max - min, minSpan);
+  const pad = Math.max(span * 0.18, 2);
+  min = Math.max(0, Math.floor((min - pad) / 5) * 5);
+  max = Math.min(100, Math.ceil((max + pad) / 5) * 5);
+  if (max - min < minSpan) {
+    const mid = (max + min) / 2;
+    min = Math.max(0, Math.floor((mid - minSpan / 2) / 5) * 5);
+    max = Math.min(100, Math.ceil((mid + minSpan / 2) / 5) * 5);
+  }
+  return { min, max, ticks: { callback:v=>v+'%' } };
+}
+
+function renderBUnitChart(dd) {
+  const byYr = groupBy(dd, d=>d['연도']);
+  const avgPPA = mean(dd.map(d=>(d['가용면적']&&d['인원수'])?d['가용면적']/d['인원수']:null).filter(v=>v));
+  document.getElementById('kB-ppa').innerHTML = `${fmt1(avgPPA*M2_TO_PYEONG)}<span>평</span>`;
+  document.getElementById('kB-ppa-m2').textContent = `${fmt1(avgPPA)}m²`;
+  const unit_B1 = getUnit('B-ppa');
+  const B1data = TREND_YEARS.map(y => {
+    const ypp = (byYr[y]||[]).map(d=>(d['가용면적']&&d['인원수'])?d['가용면적']/d['인원수']:null).filter(v=>v);
+    const v = mean(ypp);
+    return v ? (unit_B1==='평' ? v*M2_TO_PYEONG : v) : null;
+  });
+  const b1Vals = B1data.filter(v=>v!=null);
+  const b1Max = Math.max(...b1Vals, 0);
+  const b1Min = Math.min(...b1Vals, 0);
+  mkChart('cB1', lineCfg(TREND_YEARS.map(String), [{
+    label:`인당 면적 (${unit_B1})`, data:B1data,
+    borderColor:C.p, backgroundColor:C.p+'18', fill:false, tension:.3, pointRadius:4, pointBackgroundColor:C.p
+  }], {plugins:{datalabels:{display:true,color:C.p,font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:8,clamp:true,formatter:v=>v?`${v.toFixed(2)}${unit_B1}`:''}},scales:{y:{title:{display:true,text:unit_B1,font:baseFont,color:'#6677AA'},min:Math.max(0,b1Min*0.85),suggestedMax:b1Max*1.22}}}));
+}
+
+function renderETangChart(sp) {
+  const u_E3 = getUnit('E-tang');
+  const E3data = 인원ORDER.map(cat => {
+    const catIdx = new Set(filteredIdx.filter(i=>DRAWINGS[i]['인원구간']===cat));
+    const vs = sp.filter(s=>catIdx.has(s[S_DID])&&s[S_SUB]==='탕비').map(s=>s[S_AREA]).filter(v=>v>0);
+    const v = mean(vs);
+    return v ? (u_E3==='평' ? v*M2_TO_PYEONG : v) : null;
+  });
+  mkChart('cE3', barCfg(인원ORDER, [{
+    label:`탕비 평균면적(${u_E3})`, data:E3data,
+    backgroundColor:C.소셜+'99', borderRadius:6, borderSkipped:false
+  }], {plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?v.toFixed(2):''}},scales:{y:{title:{display:true,text:u_E3,font:baseFont,color:'#6677AA'}}}}));
+}
+
+function renderETang2Chart(sp) {
+  const u_E4 = getUnit('E-tang2');
+  const E4data = 면적ORDER.map(cat => {
+    const catIdx = new Set(filteredIdx.filter(i=>DRAWINGS[i]['가용면적구간']===cat));
+    const vs = sp.filter(s=>catIdx.has(s[S_DID])&&s[S_SUB]==='탕비').map(s=>s[S_AREA]).filter(v=>v>0);
+    const v = mean(vs);
+    return v ? (u_E4==='평' ? v*M2_TO_PYEONG : v) : null;
+  });
+  mkChart('cE4', barCfg(면적ORDER.map(s=>s.replace('100평 미만','100↓').replace('~200평','-200').replace(' 미만','↓').replace('평 이상','↑')), [{
+    label:`탕비 평균면적(${u_E4})`, data:E4data,
+    backgroundColor:C.소셜+'77', borderRadius:6, borderSkipped:false
+  }], {plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?v.toFixed(2):''}},scales:{y:{title:{display:true,text:u_E4,font:baseFont,color:'#6677AA'}}}}));
+}
+/* legacy broken helper removed
+function renderELoungeChart(dd, sp) {
+  const unit_E5 = getUnit('E-lounge');
+  const ltypes = [...new Set(dd.map(d=>d['?쇱슫吏?좏삎']).filter(v=>v&&v!=='None'))];
+  const E5data = ltypes.map(lt => {
+    const ltIdx = new Set(filteredIdx.filter(i=>DRAWINGS[i]['?쇱슫吏?좏삎']===lt));
+    const vs = sp.filter(s=>ltIdx.has(s[S_DID])&&s[S_SUB]==='?쇱슫吏').map(s=>s[S_AREA]).filter(v=>v>0);
+    const avg = vs.length ? mean(vs) : null;
+    return avg ? (unit_E5==='??' ? avg*M2_TO_PYEONG : avg) : null;
+  });
+  mkChart('cE5', barCfg(ltypes.map(t=>t.replace(' / None','')), [{
+    label:`?쇱슫吏 ?됯퇏硫댁쟻(${unit_E5})`, data:E5data,
+    backgroundColor:C.?뚯뀥+'CC', borderRadius:6, borderSkipped:false
+  }], {indexAxis:'y', plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?`${v.toFixed(2)}${unit_E5}`:''}},scales:{x:{title:{display:true,text:unit_E5,font:baseFont,color:'#6677AA'}}}}));
+}
+
+*/
 function tableHtml(headers, rows) {
   return `
     <div class="tbl-wrap">
@@ -778,6 +877,12 @@ function toggleUnit(key, unit, btn) {
   unitStates[key] = unit;
   btn.closest('.toggle').querySelectorAll('.tgl').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
+  const dd = getDD();
+  const sp = getSpaces(filteredIdx);
+  if (key === 'B-ppa') return renderBUnitChart(dd);
+  if (key === 'E-tang') return renderETangChart(sp);
+  if (key === 'E-tang2') return renderETang2Chart(sp);
+  if (key === 'E-lounge') return renderELoungeChart(dd, sp);
   refresh();
 }
 function getUnit(key, def='평') { return unitStates[key] || def; }
@@ -1098,13 +1203,14 @@ function renderB(dd, sp) {
   document.getElementById('cB5').innerHTML = topRanksHtml(straightBins);
   document.getElementById('cB6').innerHTML = topRanksHtml(lBins);
 
+
   const B7year = TREND_YEARS.map(y => {
     const yd = (byYr[y]||[]);
     return yd.length ? pct(yd.filter(d=>d['자율좌석제']==='O').length, yd.length) : null;
   });
   const flexOverall = pct(flexCnt, dd.length);
   document.getElementById('cB7a').innerHTML = `${flexOverall.toFixed(2)}<span>%</span>`;
-  mkChart('cB7', {type:'bar', data:{labels:TREND_YEARS.map(String),datasets:[{label:'자율좌석제 비중',data:B7year,backgroundColor:TREND_YEARS.map(()=>C.소셜+'AA'),borderRadius:8,borderSkipped:false}]}, options:deepMerge(baseOpts,{plugins:{legend:{display:false},datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'700'},anchor:'end',align:'end',formatter:v=>`${(v||0).toFixed(2)}%`}},scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}})});
+  mkChart('cB7', {type:'bar', data:{labels:TREND_YEARS.map(String),datasets:[{label:'자율좌석제 비중',data:B7year,backgroundColor:TREND_YEARS.map(()=> '#81C7B5'),borderRadius:8,borderSkipped:false}]}, options:deepMerge(baseOpts,{plugins:{legend:{display:false},datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'700'},anchor:'end',align:'end',formatter:v=>`${(v||0).toFixed(2)}%`}},scales:{y:percentAxisAuto(B7year)}})});
 
   const B8year = TREND_YEARS.map(y => {
     const yd = (byYr[y]||[]);
@@ -1113,12 +1219,9 @@ function renderB(dd, sp) {
     const hasGrp = new Set(sp.filter(s=>yIdx2.has(s[S_DID])&&s[S_SUB]==='그룹업무공간').map(s=>s[S_DID]));
     return pct(hasGrp.size, yd.length);
   });
-  mkChart('cB8', {type:'bar', data:{labels:TREND_YEARS.map(String),datasets:[{label:'그룹업무공간 보유 비중',data:B8year,backgroundColor:TREND_YEARS.map(()=>C.업무+'AA'),borderRadius:8,borderSkipped:false}]}, options:deepMerge(baseOpts,{plugins:{legend:{display:false},datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'700'},anchor:'end',align:'end',formatter:v=>`${(v||0).toFixed(2)}%`}},scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}})});
+  mkChart('cB8', {type:'bar', data:{labels:TREND_YEARS.map(String),datasets:[{label:'그룹업무공간 보유 비중',data:B8year,backgroundColor:TREND_YEARS.map(()=> '#F0B35C'),borderRadius:8,borderSkipped:false}]}, options:deepMerge(baseOpts,{plugins:{legend:{display:false},datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'700'},anchor:'end',align:'end',formatter:v=>`${(v||0).toFixed(2)}%`}},scales:{y:percentAxisAuto(B8year)}})});
 }
 
-// ════════════════════════════════════════════
-// 섹션 C: 업무공간:임원
-// ════════════════════════════════════════════
 function renderC(dd, sp) {
   const EXEC_SUBS = ['책상','책상+소파','책상+회의테이블','책상+소파+회의테이블'];
   const EXEC_SUB_ROOM = {'책상':'책상실','책상+소파':'책상+소파실','책상+회의테이블':'책상+회의테이블실','책상+소파+회의테이블':'책상+소파+회의테이블실'};
@@ -1146,12 +1249,12 @@ function renderC(dd, sp) {
   const hasOpenSeat = new Set(execOpen.map(s=>s[S_DID]));
   const openRatio = pct(hasOpenSeat.size, execDrawingIds.size);
 
-  document.getElementById('kC-open').innerHTML = `${fmt1(openRatio)}<span>%</span>`;
-  document.getElementById('kC-open-overall').innerHTML = `<b>${fmt1(openRatio)}%</b> · ${hasOpenSeat.size}개 / ${execDrawingIds.size}개 도면`;
+  document.getElementById('kC-open').innerHTML = fmt1(openRatio) + '<span>%</span>';
+  document.getElementById('kC-open-overall').innerHTML = '<b>' + fmt1(openRatio) + '%</b> · ' + hasOpenSeat.size + '개 / ' + execDrawingIds.size + '개 도면';
   document.getElementById('kC-top').textContent = topSubRoom || '—';
-  document.getElementById('kC-top-pct').textContent = topSubRoomPct != null ? `${fmt1(topSubRoomPct)}%` : '—';
-  const deskArea = subAreaRoom[EXEC_SUBS.indexOf('책상+회의테이블')];
-  document.getElementById('kC-area').innerHTML = `${fmt1(deskArea)}<span>평</span>`;
+  document.getElementById('kC-top-pct').textContent = topSubRoomPct != null ? fmt1(topSubRoomPct) + '%' : '—';
+  const deskArea = subAreaRoom[EXEC_SUBS.indexOf('책상+소파')];
+  document.getElementById('kC-area').innerHTML = fmt1(deskArea) + '<span>평</span>';
 
   const C1data = TREND_YEARS.map(y => {
     const yIdx = filteredIdx.filter(i=>DRAWINGS[i]['연도']===y);
@@ -1162,76 +1265,18 @@ function renderC(dd, sp) {
     const hasYOpen = new Set(execOpen.filter(s=>ySet.has(s[S_DID])).map(s=>s[S_DID]));
     return pct(hasYOpen.size, yExecDrawings.size);
   });
-  const c1Max = Math.max(...C1data.filter(v=>v!=null), 0);
-  mkChart('cC1', lineCfg(TREND_YEARS.map(String), [{
-    label:'오픈 임원석 보유 도면 비율',
-    data:C1data,
-    borderColor:C.임원,
-    backgroundColor:C.임원+'18',
-    fill:false,
-    tension:.28,
-    pointRadius:4,
-    pointHoverRadius:5,
-    pointBackgroundColor:C.임원,
-    pointBorderWidth:2
-  }], {
-    plugins:{
-      legend:{display:false},
-      datalabels:{
-        display:true,
-        color:C.임원,
-        font:{...baseFont,weight:'bold'},
-        align:'top',
-        anchor:'end',
-        offset:4,
-        formatter:v=>v==null?'':`${v.toFixed(2)}%`
-      }
-    },
-    scales:{y:{min:0,suggestedMax:Math.max(25, c1Max+8),ticks:{callback:v=>v+'%'}}}
-  }));
+  mkChart('cC1', barCfg(TREND_YEARS.map(String), [{label:'오픈 임원석 보유 도면 비율',data:C1data,backgroundColor:TREND_YEARS.map(()=> '#E59AA0'),borderRadius:8,borderSkipped:false}], {plugins:{legend:{display:false},datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'bold'},anchor:'end',align:'end',formatter:v=>`${(v||0).toFixed(2)}%`}},scales:{y:percentAxisAuto(C1data)}}));
 
-  const prettyExecLabel = s => ({
-    '책상':'책상',
-    '책상+소파':'책상 + 소파',
-    '책상+회의테이블':'책상 + 회의테이블',
-    '책상+소파+회의테이블':'책상 + 소파 + 회의테이블'
-  }[s] || s);
+  const prettyExecLabel = s => ({'책상':'책상','책상+소파':'책상 + 소파','책상+회의테이블':'책상 + 회의테이블','책상+소파+회의테이블':'책상 + 소파 + 회의테이블'}[s] || s);
   const shortLabels = EXEC_SUBS.map(prettyExecLabel);
   const roomPctData = subCntRoom.map(v=>pct(v, sum(subCntRoom)));
   const openPctData = subCntOpen.map(v=>pct(v, sum(subCntOpen)));
-  const execCols = [C.임원+'CC', C.임원+'99', C.임원+'66', C.임원+'33'];
-  mkChart('cC2allr', {
-    type:'bar',
-    data:{labels:shortLabels,datasets:[
-      {label:'실형', data:roomPctData, backgroundColor:C.임원+'CC', borderRadius:6, borderSkipped:false}
-    ]},
-    options:deepMerge(baseOpts,{
-      plugins:{
-        legend:{display:false},
-        datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'bold'},anchor:'end',align:'end',formatter:v=>v?`${v.toFixed(2)}%`:''}
-      },
-      scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}
-    })
-  });
-  mkChart('cC2allo', {
-    type:'bar',
-    data:{labels:shortLabels,datasets:[
-      {label:'오픈형', data:openPctData, backgroundColor:C.임원+'66', borderRadius:6, borderSkipped:false}
-    ]},
-    options:deepMerge(baseOpts,{
-      plugins:{
-        legend:{display:false},
-        datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'bold'},anchor:'end',align:'end',formatter:v=>v?`${v.toFixed(2)}%`:''}
-      },
-      scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}
-    })
-  });
+  const execCols = ['#E59AA0','#D7788B','#C7647C','#B6516D'];
+  mkChart('cC2allr', {type:'doughnut',data:{labels:shortLabels,datasets:[{data:roomPctData,backgroundColor:execCols,borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'right',labels:{font:baseFont,boxWidth:12}},tooltip:{callbacks:{label:c=>c.label + ': ' + Number(c.raw).toFixed(2) + '%'}},datalabels:{display:true,color:'#fff',font:{...baseFont,weight:'700'},formatter:v=>v?Number(v).toFixed(2)+'%':''}}}});
+  mkChart('cC2allo', {type:'doughnut',data:{labels:shortLabels,datasets:[{data:openPctData,backgroundColor:execCols,borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'right',labels:{font:baseFont,boxWidth:12}},tooltip:{callbacks:{label:c=>c.label + ': ' + Number(c.raw).toFixed(2) + '%'}},datalabels:{display:true,color:'#fff',font:{...baseFont,weight:'700'},formatter:v=>v?Number(v).toFixed(2)+'%':''}}}});
 
   const yearlyRoomData = EXEC_SUBS.map((sub, i) => ({
-    label:shortLabels[i],
-    backgroundColor:execCols[i],
-    borderRadius:4,
-    borderSkipped:false,
+    label:shortLabels[i], backgroundColor:execCols[i], borderRadius:4, borderSkipped:false,
     data:TREND_YEARS.map(y => {
       const ySet = new Set(filteredIdx.filter(idx=>DRAWINGS[idx]['연도']===y));
       const yRoom = execRoom.filter(s=>ySet.has(s[S_DID]));
@@ -1241,10 +1286,7 @@ function renderC(dd, sp) {
     })
   }));
   const yearlyOpenData = EXEC_SUBS.map((sub, i) => ({
-    label:shortLabels[i],
-    backgroundColor:execCols[i],
-    borderRadius:4,
-    borderSkipped:false,
+    label:shortLabels[i], backgroundColor:execCols[i], borderRadius:4, borderSkipped:false,
     data:TREND_YEARS.map(y => {
       const ySet = new Set(filteredIdx.filter(idx=>DRAWINGS[idx]['연도']===y));
       const yOpen = execOpen.filter(s=>ySet.has(s[S_DID]));
@@ -1253,48 +1295,14 @@ function renderC(dd, sp) {
       return pct(yOpen.filter(s=>s[S_SUB]===EXEC_SUB_OPEN[sub]).length, total);
     })
   }));
-  mkChart('cC2yearr', {
-    type:'bar',
-    data:{labels:TREND_YEARS.map(String),datasets:yearlyRoomData},
-    options:deepMerge(baseOpts,{
-      plugins:{
-        legend:{display:true,position:'bottom',labels:{font:baseFont,boxWidth:10}},
-        datalabels:{display:false}
-      },
-      scales:{
-        x:{stacked:true,ticks:{font:{...baseFont,size:10},maxRotation:0,minRotation:0,color:'#6677AA'}},
-        y:{stacked:true,min:0,max:100,ticks:{callback:v=>v+'%'}}
-      }
-    })
-  });
-  mkChart('cC2yearo', {
-    type:'bar',
-    data:{labels:TREND_YEARS.map(String),datasets:yearlyOpenData},
-    options:deepMerge(baseOpts,{
-      plugins:{
-        legend:{display:true,position:'bottom',labels:{font:baseFont,boxWidth:10}},
-        datalabels:{display:false}
-      },
-      scales:{
-        x:{stacked:true,ticks:{font:{...baseFont,size:10},maxRotation:0,minRotation:0,color:'#6677AA'}},
-        y:{stacked:true,min:0,max:100,ticks:{callback:v=>v+'%'}}
-      }
-    })
-  });
+  mkChart('cC2yearr', {type:'bar',data:{labels:TREND_YEARS.map(String),datasets:yearlyRoomData},options:deepMerge(baseOpts,{plugins:{legend:{display:true,position:'bottom',labels:{font:baseFont,boxWidth:10}},datalabels:{display:false}},scales:{x:{stacked:true,ticks:{font:{...baseFont,size:10},maxRotation:0,minRotation:0,color:'#6677AA'}},y:{stacked:true,min:0,max:100,ticks:{callback:v=>v+'%'}}}})});
+  mkChart('cC2yearo', {type:'bar',data:{labels:TREND_YEARS.map(String),datasets:yearlyOpenData},options:deepMerge(baseOpts,{plugins:{legend:{display:true,position:'bottom',labels:{font:baseFont,boxWidth:10}},datalabels:{display:false}},scales:{x:{stacked:true,ticks:{font:{...baseFont,size:10},maxRotation:0,minRotation:0,color:'#6677AA'}},y:{stacked:true,min:0,max:100,ticks:{callback:v=>v+'%'}}}})});
 
-  const areaRowsHtml = (labels, values) => labels.map((label, i) => `
-    <div class="mini-row">
-      <span class="label">${prettyExecLabel(label)}</span>
-      <span class="value">${values[i] != null ? values[i].toFixed(2) : '—'}${values[i] != null ? '<span>평</span>' : ''}</span>
-    </div>
-  `).join('');
+  const areaRowsHtml = (labels, values) => labels.map((label, i) => '<div class="mini-row"><span class="label">' + prettyExecLabel(label) + '</span><span class="value">' + (values[i] != null ? values[i].toFixed(2) + '<span>평</span>' : '—') + '</span></div>').join('');
   document.getElementById('cC3r').innerHTML = areaRowsHtml(EXEC_SUBS, subAreaRoom);
   document.getElementById('cC3o').innerHTML = areaRowsHtml(EXEC_SUBS, subAreaOpen);
 }
 
-// ════════════════════════════════════════════
-// 섹션 D: 회의공간
-// ════════════════════════════════════════════
 function renderD(dd, sp) {
   const isMeetingSpace = s => s[S_PROG]==='회의' && s[S_SUB] !== '기타회의공간';
   const isMeetingRoom = s => isMeetingSpace(s) && s[S_OPEN] === '실';
@@ -1312,67 +1320,47 @@ function renderD(dd, sp) {
   const openMeetArea = sum(meetAll.filter(s=>s[S_OPEN]==='오픈').map(s=>s[S_AREA]||0));
   const formalPct = pct(meetRoom.filter(s=>s[S_DT]==='정형').length, meetRoom.length);
 
-  document.getElementById('kD-avg').innerHTML = `${fmt1(avgMeet)}<span>개소</span>`;
-  document.getElementById('kD-sm').innerHTML = `${fmt1(avgSm)}<span>평</span>`;
-  document.getElementById('kD-open-pct').innerHTML = `${fmt1(pct(openMeetArea,totalMeetArea))}<span>%</span>`;
-  document.getElementById('kD-formal').innerHTML = `${fmt1(formalPct)}<span>%</span>`;
-  document.getElementById('kD-open-overall').innerHTML = `<b>${fmt1(pct(openMeetArea,totalMeetArea))}%</b> · 전체 회의 면적 기준`;
+  document.getElementById('kD-avg').innerHTML = fmt1(avgMeet) + '<span>개소</span>';
+  document.getElementById('kD-sm').innerHTML = fmt1(avgSm) + '<span>평</span>';
+  document.getElementById('kD-open-pct').innerHTML = fmt1(pct(openMeetArea,totalMeetArea)) + '<span>%</span>';
+  document.getElementById('kD-formal').innerHTML = fmt1(formalPct) + '<span>%</span>';
+  document.getElementById('kD-open-overall').innerHTML = '<b>' + fmt1(pct(openMeetArea,totalMeetArea)) + '%</b> · 전체 회의 면적 기준';
 
   const D1data = TREND_YEARS.map(y => {
     const yIdx2 = new Set(filteredIdx.filter(i=>DRAWINGS[i]['연도']===y));
     if (!yIdx2.size) return null;
     return meanPositive([...yIdx2], meetingRoomCount);
   });
-  mkChart('cD1', lineCfg(TREND_YEARS.map(String), [{
-    label:'평균 회의실 개소', data:D1data,
-    borderColor:C.회의, backgroundColor:C.회의+'33', fill:false, tension:.3, pointRadius:4, pointBackgroundColor:C.회의
-  }], {plugins:{datalabels:{formatter:v=>v==null?'':`${Number(v).toFixed(2)}`}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
+  mkChart('cD1', lineCfg(TREND_YEARS.map(String), [{label:'평균 회의실 개소', data:D1data, borderColor:'#5B7FBF', backgroundColor:'#5B7FBF33', fill:false, tension:.3, pointRadius:4, pointBackgroundColor:'#5B7FBF'}], {plugins:{datalabels:{formatter:v=>v==null?'':Number(v).toFixed(2)}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
 
-  const D2data = 인원ORDER.map(cat => {
+  const peopleCats = ['- 49인','50 - 99인','100 - 149인','150 - 199인','200인 -'];
+  const areaCats = ['100평 미만','100~200평 미만','200~300평 미만','300~400평 미만','400~500평 미만','500~600평 미만','600평 이상'];
+  const areaLabels = ['100평','100-200평','200-300평','300-400평','400-500평','500-600평','600평↑'];
+  const D2data = peopleCats.map(cat => {
     const catIdx = filteredIdx.filter(i=>DRAWINGS[i]['인원구간']===cat);
     if (!catIdx.length) return null;
     return meanPositive(catIdx, meetingRoomCount);
   });
-  mkChart('cD2', lineCfg(인원ORDER, [{
-    label:'평균 회의실 개소', data:D2data,
-    borderColor:C.회의, backgroundColor:C.회의+'22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:C.회의
-  }], {plugins:{datalabels:{formatter:v=>v==null?'':`${Number(v).toFixed(2)}`}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
+  mkChart('cD2', lineCfg(peopleCats, [{label:'평균 회의실 개소', data:D2data, borderColor:'#5B7FBF', backgroundColor:'#5B7FBF22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:'#5B7FBF'}], {plugins:{datalabels:{formatter:v=>v==null?'':Number(v).toFixed(2)}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
 
-  const D3data = 면적ORDER.map(cat => {
+  const D3data = areaCats.map(cat => {
     const catIdx = filteredIdx.filter(i=>DRAWINGS[i]['가용면적구간']===cat);
     if (!catIdx.length) return null;
     return meanPositive(catIdx, meetingRoomCount);
   });
-  mkChart('cD3', lineCfg(면적ORDER.map(s=>s.replace('~200평',' -200').replace(' 미만','↓').replace('평 이상','↑').replace('100평 미만','100↓')), [{
-    label:'평균 회의실 개소', data:D3data,
-    borderColor:C.회의, backgroundColor:C.회의+'22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:C.회의
-  }], {plugins:{datalabels:{formatter:v=>v==null?'':`${Number(v).toFixed(2)}`}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
+  mkChart('cD3', lineCfg(areaLabels, [{label:'평균 회의실 개소', data:D3data, borderColor:'#5B7FBF', backgroundColor:'#5B7FBF22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:'#5B7FBF'}], {plugins:{datalabels:{formatter:v=>v==null?'':Number(v).toFixed(2)}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
 
   const D4data = MEET_SUBS.map(sub => mean(meetingDrawingIdx.map(i => meetingSubtypeCount(i, sub))));
   const D5data = MEET_SUBS.map(sub => {
     const vs = meetRoom.filter(s=>s[S_SUB]===sub).map(s=>s[S_AREA]).filter(v=>v>0);
     return vs.length ? mean(vs)*M2_TO_PYEONG : null;
   });
-  document.getElementById('cD45').innerHTML = MEET_SUBS.map((sub, i) => `
-    <div class="metric-block">
-      <div class="mb-title">${sub}</div>
-      <div class="mb-main">${D4data[i] != null ? D4data[i].toFixed(2) : '—'}<span>개소</span></div>
-      <div class="mb-sub">평균 면적 ${D5data[i] != null ? D5data[i].toFixed(2) : '—'}평</div>
-    </div>
-  `).join('');
+  document.getElementById('cD45').innerHTML = MEET_SUBS.map((sub, i) => '<div class="metric-block"><div class="mb-title">' + sub + '</div><div class="mb-main">' + (D4data[i] != null ? D4data[i].toFixed(2) : '—') + '<span>개소</span></div><div class="mb-sub">평균 면적 ' + (D5data[i] != null ? D5data[i].toFixed(2) : '—') + '평</div></div>').join('');
 
   const styles = {'정형':0,'비정형':0,'FLEXIBLE':0};
   meetRoom.forEach(s => { if (s[S_DT] in styles) styles[s[S_DT]]++; });
   const stTot = sum(Object.values(styles))||1;
-  mkChart('cD6', {type:'doughnut', data:{
-    labels:['정형','비정형','Flexible'],
-    datasets:[{data:Object.values(styles), backgroundColor:[C.회의+'CC',C.회의+'88',C.회의+'44'], borderWidth:2, borderColor:'#fff'}]
-  }, options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{display:true,position:'right',labels:{font:baseFont,boxWidth:12}},
-      tooltip:{callbacks:{label:c=>`${c.label}: ${pct(c.raw,stTot)}%`}},
-      datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'bold'},formatter:v=>pct(v,stTot)+'%'}
-    }
-  }});
+  mkChart('cD6', {type:'doughnut', data:{labels:['정형','비정형','Flexible'], datasets:[{data:Object.values(styles), backgroundColor:['#5B7FBFCC','#5B7FBF88','#5B7FBF44'], borderWidth:2, borderColor:'#fff'}]}, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'right',labels:{font:baseFont,boxWidth:12}},tooltip:{callbacks:{label:c=>c.label + ': ' + pct(c.raw,stTot) + '%'}},datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'bold'},formatter:v=>pct(v,stTot)+'%'}}}});
 
   const styleKeys = ['정형','비정형','FLEXIBLE'];
   const sizeStyleSets = styleKeys.map((style, i) => ({
@@ -1383,24 +1371,9 @@ function renderD(dd, sp) {
       if (!total) return null;
       return pct(rows.filter(s=>s[S_DT]===style).length, total);
     }),
-    backgroundColor:[C.회의+'CC', C.회의+'88', C.회의+'44'][i],
-    borderRadius:4,
-    borderSkipped:false
+    backgroundColor:['#5B7FBFCC','#5B7FBF88','#5B7FBF44'][i], borderRadius:4, borderSkipped:false
   }));
-  mkChart('cD6s', {
-    type:'bar',
-    data:{labels:MEET_SUBS,datasets:sizeStyleSets},
-    options:deepMerge(baseOpts,{
-      plugins:{
-        legend:{display:true,position:'bottom',labels:{font:baseFont,boxWidth:10}},
-        datalabels:{display:false}
-      },
-      scales:{
-        x:{stacked:true,ticks:{font:{...baseFont,size:10},maxRotation:0,minRotation:0,color:'#6677AA'}},
-        y:{stacked:true,min:0,max:100,ticks:{callback:v=>v+'%'}}
-      }
-    })
-  });
+  mkChart('cD6s', {type:'bar', data:{labels:MEET_SUBS,datasets:sizeStyleSets}, options:deepMerge(baseOpts,{plugins:{legend:{display:true,position:'bottom',labels:{font:baseFont,boxWidth:10}},datalabels:{display:false}},scales:{x:{stacked:true,ticks:{font:{...baseFont,size:10},maxRotation:0,minRotation:0,color:'#6677AA'}},y:{stacked:true,min:0,max:100,ticks:{callback:v=>v+'%'}}}})});
 
   const D7data = TREND_YEARS.map(y => {
     const yIdx2 = new Set(filteredIdx.filter(i=>DRAWINGS[i]['연도']===y));
@@ -1410,123 +1383,133 @@ function renderD(dd, sp) {
     const opn = sum(yMeet.filter(s=>s[S_OPEN]==='오픈').map(s=>s[S_AREA]||0));
     return tot ? pct(opn, tot) : null;
   });
-  mkChart('cD7', lineCfg(TREND_YEARS.map(String), [{
-    label:'오픈회의 면적 비중(%)', data:D7data,
-    borderColor:C.회의, backgroundColor:C.회의+'33', fill:false, tension:.3, pointRadius:4, pointBackgroundColor:C.회의
-  }], {plugins:{datalabels:{formatter:v=>v==null?'':`${Number(v).toFixed(2)}%`}},scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}}));
+  mkChart('cD7', barCfg(TREND_YEARS.map(String), [{label:'오픈 회의 면적 비중(%)', data:D7data, backgroundColor:TREND_YEARS.map(()=> '#5B7FBF'), borderRadius:8, borderSkipped:false}], {plugins:{legend:{display:false},datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'700'},anchor:'end',align:'end',formatter:v=>`${(v||0).toFixed(2)}%`}},scales:{y:percentAxisAuto(D7data)}}));
 }
 
-// ════════════════════════════════════════════
-// 섹션 E: 소셜공간
-// ════════════════════════════════════════════
 function renderE(dd, sp) {
-  const byYr = groupBy(dd, d=>d['연도']);
-  const social = sp.filter(s=>s[S_PROG]==='공용');
-  const tang = social.filter(s=>s[S_SUB]==='탕비');
-  const lounge = social.filter(s=>s[S_SUB]==='라운지');
 
-  // KPI
-  const loungeCnt = dd.filter(d=>d['라운지_조성여부']===1||d['라운지_조성여부']==='O').length;
+  const social = sp.filter(s=>s[S_PROG]==='\uacf5\uc6a9');
+  const tang = social.filter(s=>s[S_SUB]==='\ud0d5\ube44');
+  const lounge = social.filter(s=>s[S_SUB]==='\ub77c\uc6b4\uc9c0');
+  const loungeDrawingIds = new Set(lounge.map(s => s[S_DID]));
+
+  const loungeCnt = loungeDrawingIds.size;
   const avgTang = mean(tang.map(s=>s[S_AREA]).filter(v=>v>0));
-  const socialTot = sum(social.map(s=>s[S_AREA]||0));
-  const loungeTot = sum(lounge.map(s=>s[S_AREA]||0));
-  const tangTot = sum(tang.map(s=>s[S_AREA]||0));
 
-  document.getElementById('kE-lounge').innerHTML = `${fmt1(pct(loungeCnt,dd.length))}<span>%</span>`;
-  document.getElementById('kE-tang').innerHTML = `${fmt1(avgTang*M2_TO_PYEONG)}<span>평</span>`;
-  document.getElementById('kE-tang-m2').textContent = fmt1(avgTang)+'m²';
-  document.getElementById('kE-lounge-ratio').innerHTML = `${fmt1(pct(loungeTot,socialTot))}<span>%</span>`;
-  document.getElementById('kE-tang-ratio').innerHTML = `${fmt1(pct(tangTot,socialTot))}<span>%</span>`;
+  document.getElementById('kE-lounge').innerHTML = fmt1(pct(loungeCnt,dd.length)) + '<span>%</span>';
+  document.getElementById('kE-lounge-overall').innerHTML = '<b>' + fmt1(pct(loungeCnt,dd.length)) + '%</b> ? ?? ?? ??';
+  document.getElementById('kE-tang').innerHTML = fmt1(avgTang*M2_TO_PYEONG) + '<span>?</span>';
+  document.getElementById('kE-tang-m2').textContent = fmt1(avgTang)+'m?';
 
-  // E1: 연도별 소셜공간 유형 구성 비율 (도면별 소셜 세부유형 비율의 연도 평균)
-  const SOC_SUBS = ['라운지','탕비','기타소셜공간'];
-  const SOC_COLS = [C.소셜+'CC',C.소셜+'88',C.소셜+'44'];
+  const SOC_SUBS = ['\ub77c\uc6b4\uc9c0','\ud0d5\ube44','\uae30\ud0c0\uc18c\uc15c\uacf5\uac04'];
+  const SOC_COLS = [C['\uc18c\uc15c']+'CC',C['\uc18c\uc15c']+'88',C['\uc18c\uc15c']+'44'];
   const E1data = TREND_YEARS.map(y => {
-    const yearIdx = filteredIdx.filter(i=>DRAWINGS[i]['연도']===y);
+    const yearIdx = filteredIdx.filter(i=>DRAWINGS[i]['\uc5f0\ub3c4']===y);
     if (!yearIdx.length) return null;
     return SOC_SUBS.map(sub => {
       const ratios = yearIdx.map(i => {
-        const socialSpaces = sp.filter(s=>s[S_DID]===i && s[S_PROG]==='공용');
+        const socialSpaces = sp.filter(s=>s[S_DID]===i && s[S_PROG]==='\uacf5\uc6a9');
         const socialTotal = sum(socialSpaces.map(s=>s[S_AREA]||0));
         if (!socialTotal) return null;
         const subtypeArea = sum(socialSpaces.filter(s=>s[S_SUB]===sub).map(s=>s[S_AREA]||0));
         return subtypeArea / socialTotal * 100;
       }).filter(v => v != null && isFinite(v));
-      return ratios.length ? Math.round(mean(ratios) * 10) / 10 : null;
+      return ratios.length ? mean(ratios) : null;
     });
   });
-  mkChart('cE1', {type:'bar', data:{
-    labels:TREND_YEARS.map(String),
-    datasets:SOC_SUBS.map((sub,i)=>({label:sub, data:E1data.map(d=>d?d[i]:null), backgroundColor:SOC_COLS[i], borderRadius:0, borderSkipped:false}))
-  }, options:deepMerge(baseOpts,{plugins:{legend:{display:true,position:'bottom',labels:{font:{...baseFont,size:10},boxWidth:10}}},scales:{x:{stacked:true},y:{stacked:true,max:100,ticks:{callback:v=>v+'%'}}}})});
+  mkChart('cE1', {
+    type:'bar',
+    data:{
+      labels:TREND_YEARS.map(String),
+      datasets:SOC_SUBS.map((sub,i)=>({
+        label:sub,
+        data:E1data.map(d=>d?d[i]:null),
+        backgroundColor:SOC_COLS[i],
+        borderRadius:0,
+        borderSkipped:false
+      }))
+    },
+    options:deepMerge(baseOpts,{
+      plugins:{
+        legend:{display:true,position:'bottom',labels:{font:{...baseFont,size:10},boxWidth:10}},
+        datalabels:{display:true,color:'#FFFFFF',font:{...baseFont,size:10,weight:'700'},anchor:'center',align:'center',clamp:true,formatter:v => v == null || v < 5 ? '' : Number(v).toFixed(2) + '%'}
+      },
+      scales:{x:{stacked:true},y:{stacked:true,max:100,ticks:{callback:v=>v+'%'}}}
+    })
+  });
 
-  // E2: 연도별 라운지 계획 여부
   const E2data = TREND_YEARS.map(y => {
-    const yd = (byYr[y]||[]);
-    if (!yd.length) return null;
-    const lCnt = yd.filter(d=>d['라운지_조성여부']===1||d['라운지_조성여부']==='O').length;
-    return pct(lCnt, yd.length);
+    const yIdx = filteredIdx.filter(i=>DRAWINGS[i]['\uc5f0\ub3c4']===y);
+    if (!yIdx.length) return null;
+    const yLounge = yIdx.filter(i => loungeDrawingIds.has(i)).length;
+    return pct(yLounge, yIdx.length);
   });
-  mkChart('cE2', lineCfg(TREND_YEARS.map(String), [{
-    label:'라운지 계획 비중(%)', data:E2data,
-    borderColor:C.소셜, backgroundColor:C.소셜+'33', fill:true, tension:.3, pointRadius:4, pointBackgroundColor:C.소셜
-  }], {scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}}));
+  mkChart('cE2', barCfg(TREND_YEARS.map(String), [{ label:'??? ?? ?? ??(%)', data:E2data, backgroundColor:TREND_YEARS.map(()=> '#85C9BC'), borderRadius:8, borderSkipped:false }], {plugins:{legend:{display:false},datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'700'},anchor:'end',align:'end',formatter:v=>v==null?'':`${Number(v).toFixed(2)}%`}},scales:{y:percentAxisAuto(E2data)}}));
 
-  // E3: 인원구간별 탕비 평균 면적
-  const u_E3 = getUnit('E-tang');
-  const E3data = 인원ORDER.map(cat => {
-    const catIdx = new Set(filteredIdx.filter(i=>DRAWINGS[i]['인원구간']===cat));
-    const vs = sp.filter(s=>catIdx.has(s[S_DID])&&s[S_SUB]==='탕비').map(s=>s[S_AREA]).filter(v=>v>0);
-    const v = mean(vs);
-    return v ? (u_E3==='평' ? v*M2_TO_PYEONG : v) : null;
+  const peopleCats = ['- 49\uC778','50 - 99\uC778','100 - 149\uC778','150 - 199\uC778','200\uC778 -'];
+  const areaCats = ['100\uD3C9 \uBBF8\uB9CC','100~200\uD3C9 \uBBF8\uB9CC','200~300\uD3C9 \uBBF8\uB9CC','300~400\uD3C9 \uBBF8\uB9CC','400~500\uD3C9 \uBBF8\uB9CC','500~600\uD3C9 \uBBF8\uB9CC','600\uD3C9 \uC774\uC0C1'];
+  const areaLabels = ['100\uD3C9','100-200\uD3C9','200-300\uD3C9','300-400\uD3C9','400-500\uD3C9','500-600\uD3C9','600\uD3C9\u2191'];
+
+  const uE3 = getUnit('E-tang');
+  const E3data = peopleCats.map(cat => {
+    const catIdx = new Set(filteredIdx.filter(i=>DRAWINGS[i]['\uC778\uC6D0\uAD6C\uAC04']===cat));
+    const vals = sp.filter(s=>catIdx.has(s[S_DID]) && s[S_SUB]==='\ud0d5\ube44').map(s=>s[S_AREA]).filter(v=>v>0);
+    const avg = mean(vals);
+    return avg ? (uE3==='?' ? avg*M2_TO_PYEONG : avg) : null;
   });
-  mkChart('cE3', barCfg(인원ORDER, [{
-    label:`탕비 평균면적(${u_E3})`, data:E3data,
-    backgroundColor:C.소셜+'99', borderRadius:6, borderSkipped:false
-  }], {plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?v.toFixed(2):''}},scales:{y:{title:{display:true,text:u_E3,font:baseFont,color:'#6677AA'}}}}));
+  mkChart('cE3', lineCfg(peopleCats, [{
+    label:'?? ????(' + uE3 + ')', data:E3data,
+    borderColor:C['\uc18c\uc15c'], backgroundColor:C['\uc18c\uc15c']+'22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:C['\uc18c\uc15c']
+  }], {plugins:{datalabels:{display:true,color:C['\uc18c\uc15c'],font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':Number(v).toFixed(2) + uE3}},scales:{y:{title:{display:true,text:uE3,font:baseFont,color:'#6677AA'}}}}));
 
-  // E4: 가용면적구간별 탕비 평균 면적
-  const u_E4 = getUnit('E-tang2');
-  const E4data = 면적ORDER.map(cat => {
-    const catIdx = new Set(filteredIdx.filter(i=>DRAWINGS[i]['가용면적구간']===cat));
-    const vs = sp.filter(s=>catIdx.has(s[S_DID])&&s[S_SUB]==='탕비').map(s=>s[S_AREA]).filter(v=>v>0);
-    const v = mean(vs);
-    return v ? (u_E4==='평' ? v*M2_TO_PYEONG : v) : null;
+  const uE4 = getUnit('E-tang2');
+  const E4data = areaCats.map(cat => {
+    const catIdx = new Set(filteredIdx.filter(i=>DRAWINGS[i]['\uAC00\uC6A9\uBA74\uC801\uAD6C\uAC04']===cat));
+    const vals = sp.filter(s=>catIdx.has(s[S_DID]) && s[S_SUB]==='\ud0d5\ube44').map(s=>s[S_AREA]).filter(v=>v>0);
+    const avg = mean(vals);
+    return avg ? (uE4==='?' ? avg*M2_TO_PYEONG : avg) : null;
   });
-  mkChart('cE4', barCfg(면적ORDER.map(s=>s.replace('100평 미만','100↓').replace('~200평','-200').replace(' 미만','↓').replace('평 이상','↑')), [{
-    label:`탕비 평균면적(${u_E4})`, data:E4data,
-    backgroundColor:C.소셜+'77', borderRadius:6, borderSkipped:false
-  }], {plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?v.toFixed(2):''}},scales:{y:{title:{display:true,text:u_E4,font:baseFont,color:'#6677AA'}}}}));
+  mkChart('cE4', lineCfg(areaLabels, [{
+    label:'?? ????(' + uE4 + ')', data:E4data,
+    borderColor:C['\uc18c\uc15c'], backgroundColor:C['\uc18c\uc15c']+'22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:C['\uc18c\uc15c']
+  }], {plugins:{datalabels:{display:true,color:C['\uc18c\uc15c'],font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':Number(v).toFixed(2) + uE4}},scales:{y:{title:{display:true,text:uE4,font:baseFont,color:'#6677AA'}}}}));
 
-  // E5: 라운지유형별 평균면적
-  const ltypes = [...new Set(dd.map(d=>d['라운지유형']).filter(v=>v&&v!=='None'))];
-  const E5data = ltypes.map(lt => {
-    const ltIdx = new Set(filteredIdx.filter(i=>DRAWINGS[i]['라운지유형']===lt));
-    const vs = sp.filter(s=>ltIdx.has(s[S_DID])&&s[S_SUB]==='라운지').map(s=>s[S_AREA]).filter(v=>v>0);
-    return vs.length ? mean(vs)*M2_TO_PYEONG : null;
-  });
-  mkChart('cE5', barCfg(ltypes.map(t=>t.replace(' / None','')), [{
-    label:'라운지 평균면적(평)', data:E5data,
-    backgroundColor:C.소셜+'CC', borderRadius:6, borderSkipped:false
-  }], {indexAxis:'y', plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?v.toFixed(2)+'평':''}},scales:{x:{title:{display:true,text:'평',font:baseFont,color:'#6677AA'}}}}));
+  renderELoungeChart(dd, sp);
 
-  // E6: 라운지 내 세부 프로그램 선택 비율
-  const LOUNGE_PROGS = [
-    ['라운지_커뮤오픈','커뮤니티 오픈'],['라운지_탕비','탕비'],['라운지_카페','카페'],
-    ['라운지_엔터','엔터테인먼트'],['라운지_휴게','휴게'],['라운지_이벤트','이벤트'],
-    ['라운지_업무오픈','업무(오픈)'],['라운지_업무룸','업무(룸)'],['라운지_폰부스','폰부스']
+  const loungePrograms = [
+    ['\ub77c\uc6b4\uc9c0_\ud0d5\ube44','??'],
+    ['\ub77c\uc6b4\uc9c0_\uce74\ud398','??'],
+    ['\ub77c\uc6b4\uc9c0_\uc5d4\ud130','??????'],
+    ['\ub77c\uc6b4\uc9c0_\ud734\uac8c','??'],
+    ['\ub77c\uc6b4\uc9c0_\uc774\ubca4\ud2b8','???'],
+    ['\ub77c\uc6b4\uc9c0_\uc5c5\ubb34\uc624\ud508','??(??)'],
+    ['\ub77c\uc6b4\uc9c0_\uc5c5\ubb34\ub8f8','??(?)'],
+    ['\ub77c\uc6b4\uc9c0_\ud3f0\ubd80\uc2a4','???']
   ];
-  const ldIdx = filteredIdx.filter(i=>DRAWINGS[i]['라운지_조성여부']===1||DRAWINGS[i]['라운지_조성여부']==='O');
-  const E6data = LOUNGE_PROGS.map(([col]) => pct(ldIdx.filter(i=>DRAWINGS[i][col]===1).length, ldIdx.length||1));
-  mkChart('cE6', barCfg(LOUNGE_PROGS.map(p=>p[1]), [{
-    label:'선택 비율(%)', data:E6data,
-    backgroundColor:C.소셜+'AA', borderRadius:4, borderSkipped:false
-  }], {indexAxis:'y', plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?v+'%':''}},scales:{x:{max:100,ticks:{callback:v=>v+'%'}}}}));
+  const loungeIdx = filteredIdx.filter(i => loungeDrawingIds.has(i));
+  const sortedPrograms = loungePrograms.map(([col,label]) => ({
+    col, label, val: pct(loungeIdx.filter(i=>DRAWINGS[i][col]===1).length, loungeIdx.length || 1)
+  })).sort((a,b) => b.val - a.val);
+  const hostE6 = document.getElementById('cE6');
+  if (hostE6) {
+    const palette = ['#b9ddd6','#94c9cb','#79bac6','#5daabd','#4797b4','#3e86ab','#366f9b','#315f89','#2c5078'];
+    const layout = [
+      {col:'1 / span 7', row:'1 / span 8', size:'lg'},
+      {col:'8 / span 4', row:'1 / span 4', size:'md'},
+      {col:'12 / span 3', row:'1 / span 4', size:'sm'},
+      {col:'8 / span 4', row:'5 / span 3', size:'md'},
+      {col:'12 / span 3', row:'5 / span 3', size:'sm'},
+      {col:'8 / span 3', row:'8 / span 2', size:'sm'},
+      {col:'11 / span 2', row:'8 / span 2', size:'sm'},
+      {col:'13 / span 2', row:'8 / span 2', size:'xs'}
+    ];
+    hostE6.innerHTML = sortedPrograms.map((item, idx) => {
+      const slot = layout[idx] || {col:'1 / span 2', row:'1 / span 2', size:'sm'};
+      return '<div class="tree-tile ' + slot.size + '" style="grid-column:' + slot.col + ';grid-row:' + slot.row + ';background:' + palette[idx % palette.length] + '"><div class="tree-inner"><div class="tree-name">' + item.label + '</div><div class="tree-val">' + Number(item.val).toFixed(2) + '%</div></div></div>';
+    }).join('');
+  }
 }
 
-// ════════════════════════════════════════════
-// 섹션 F: 지원공간
-// ════════════════════════════════════════════
 function renderF(dd, sp) {
   const byYr = groupBy(dd, d=>d['연도']);
 
@@ -1538,58 +1521,56 @@ function renderF(dd, sp) {
   function countOA(i) { return sp.filter(s=>s[S_DID]===i&&s[S_SUB]==='OA').length; }
   
   const pbCnt = filteredIdx.filter(i=>countPBorSW(i) > 0).length;
-  const swAvg = meanPositive(filteredIdx, countSW);
+  const pbswAvg = meanPositive(filteredIdx, countPBorSW);
   const oaAvg = meanPositive(filteredIdx, countOA);
-  const pbAvg = meanPositive(filteredIdx, countPB);
+  const peopleCats = ['- 49\uC778','50 - 99\uC778','100 - 149\uC778','150 - 199\uC778','200\uC778 -'];
+  const areaCats = ['100\uD3C9 \uBBF8\uB9CC','100~200\uD3C9 \uBBF8\uB9CC','200~300\uD3C9 \uBBF8\uB9CC','300~400\uD3C9 \uBBF8\uB9CC','400~500\uD3C9 \uBBF8\uB9CC','500~600\uD3C9 \uBBF8\uB9CC','600\uD3C9 \uC774\uC0C1'];
+  const areaLabels = ['100\uD3C9','100-200\uD3C9','200-300\uD3C9','300-400\uD3C9','400-500\uD3C9','500-600\uD3C9','600\uD3C9\u2191'];
 
   document.getElementById('kF-pb').innerHTML = `${fmt1(pct(pbCnt,filteredIdx.length))}<span>%</span>`;
-  document.getElementById('kF-sw').innerHTML = `${fmt1(swAvg)}<span>개소</span>`;
-  document.getElementById('kF-oa').innerHTML = `${fmt1(oaAvg)}<span>개소</span>`;
-  document.getElementById('kF-phone').innerHTML = `${fmt1(pbAvg)}<span>개소</span>`;
+  document.getElementById('kF-sw').innerHTML = `${fmt1(pbswAvg)}<span>\uAC1C\uC18C</span>`;
+  document.getElementById('kF-oa').innerHTML = `${fmt1(oaAvg)}<span>\uAC1C\uC18C</span>`;
 
-  // F1: 연도별 폰부스+선택업무공간_실 조성 비율
+  // F1: ratio -> bar
   const F1data = TREND_YEARS.map(y => {
-    const yIdx2 = filteredIdx.filter(i=>DRAWINGS[i]['연도']===y);
+    const yIdx2 = filteredIdx.filter(i=>DRAWINGS[i]['\uC5F0\uB3C4']===y);
     if (!yIdx2.length) return null;
     return pct(yIdx2.filter(i=>countPBorSW(i) > 0).length, yIdx2.length);
   });
-  mkChart('cF1', lineCfg(TREND_YEARS.map(String), [{
-    label:'조성 비율(%)', data:F1data,
-    borderColor:C.지원, backgroundColor:C.지원+'33', fill:true, tension:.3, pointRadius:4, pointBackgroundColor:C.지원
-  }], {scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}}));
+  mkChart('cF1', barCfg(TREND_YEARS.map(String), [{ label:'?? ??(%)', data:F1data, backgroundColor:TREND_YEARS.map(()=> '#A896D6'), borderRadius:8, borderSkipped:false }], {plugins:{legend:{display:false},datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'700'},anchor:'end',align:'end',formatter:v=>v==null?'':`${Number(v).toFixed(2)}%`}},scales:{y:percentAxisAuto(F1data)}}));
 
-  // F2: 인원구간별 폰부스+선택업무공간_실 평균 개소
-  const F2data = 인원ORDER.map(cat => {
-    const catIdx = filteredIdx.filter(i=>DRAWINGS[i]['인원구간']===cat);
+  // F2: count -> line
+  const F2data = peopleCats.map(cat => {
+    const catIdx = filteredIdx.filter(i=>DRAWINGS[i]['\uC778\uC6D0\uAD6C\uAC04']===cat);
     if (!catIdx.length) return null;
     return meanPositive(catIdx, countPBorSW);
   });
-  mkChart('cF2', barCfg(인원ORDER, [{
-    label:'평균 개소', data:F2data,
-    backgroundColor:C.지원+'AA', borderRadius:6, borderSkipped:false
-  }], {plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?v.toFixed(2):''}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
+  mkChart('cF2', lineCfg(peopleCats, [{
+    label:'\uD3C9\uADE0 \uAC1C\uC18C', data:F2data,
+    borderColor:'#A896D6', backgroundColor:'#A896D622', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:'#A896D6'
+  }], {plugins:{datalabels:{display:true,color:'#A896D6',font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':`${Number(v).toFixed(2)}`}},scales:{y:{title:{display:true,text:'\uAC1C\uC18C',font:baseFont,color:'#6677AA'}}}}));
 
-  // F3: 면적구간별 폰부스+선택업무공간_실 평균 개소
-  const F3data = 면적ORDER.map(cat => {
-    const catIdx = filteredIdx.filter(i=>DRAWINGS[i]['가용면적구간']===cat);
+  // F3: count -> line
+  const F3data = areaCats.map(cat => {
+    const catIdx = filteredIdx.filter(i=>DRAWINGS[i]['\uAC00\uC6A9\uBA74\uC801\uAD6C\uAC04']===cat);
     if (!catIdx.length) return null;
     return meanPositive(catIdx, countPBorSW);
   });
-  mkChart('cF3', barCfg(면적ORDER.map(s=>s.replace('100평 미만','100↓').replace('~200평','-200').replace(' 미만','↓').replace('평 이상','↑')), [{
-    label:'평균 개소', data:F3data,
-    backgroundColor:C.지원+'88', borderRadius:6, borderSkipped:false
-  }], {plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?v.toFixed(2):''}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
+  mkChart('cF3', lineCfg(areaLabels, [{
+    label:'\uD3C9\uADE0 \uAC1C\uC18C', data:F3data,
+    borderColor:'#A896D6', backgroundColor:'#A896D622', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:'#A896D6'
+  }], {plugins:{datalabels:{display:true,color:'#A896D6',font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':`${Number(v).toFixed(2)}`}},scales:{y:{title:{display:true,text:'\uAC1C\uC18C',font:baseFont,color:'#6677AA'}}}}));
 
-  // F4: 인원구간별 OA 평균 개소
-  const F4data = 인원ORDER.map(cat => {
-    const catIdx = filteredIdx.filter(i=>DRAWINGS[i]['인원구간']===cat);
+  // F4: count -> line
+  const F4data = peopleCats.map(cat => {
+    const catIdx = filteredIdx.filter(i=>DRAWINGS[i]['\uC778\uC6D0\uAD6C\uAC04']===cat);
     if (!catIdx.length) return null;
     return meanPositive(catIdx, countOA);
   });
-  mkChart('cF4', barCfg(인원ORDER, [{
-    label:'OA 평균 개소', data:F4data,
-    backgroundColor:C.지원+'66', borderRadius:6, borderSkipped:false
-  }], {plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?v.toFixed(2):''}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
+  mkChart('cF4', lineCfg(peopleCats, [{
+    label:'OA \uD3C9\uADE0 \uAC1C\uC18C', data:F4data,
+    borderColor:'#8A77BE', backgroundColor:'#8A77BE22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:'#8A77BE'
+  }], {plugins:{datalabels:{display:true,color:'#8A77BE',font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':`${Number(v).toFixed(2)}`}},scales:{y:{title:{display:true,text:'\uAC1C\uC18C',font:baseFont,color:'#6677AA'}}}}));
 }
 
 // ════════════════════════════════════════════
