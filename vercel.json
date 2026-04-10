@@ -1,5 +1,5 @@
 {
   "routes": [
-    { "src": "/", "dest": "/spacedatabase_dashboard_0409.html" }
+    { "src": "/", "dest": "/spacedatabase_dashboard.html" }
   ]
 }
