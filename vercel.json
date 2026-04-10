@@ -1,5 +1,5 @@
 {
   "routes": [
-    { "src": "/", "dest": "/공간DB_대시보드.html" }
+    { "src": "/", "dest": "/spacedatabase_dashboard_0409.html" }
   ]
 }
