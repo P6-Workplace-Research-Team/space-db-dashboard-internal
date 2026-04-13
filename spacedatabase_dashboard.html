@@ -239,9 +239,9 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
   <div class="sec-hd"><h2>개괄</h2><p>도면 분포, 인원·면적 구간별 구성, 연도별 공간 프로그램 변화</p></div>
   <div class="krow">
     <div class="kpi hl"><div class="kl">분석 도면 수</div><div class="kv" id="kA-total">540<span>건</span></div><div class="ks">수집 연도 2002–2025</div></div>
-    <div class="kpi"><div class="kl">평균 가용면적</div><div class="kv" id="kA-area">—<span>평</span></div><div class="ks" id="kA-area-m2">—m²</div></div>
+    <div class="kpi"><div class="kl">평균 가용면적</div><div class="kv" id="kA-area">—<span>평</span></div><div class="ks" id="kA-area-m2">—㎡</div></div>
     <div class="kpi"><div class="kl">평균 인원수</div><div class="kv" id="kA-person">—<span>인</span></div><div class="ks">도면당 평균</div></div>
-    <div class="kpi"><div class="kl">평균 인당 면적</div><div class="kv" id="kA-ppa">—<span>평</span></div><div class="ks" id="kA-ppa-m2">—m²</div></div>
+    <div class="kpi"><div class="kl">평균 인당 면적</div><div class="kv" id="kA-ppa">—<span>평</span></div><div class="ks" id="kA-ppa-m2">—㎡</div></div>
   </div>
   <div class="g2">
     <div class="card"><div class="ct">인원 구간별 도면 수</div><div class="cs">연도 x 인원 구간 기준 도면 수 표</div><div class="cw auto" id="cA1"></div></div>
@@ -261,7 +261,7 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
   <div class="sec-hd"><h2>업무공간 : 일반</h2><p>인당 면적, 데스크 형태·너비, 배치 간격, 팀장석, 자율좌석제</p></div>
   <div class="g6">
     <div class="kpi hl"><div class="kl">업무 공간 비중</div><div class="kv" id="kB-work">—<span>%</span></div><div class="ks">전체 가용면적 대비</div></div>
-    <div class="kpi"><div class="kl">평균 인당 면적</div><div class="kv" id="kB-ppa">—<span>평</span></div><div class="ks" id="kB-ppa-m2">—m²</div></div>
+    <div class="kpi"><div class="kl">평균 인당 면적</div><div class="kv" id="kB-ppa">—<span>평</span></div><div class="ks" id="kB-ppa-m2">—㎡</div></div>
     <div class="kpi"><div class="kl">주요 등간격(일자형)</div><div class="kv" id="kB-gap-st" style="font-size:16px">—</div><div class="ks" id="kB-gap-st-pct">—</div></div>
     <div class="kpi"><div class="kl">주요 등간격(L자형)</div><div class="kv" id="kB-gap-l" style="font-size:16px">—</div><div class="ks" id="kB-gap-l-pct">—</div></div>
     <div class="kpi"><div class="kl">주요 데스크 형태</div><div class="kv" id="kB-dtop" style="font-size:16px">—</div><div class="ks" id="kB-dtop-pct">—</div></div>
@@ -270,7 +270,7 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
   <div class="g2">
     <div class="card">
       <div class="ct">인당 면적</div><div class="cs">전체 평균값과 연도별 추세를 함께 제공합니다.</div>
-      <div class="toggle"><button class="tgl on" onclick="toggleUnit('B-ppa','평',this)">평</button><button class="tgl" onclick="toggleUnit('B-ppa','m2',this)">m²</button></div>
+      <div class="toggle"><button class="tgl on" onclick="toggleUnit('B-ppa','평',this)">평</button><button class="tgl" onclick="toggleUnit('B-ppa','m2',this)">㎡</button></div>
       <div class="cw"><canvas id="cB1"></canvas></div>
     </div>
     <div class="card"><div class="ct">자율좌석제 시행 비중</div><div class="cs">전체 비중은 값으로, 연도별 추세는 그래프로 제공합니다.</div><div class="subgrid"><div class="subcard"><div class="st">전체 도면 기준</div><div class="value-panel" id="cB7a"></div></div><div class="subcard"><div class="st">연도별 추세</div><div class="cw t"><canvas id="cB7"></canvas></div></div></div></div>
@@ -348,7 +348,7 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
   <div class="sec-hd"><h2>소셜공간</h2><p>라운지·탕비 현황, 라운지 유형별 면적, 프로그램 구성</p></div>
   <div class="krow">
     <div class="kpi hl"><div class="kl">라운지 계획 비율</div><div class="kv" id="kE-lounge">—<span>%</span></div><div class="ks">전체 도면 중 라운지 보유 비율</div></div>
-    <div class="kpi"><div class="kl">탕비 평균 면적</div><div class="kv" id="kE-tang">—<span>평</span></div><div class="ks" id="kE-tang-m2">—m²</div></div>
+    <div class="kpi"><div class="kl">탕비 평균 면적</div><div class="kv" id="kE-tang">—<span>평</span></div><div class="ks" id="kE-tang-m2">—㎡</div></div>
   </div>
   <div class="g2">
     <div class="card"><div class="ct">연도별 소셜공간 유형 구성 비율</div><div class="cs">소셜공간 면적 내 세부유형별 비중 추이</div><div class="cw t"><canvas id="cE1"></canvas></div></div>
@@ -356,17 +356,17 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
   </div>
   <div class="g2">
     <div class="card"><div class="ct">인원 구간별 탕비 평균 면적</div><div class="cs">소셜공간 내 탕비(세부유형=탕비) 기준</div>
-      <div class="toggle"><button class="tgl on" onclick="toggleUnit('E-tang','평',this)">평</button><button class="tgl" onclick="toggleUnit('E-tang','m2',this)">m²</button></div>
+      <div class="toggle"><button class="tgl on" onclick="toggleUnit('E-tang','평',this)">평</button><button class="tgl" onclick="toggleUnit('E-tang','m2',this)">㎡</button></div>
       <div class="cw"><canvas id="cE3"></canvas></div>
     </div>
     <div class="card"><div class="ct">가용 면적 구간별 탕비 평균 면적</div><div class="cs">면적 규모에 따른 탕비 크기</div>
-      <div class="toggle"><button class="tgl on" onclick="toggleUnit('E-tang2','평',this)">평</button><button class="tgl" onclick="toggleUnit('E-tang2','m2',this)">m²</button></div>
+      <div class="toggle"><button class="tgl on" onclick="toggleUnit('E-tang2','평',this)">평</button><button class="tgl" onclick="toggleUnit('E-tang2','m2',this)">㎡</button></div>
       <div class="cw"><canvas id="cE4"></canvas></div>
     </div>
   </div>
   <div class="g2 social-bottom">
     <div class="card"><div class="ct">라운지 유형별 평균 면적</div><div class="cs">라운지유형에 따른 라운지(세부유형=라운지) 평균 면적</div>
-      <div class="toggle"><button class="tgl on" onclick="toggleUnit('E-lounge','평',this)">평</button><button class="tgl" onclick="toggleUnit('E-lounge','m2',this)">m²</button></div>
+      <div class="toggle"><button class="tgl on" onclick="toggleUnit('E-lounge','평',this)">평</button><button class="tgl" onclick="toggleUnit('E-lounge','m2',this)">㎡</button></div>
       <div class="metric-grid4" id="cE5"></div></div>
     <div class="card"><div class="ct">라운지 내 세부 프로그램 선택 비율</div><div class="cs">라운지 보유 도면 중 해당 프로그램 선택 비중</div><div class="cw auto"><div id="cE6" class="treemap"></div></div></div>
   </div>
@@ -422,6 +422,14 @@ function sum(arr){ return arr.reduce((a,b)=>a+b,0); }
 function pct(n,d){ return d ? Math.round(n/d*10000)/100 : 0; }
 function fmt1(v){ return isFinite(v) && v>0 ? v.toFixed(2) : '—'; }
 function fmt0(v){ return isFinite(v) && v>=0 ? Number(v).toFixed(2) : '—'; }
+function displayUnit(unit){ return unit === 'm2' ? '㎡' : unit; }
+function chartAxisUnit(ctx) {
+  return ctx?.chart?.options?.scales?.y?.title?.text || '';
+}
+function formatChartValue(value, unit='') {
+  if (value == null || !isFinite(value)) return '';
+  return `${Number(value).toFixed(2)}${unit || ''}`;
+}
 
 function percentile(arr, p) {
   if (!arr.length) return 0;
@@ -676,7 +684,18 @@ function barCfg(labels, datasets, extra={}) {
 function lineCfg(labels, datasets, extra={}) {
   return deepMerge({ type:'line', data:{labels,datasets}, options: deepMerge(baseOpts,{
     layout:{padding:{left:18,right:12,top:28,bottom:4}},
-    plugins:{datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'bold'},align:'top',anchor:'end',offset:4,clamp:true,formatter:v=>v==null?'':Number(v).toFixed(2)}},
+    plugins:{
+      tooltip:{
+        callbacks:{
+          label:ctx => {
+            const unit = chartAxisUnit(ctx);
+            const prefix = ctx.dataset?.label ? `${ctx.dataset.label}: ` : '';
+            return `${prefix}${formatChartValue(ctx.parsed?.y, unit)}`;
+          }
+        }
+      },
+      datalabels:{display:true,color:'#2D2D3A',font:{...baseFont,weight:'bold'},align:'top',anchor:'end',offset:4,clamp:true,formatter:(v,ctx)=>formatChartValue(v, chartAxisUnit(ctx))}
+    },
     scales:{x:{offset:true,ticks:{padding:8}},y:{beginAtZero:true,grace:'8%'}}
   }) }, deepMerge({options:extra},{}) );
 }
@@ -701,8 +720,9 @@ function renderBUnitChart(dd) {
   const byYr = groupBy(dd, d=>d['연도']);
   const avgPPA = mean(dd.map(d=>(d['가용면적']&&d['인원수'])?d['가용면적']/d['인원수']:null).filter(v=>v));
   document.getElementById('kB-ppa').innerHTML = `${fmt1(avgPPA*M2_TO_PYEONG)}<span>평</span>`;
-  document.getElementById('kB-ppa-m2').textContent = `${fmt1(avgPPA)}m²`;
+  document.getElementById('kB-ppa-m2').textContent = `${fmt1(avgPPA)}㎡`;
   const unit_B1 = getUnit('B-ppa');
+  const unitLabel_B1 = displayUnit(unit_B1);
   const B1data = TREND_YEARS.map(y => {
     const ypp = (byYr[y]||[]).map(d=>(d['가용면적']&&d['인원수'])?d['가용면적']/d['인원수']:null).filter(v=>v);
     const v = mean(ypp);
@@ -712,13 +732,14 @@ function renderBUnitChart(dd) {
   const b1Max = Math.max(...b1Vals, 0);
   const b1Min = Math.min(...b1Vals, 0);
   mkChart('cB1', lineCfg(TREND_YEARS.map(String), [{
-    label:`인당 면적 (${unit_B1})`, data:B1data,
+    label:`인당 면적 (${unitLabel_B1})`, data:B1data,
     borderColor:C.p, backgroundColor:C.p+'18', fill:false, tension:.3, pointRadius:4, pointBackgroundColor:C.p
-  }], {plugins:{datalabels:{display:true,color:C.p,font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:8,clamp:true,formatter:v=>v?`${v.toFixed(2)}${unit_B1}`:''}},scales:{y:{title:{display:true,text:unit_B1,font:baseFont,color:'#6677AA'},min:Math.max(0,b1Min*0.85),suggestedMax:b1Max*1.22}}}));
+  }], {plugins:{datalabels:{display:true,color:C.p,font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:8,clamp:true,formatter:v=>v?`${v.toFixed(2)}${unitLabel_B1}`:''}},scales:{y:{title:{display:true,text:unitLabel_B1,font:baseFont,color:'#6677AA'},min:Math.max(0,b1Min*0.85),suggestedMax:b1Max*1.22}}}));
 }
 
 function renderETangChart(sp) {
   const u_E3 = getUnit('E-tang');
+  const u_E3_label = displayUnit(u_E3);
   const E3data = 인원ORDER.map(cat => {
     const catIdx = new Set(filteredIdx.filter(i=>DRAWINGS[i]['인원구간']===cat));
     const vs = sp.filter(s=>catIdx.has(s[S_DID])&&s[S_SUB]==='탕비').map(s=>s[S_AREA]).filter(v=>v>0);
@@ -726,13 +747,14 @@ function renderETangChart(sp) {
     return v ? (u_E3==='평' ? v*M2_TO_PYEONG : v) : null;
   });
   mkChart('cE3', lineCfg(인원ORDER, [{
-    label:`탕비 평균면적(${u_E3})`, data:E3data,
+    label:`탕비 평균면적(${u_E3_label})`, data:E3data,
     borderColor:C.소셜, backgroundColor:C.소셜+'22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:C.소셜
-  }], {plugins:{datalabels:{display:true,color:C.소셜,font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':Number(v).toFixed(2)+u_E3}},scales:{y:{title:{display:true,text:u_E3,font:baseFont,color:'#6677AA'}}}}));
+  }], {plugins:{datalabels:{display:true,color:C.소셜,font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':Number(v).toFixed(2)+u_E3_label}},scales:{y:{title:{display:true,text:u_E3_label,font:baseFont,color:'#6677AA'}}}}));
 }
 
 function renderETang2Chart(sp) {
   const u_E4 = getUnit('E-tang2');
+  const u_E4_label = displayUnit(u_E4);
   const E4data = 면적ORDER.map(cat => {
     const catIdx = new Set(filteredIdx.filter(i=>DRAWINGS[i]['가용면적구간']===cat));
     const vs = sp.filter(s=>catIdx.has(s[S_DID])&&s[S_SUB]==='탕비').map(s=>s[S_AREA]).filter(v=>v>0);
@@ -740,13 +762,14 @@ function renderETang2Chart(sp) {
     return v ? (u_E4==='평' ? v*M2_TO_PYEONG : v) : null;
   });
   mkChart('cE4', lineCfg(면적ORDER.map(s=>s.replace('100평 미만','100↓').replace('~200평','-200').replace(' 미만','↓').replace('평 이상','↑')), [{
-    label:`탕비 평균면적(${u_E4})`, data:E4data,
+    label:`탕비 평균면적(${u_E4_label})`, data:E4data,
     borderColor:C.소셜, backgroundColor:C.소셜+'22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:C.소셜
-  }], {plugins:{datalabels:{display:true,color:C.소셜,font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':Number(v).toFixed(2)+u_E4}},scales:{y:{title:{display:true,text:u_E4,font:baseFont,color:'#6677AA'}}}}));
+  }], {plugins:{datalabels:{display:true,color:C.소셜,font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':Number(v).toFixed(2)+u_E4_label}},scales:{y:{title:{display:true,text:u_E4_label,font:baseFont,color:'#6677AA'}}}}));
 }
 function renderELoungeChart(dd, sp) {
   const unit = getUnit('E-lounge');
   const useM2 = unit === 'm2';
+  const unitLabel = displayUnit(unit);
   const host = document.getElementById('cE5');
   if (!host) return;
   const loungeDrawingIds = new Set(
@@ -776,7 +799,7 @@ function renderELoungeChart(dd, sp) {
     return `
       <div class="metric-block">
         <div class="mb-title">${type.replace(' / None','')}</div>
-        <div class="mb-main">${displayValue != null ? displayValue.toFixed(2) : '—'}<span>${unit}</span></div>
+        <div class="mb-main">${displayValue != null ? displayValue.toFixed(2) : '—'}<span>${unitLabel}</span></div>
         <div class="mb-sub">${idxs.length}개 도면 기준</div>
       </div>
     `;
@@ -1017,10 +1040,10 @@ function renderA(dd, sp) {
   const avgArea = mean(areas_m2), avgPerson = mean(persons), avgPPA = mean(ppa);
   document.getElementById('kA-total').innerHTML = `${filteredIdx.length}<span>건</span>`;
   document.getElementById('kA-area').innerHTML = `${fmt1(avgArea*M2_TO_PYEONG)}<span>평</span>`;
-  document.getElementById('kA-area-m2').textContent = fmt1(avgArea)+'m²';
+  document.getElementById('kA-area-m2').textContent = fmt1(avgArea)+'㎡';
   document.getElementById('kA-person').innerHTML = `${fmt0(avgPerson)}<span>인</span>`;
   document.getElementById('kA-ppa').innerHTML = `${fmt1(avgPPA*M2_TO_PYEONG)}<span>평</span>`;
-  document.getElementById('kA-ppa-m2').textContent = fmt1(avgPPA)+'m²';
+  document.getElementById('kA-ppa-m2').textContent = fmt1(avgPPA)+'㎡';
 
   const byYr = groupBy(dd, d=>d['연도']);
 
@@ -1236,7 +1259,7 @@ function renderB(dd, sp) {
 
   document.getElementById('kB-work').innerHTML = `${fmt1(workRatio)}<span>%</span>`;
   document.getElementById('kB-ppa').innerHTML = `${fmt1(avgPPA*M2_TO_PYEONG)}<span>평</span>`;
-  document.getElementById('kB-ppa-m2').textContent = `${fmt1(avgPPA)}m²`;
+  document.getElementById('kB-ppa-m2').textContent = `${fmt1(avgPPA)}㎡`;
   document.getElementById('kB-gap-st').textContent = topStraight ? topStraight[0] : '—';
   document.getElementById('kB-gap-st-pct').textContent = topStraight ? `${pct(topStraight[1], straightTot).toFixed(2)}%` : '—';
   document.getElementById('kB-gap-l').textContent = topL ? topL[0] : '—';
@@ -1431,7 +1454,7 @@ function renderD(dd, sp) {
     if (!yIdx2.size) return null;
     return meanPositive([...yIdx2], meetingRoomCount);
   });
-  mkChart('cD1', lineCfg(TREND_YEARS.map(String), [{label:'평균 회의실 개소', data:D1data, borderColor:'#5B7FBF', backgroundColor:'#5B7FBF33', fill:false, tension:.3, pointRadius:4, pointBackgroundColor:'#5B7FBF'}], {plugins:{datalabels:{formatter:v=>v==null?'':Number(v).toFixed(2)}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
+  mkChart('cD1', lineCfg(TREND_YEARS.map(String), [{label:'평균 회의실 개소', data:D1data, borderColor:'#5B7FBF', backgroundColor:'#5B7FBF33', fill:false, tension:.3, pointRadius:4, pointBackgroundColor:'#5B7FBF'}], {plugins:{datalabels:{formatter:v=>v==null?'':`${Number(v).toFixed(2)}개소`}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
 
   const peopleCats = ['- 49인','50 - 99인','100 - 149인','150 - 199인','200인 -'];
   const areaCats = ['100평 미만','100~200평 미만','200~300평 미만','300~400평 미만','400~500평 미만','500~600평 미만','600평 이상'];
@@ -1441,14 +1464,14 @@ function renderD(dd, sp) {
     if (!catIdx.length) return null;
     return meanPositive(catIdx, meetingRoomCount);
   });
-  mkChart('cD2', lineCfg(peopleCats, [{label:'평균 회의실 개소', data:D2data, borderColor:'#5B7FBF', backgroundColor:'#5B7FBF22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:'#5B7FBF'}], {plugins:{datalabels:{formatter:v=>v==null?'':Number(v).toFixed(2)}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
+  mkChart('cD2', lineCfg(peopleCats, [{label:'평균 회의실 개소', data:D2data, borderColor:'#5B7FBF', backgroundColor:'#5B7FBF22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:'#5B7FBF'}], {plugins:{datalabels:{formatter:v=>v==null?'':`${Number(v).toFixed(2)}개소`}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
 
   const D3data = areaCats.map(cat => {
     const catIdx = filteredIdx.filter(i=>DRAWINGS[i]['가용면적구간']===cat);
     if (!catIdx.length) return null;
     return meanPositive(catIdx, meetingRoomCount);
   });
-  mkChart('cD3', lineCfg(areaLabels, [{label:'평균 회의실 개소', data:D3data, borderColor:'#5B7FBF', backgroundColor:'#5B7FBF22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:'#5B7FBF'}], {plugins:{datalabels:{formatter:v=>v==null?'':Number(v).toFixed(2)}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
+  mkChart('cD3', lineCfg(areaLabels, [{label:'평균 회의실 개소', data:D3data, borderColor:'#5B7FBF', backgroundColor:'#5B7FBF22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:'#5B7FBF'}], {plugins:{datalabels:{formatter:v=>v==null?'':`${Number(v).toFixed(2)}개소`}},scales:{y:{title:{display:true,text:'개소',font:baseFont,color:'#6677AA'}}}}));
 
   const D4data = MEET_SUBS.map(sub => mean(meetingDrawingIdx.map(i => meetingSubtypeCount(i, sub))));
   const D5data = MEET_SUBS.map(sub => {
@@ -1509,10 +1532,10 @@ function renderE(dd, sp) {
     document.getElementById('kE-lounge-area').innerHTML = fmt1(avgLounge*M2_TO_PYEONG) + '<span>평</span>';
   }
   if (document.getElementById('kE-lounge-area-m2')) {
-    document.getElementById('kE-lounge-area-m2').textContent = fmt1(avgLounge)+'m²';
+    document.getElementById('kE-lounge-area-m2').textContent = fmt1(avgLounge)+'㎡';
   }
   document.getElementById('kE-tang').innerHTML = fmt1(avgTang*M2_TO_PYEONG) + '<span>평</span>';
-  document.getElementById('kE-tang-m2').textContent = fmt1(avgTang)+'m²';
+  document.getElementById('kE-tang-m2').textContent = fmt1(avgTang)+'㎡';
   if (document.getElementById('kE-ltype')) {
     document.getElementById('kE-ltype').textContent = topLoungeType;
   }
@@ -1667,7 +1690,7 @@ function renderF(dd, sp) {
   mkChart('cF2', lineCfg(peopleCats, [{
     label:'\uD3C9\uADE0 \uAC1C\uC18C', data:F2data,
     borderColor:'#A896D6', backgroundColor:'#A896D622', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:'#A896D6'
-  }], {plugins:{datalabels:{display:true,color:'#A896D6',font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':`${Number(v).toFixed(2)}`}},scales:{y:{title:{display:true,text:'\uAC1C\uC18C',font:baseFont,color:'#6677AA'}}}}));
+  }], {plugins:{datalabels:{display:true,color:'#A896D6',font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':`${Number(v).toFixed(2)}개소`}},scales:{y:{title:{display:true,text:'\uAC1C\uC18C',font:baseFont,color:'#6677AA'}}}}));
 
   // F3: count -> line
   const F3data = areaCats.map(cat => {
@@ -1678,7 +1701,7 @@ function renderF(dd, sp) {
   mkChart('cF3', lineCfg(areaLabels, [{
     label:'\uD3C9\uADE0 \uAC1C\uC18C', data:F3data,
     borderColor:'#A896D6', backgroundColor:'#A896D622', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:'#A896D6'
-  }], {plugins:{datalabels:{display:true,color:'#A896D6',font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':`${Number(v).toFixed(2)}`}},scales:{y:{title:{display:true,text:'\uAC1C\uC18C',font:baseFont,color:'#6677AA'}}}}));
+  }], {plugins:{datalabels:{display:true,color:'#A896D6',font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':`${Number(v).toFixed(2)}개소`}},scales:{y:{title:{display:true,text:'\uAC1C\uC18C',font:baseFont,color:'#6677AA'}}}}));
 
   // F4: count -> line
   const F4data = peopleCats.map(cat => {
@@ -1689,7 +1712,7 @@ function renderF(dd, sp) {
   mkChart('cF4', lineCfg(peopleCats, [{
     label:'OA \uD3C9\uADE0 \uAC1C\uC18C', data:F4data,
     borderColor:'#8A77BE', backgroundColor:'#8A77BE22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:'#8A77BE'
-  }], {plugins:{datalabels:{display:true,color:'#8A77BE',font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':`${Number(v).toFixed(2)}`}},scales:{y:{title:{display:true,text:'\uAC1C\uC18C',font:baseFont,color:'#6677AA'}}}}));
+  }], {plugins:{datalabels:{display:true,color:'#8A77BE',font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':`${Number(v).toFixed(2)}개소`}},scales:{y:{title:{display:true,text:'\uAC1C\uC18C',font:baseFont,color:'#6677AA'}}}}));
 }
 
 // ════════════════════════════════════════════
@@ -1733,7 +1756,7 @@ function arrangeDashboardLayout() {
     const loungeCard = document.getElementById('kE-lounge')?.closest('.kpi');
     const loungeAreaCard = document.createElement('div');
     loungeAreaCard.className = 'kpi';
-    loungeAreaCard.innerHTML = '<div class="kl">라운지 평균 면적</div><div class="kv" id="kE-lounge-area">—<span>평</span></div><div class="ks" id="kE-lounge-area-m2">—m²</div>';
+    loungeAreaCard.innerHTML = '<div class="kl">라운지 평균 면적</div><div class="kv" id="kE-lounge-area">—<span>평</span></div><div class="ks" id="kE-lounge-area-m2">—㎡</div>';
     const ltypeCard = document.createElement('div');
     ltypeCard.className = 'kpi';
     ltypeCard.innerHTML = '<div class="kl">면적 구간별 라운지 유형</div><div class="kv" id="kE-ltype" style="font-size:16px">—</div><div class="ks" id="kE-ltype-pct">—</div>';
