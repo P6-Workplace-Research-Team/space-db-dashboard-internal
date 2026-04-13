@@ -94,6 +94,8 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 /* CARD */
 .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px;transition:.15s;position:relative;scroll-margin-top:calc(var(--header-top,49px) + 18px)}
 .card:hover{box-shadow:0 3px 16px rgba(107,79,160,.07)}
+.card.toc-hover{border-color:var(--p2);box-shadow:0 0 0 3px rgba(139,111,192,.14),0 10px 26px rgba(107,79,160,.12)}
+.card.toc-focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(107,79,160,.22),0 14px 30px rgba(107,79,160,.16)}
 .ct{font-size:13px;font-weight:700;color:var(--tx);margin-bottom:2px}
 .cs{font-size:11px;color:var(--lt);margin-bottom:14px}
 .cw{position:relative;height:220px}.cw.t{height:280px}.cw.s{height:160px}
@@ -181,7 +183,9 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 .toc-link::before{content:'';flex:0 0 8px;width:8px;height:8px;border-radius:999px;background:#D7CFF0;margin-top:4px}
 .toc-item:hover .toc-link{background:#F6F1FC;color:var(--p)}
 .toc-item.active .toc-link{background:#F2ECFB;color:var(--p)}
+.toc-item.preview .toc-link{background:#FBF7FF;color:var(--p)}
 .toc-item.active .toc-link::before,.toc-item:hover .toc-link::before{background:var(--p)}
+.toc-item.preview .toc-link::before{background:var(--p2)}
 </style>
 </head>
 <body>
@@ -721,10 +725,10 @@ function renderETangChart(sp) {
     const v = mean(vs);
     return v ? (u_E3==='평' ? v*M2_TO_PYEONG : v) : null;
   });
-  mkChart('cE3', barCfg(인원ORDER, [{
+  mkChart('cE3', lineCfg(인원ORDER, [{
     label:`탕비 평균면적(${u_E3})`, data:E3data,
-    backgroundColor:C.소셜+'99', borderRadius:6, borderSkipped:false
-  }], {plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?v.toFixed(2):''}},scales:{y:{title:{display:true,text:u_E3,font:baseFont,color:'#6677AA'}}}}));
+    borderColor:C.소셜, backgroundColor:C.소셜+'22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:C.소셜
+  }], {plugins:{datalabels:{display:true,color:C.소셜,font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':Number(v).toFixed(2)+u_E3}},scales:{y:{title:{display:true,text:u_E3,font:baseFont,color:'#6677AA'}}}}));
 }
 
 function renderETang2Chart(sp) {
@@ -735,28 +739,50 @@ function renderETang2Chart(sp) {
     const v = mean(vs);
     return v ? (u_E4==='평' ? v*M2_TO_PYEONG : v) : null;
   });
-  mkChart('cE4', barCfg(면적ORDER.map(s=>s.replace('100평 미만','100↓').replace('~200평','-200').replace(' 미만','↓').replace('평 이상','↑')), [{
+  mkChart('cE4', lineCfg(면적ORDER.map(s=>s.replace('100평 미만','100↓').replace('~200평','-200').replace(' 미만','↓').replace('평 이상','↑')), [{
     label:`탕비 평균면적(${u_E4})`, data:E4data,
-    backgroundColor:C.소셜+'77', borderRadius:6, borderSkipped:false
-  }], {plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?v.toFixed(2):''}},scales:{y:{title:{display:true,text:u_E4,font:baseFont,color:'#6677AA'}}}}));
+    borderColor:C.소셜, backgroundColor:C.소셜+'22', fill:false, tension:.28, pointRadius:4, pointBackgroundColor:C.소셜
+  }], {plugins:{datalabels:{display:true,color:C.소셜,font:{...baseFont,weight:'700'},anchor:'end',align:'top',offset:6,clamp:true,formatter:v=>v==null?'':Number(v).toFixed(2)+u_E4}},scales:{y:{title:{display:true,text:u_E4,font:baseFont,color:'#6677AA'}}}}));
 }
-/* legacy broken helper removed
 function renderELoungeChart(dd, sp) {
-  const unit_E5 = getUnit('E-lounge');
-  const ltypes = [...new Set(dd.map(d=>d['?쇱슫吏?좏삎']).filter(v=>v&&v!=='None'))];
-  const E5data = ltypes.map(lt => {
-    const ltIdx = new Set(filteredIdx.filter(i=>DRAWINGS[i]['?쇱슫吏?좏삎']===lt));
-    const vs = sp.filter(s=>ltIdx.has(s[S_DID])&&s[S_SUB]==='?쇱슫吏').map(s=>s[S_AREA]).filter(v=>v>0);
-    const avg = vs.length ? mean(vs) : null;
-    return avg ? (unit_E5==='??' ? avg*M2_TO_PYEONG : avg) : null;
-  });
-  mkChart('cE5', barCfg(ltypes.map(t=>t.replace(' / None','')), [{
-    label:`?쇱슫吏 ?됯퇏硫댁쟻(${unit_E5})`, data:E5data,
-    backgroundColor:C.?뚯뀥+'CC', borderRadius:6, borderSkipped:false
-  }], {indexAxis:'y', plugins:{datalabels:{display:true,color:'#2D2D3A',font:baseFont,anchor:'end',align:'end',formatter:v=>v?`${v.toFixed(2)}${unit_E5}`:''}},scales:{x:{title:{display:true,text:unit_E5,font:baseFont,color:'#6677AA'}}}}));
+  const unit = getUnit('E-lounge');
+  const useM2 = unit === 'm2';
+  const host = document.getElementById('cE5');
+  if (!host) return;
+  const loungeDrawingIds = new Set(
+    sp.filter(s => s[S_PROG] === '공용' && s[S_SUB] === '라운지').map(s => s[S_DID])
+  );
+
+  const loungeTypeEntries = Object.entries(groupBy(
+    filteredIdx.filter(i => {
+      const type = DRAWINGS[i]['라운지유형'];
+      return loungeDrawingIds.has(i) && type && type !== 'None';
+    }),
+    i => DRAWINGS[i]['라운지유형']
+  )).sort((a, b) => b[1].length - a[1].length);
+
+  if (!loungeTypeEntries.length) {
+    host.innerHTML = '<div class="empty">데이터가 없습니다</div>';
+    return;
+  }
+
+  host.innerHTML = loungeTypeEntries.map(([type, idxs]) => {
+    const avgArea = mean(
+      sp.filter(s => idxs.includes(s[S_DID]) && s[S_PROG] === '공용' && s[S_SUB] === '라운지')
+        .map(s => s[S_AREA])
+        .filter(v => v > 0)
+    );
+    const displayValue = avgArea ? (useM2 ? avgArea : avgArea * M2_TO_PYEONG) : null;
+    return `
+      <div class="metric-block">
+        <div class="mb-title">${type.replace(' / None','')}</div>
+        <div class="mb-main">${displayValue != null ? displayValue.toFixed(2) : '—'}<span>${unit}</span></div>
+        <div class="mb-sub">${idxs.length}개 도면 기준</div>
+      </div>
+    `;
+  }).join('');
 }
 
-*/
 function tableHtml(headers, rows) {
   return `
     <div class="tbl-wrap">
@@ -820,6 +846,9 @@ function slugify(text) {
 }
 let activeSec = 'A';
 let tocObserver = null;
+let tocPreviewCardId = null;
+let tocFocusedCardId = null;
+let tocFocusTimer = null;
 function setupCardAnchors() {
   document.querySelectorAll('.sec').forEach(sec => {
     const sectionId = sec.id.replace('sec-', '');
@@ -836,6 +865,48 @@ function setActiveTocItem(cardId) {
     item.classList.toggle('active', item.dataset.target === cardId);
   });
 }
+function clearCardState(className) {
+  document.querySelectorAll(`.card.${className}`).forEach(card => card.classList.remove(className));
+}
+function setPreviewCard(cardId) {
+  tocPreviewCardId = cardId || null;
+  clearCardState('toc-hover');
+  const host = document.getElementById('toc-links');
+  if (host) {
+    host.querySelectorAll('.toc-item').forEach(item => {
+      item.classList.toggle('preview', item.dataset.target === tocPreviewCardId);
+    });
+  }
+  if (!tocPreviewCardId || tocPreviewCardId === tocFocusedCardId) return;
+  const card = document.getElementById(tocPreviewCardId);
+  if (card) card.classList.add('toc-hover');
+}
+function setFocusedCard(cardId) {
+  tocFocusedCardId = cardId || null;
+  if (tocFocusTimer) {
+    clearTimeout(tocFocusTimer);
+    tocFocusTimer = null;
+  }
+  clearCardState('toc-focus');
+  if (!tocFocusedCardId) return;
+  const card = document.getElementById(tocFocusedCardId);
+  if (card) card.classList.add('toc-focus');
+  if (tocPreviewCardId && tocPreviewCardId !== tocFocusedCardId) setPreviewCard(tocPreviewCardId);
+}
+function flashFocusedCard(cardId, duration = 2200) {
+  setFocusedCard(cardId);
+  if (!cardId) return;
+  tocFocusTimer = setTimeout(() => {
+    setFocusedCard(null);
+  }, duration);
+}
+function scrollToCard(cardId) {
+  const card = document.getElementById(cardId);
+  if (!card) return;
+  setActiveTocItem(cardId);
+  flashFocusedCard(cardId);
+  card.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+}
 function observeCurrentCards() {
   if (tocObserver) tocObserver.disconnect();
   const sec = document.getElementById(`sec-${activeSec}`);
@@ -846,7 +917,10 @@ function observeCurrentCards() {
     const visible = entries
       .filter(entry => entry.isIntersecting)
       .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (visible?.target?.id) setActiveTocItem(visible.target.id);
+    if (visible?.target?.id) {
+      setActiveTocItem(visible.target.id);
+      if (tocFocusedCardId && tocFocusedCardId !== visible.target.id) setFocusedCard(null);
+    }
   }, {
     root: null,
     rootMargin: '-20% 0px -55% 0px',
@@ -860,6 +934,10 @@ function renderToc() {
   const sec = document.getElementById(`sec-${activeSec}`);
   if (!host || !sec) return;
   const cards = [...sec.querySelectorAll('.card')];
+  tocPreviewCardId = null;
+  tocFocusedCardId = null;
+  clearCardState('toc-hover');
+  clearCardState('toc-focus');
   host.innerHTML = cards.map((card, idx) => {
     const title = card.querySelector('.ct')?.textContent?.trim() || `지표 ${idx+1}`;
     return `
@@ -869,8 +947,24 @@ function renderToc() {
     `;
   }).join('');
   host.querySelectorAll('.toc-link').forEach(link => {
-    link.addEventListener('click', () => {
-      setActiveTocItem(link.getAttribute('href').slice(1));
+    const targetId = link.getAttribute('href').slice(1);
+    link.addEventListener('mouseenter', () => {
+      setPreviewCard(targetId);
+    });
+    link.addEventListener('mouseleave', () => {
+      setPreviewCard(null);
+    });
+    link.addEventListener('focus', () => {
+      setPreviewCard(targetId);
+    });
+    link.addEventListener('blur', () => {
+      setPreviewCard(null);
+    });
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      scrollToCard(targetId);
+      if (history.replaceState) history.replaceState(null, '', `#${targetId}`);
+      else location.hash = targetId;
     });
   });
   observeCurrentCards();
@@ -1398,14 +1492,33 @@ function renderE(dd, sp) {
   const tang = social.filter(s=>s[S_SUB]==='\ud0d5\ube44');
   const lounge = social.filter(s=>s[S_SUB]==='\ub77c\uc6b4\uc9c0');
   const loungeDrawingIds = new Set(lounge.map(s => s[S_DID]));
+  const avgLounge = mean(lounge.map(s=>s[S_AREA]).filter(v=>v>0));
+  const loungeTypeEntries = Object.entries(groupBy(
+    filteredIdx.filter(i => loungeDrawingIds.has(i) && DRAWINGS[i]['라운지유형'] && DRAWINGS[i]['라운지유형'] !== 'None'),
+    i => DRAWINGS[i]['라운지유형']
+  )).sort((a,b) => b[1].length - a[1].length);
 
   const loungeCnt = loungeDrawingIds.size;
   const avgTang = mean(tang.map(s=>s[S_AREA]).filter(v=>v>0));
+  const topLoungeType = loungeTypeEntries[0]?.[0]?.replace(' / None','') || '—';
+  const topLoungeTypePct = loungeTypeEntries[0] ? pct(loungeTypeEntries[0][1].length, loungeCnt || 1) : null;
 
   document.getElementById('kE-lounge').innerHTML = fmt1(pct(loungeCnt,dd.length)) + '<span>%</span>';
-  document.getElementById('kE-lounge-overall').innerHTML = '<b>' + fmt1(pct(loungeCnt,dd.length)) + '%</b> ? ?? ?? ??';
-  document.getElementById('kE-tang').innerHTML = fmt1(avgTang*M2_TO_PYEONG) + '<span>?</span>';
-  document.getElementById('kE-tang-m2').textContent = fmt1(avgTang)+'m?';
+  document.getElementById('kE-lounge-overall').innerHTML = '<b>' + fmt1(pct(loungeCnt,dd.length)) + '%</b> · 전체 도면 기준';
+  if (document.getElementById('kE-lounge-area')) {
+    document.getElementById('kE-lounge-area').innerHTML = fmt1(avgLounge*M2_TO_PYEONG) + '<span>평</span>';
+  }
+  if (document.getElementById('kE-lounge-area-m2')) {
+    document.getElementById('kE-lounge-area-m2').textContent = fmt1(avgLounge)+'m²';
+  }
+  document.getElementById('kE-tang').innerHTML = fmt1(avgTang*M2_TO_PYEONG) + '<span>평</span>';
+  document.getElementById('kE-tang-m2').textContent = fmt1(avgTang)+'m²';
+  if (document.getElementById('kE-ltype')) {
+    document.getElementById('kE-ltype').textContent = topLoungeType;
+  }
+  if (document.getElementById('kE-ltype-pct')) {
+    document.getElementById('kE-ltype-pct').textContent = topLoungeTypePct == null ? '—' : `${fmt1(topLoungeTypePct)}% · 라운지 도면 기준`;
+  }
 
   const SOC_SUBS = ['\ub77c\uc6b4\uc9c0','\ud0d5\ube44','\uae30\ud0c0\uc18c\uc15c\uacf5\uac04'];
   const SOC_COLS = [C['\uc18c\uc15c']+'CC',C['\uc18c\uc15c']+'88',C['\uc18c\uc15c']+'44'];
@@ -1483,14 +1596,14 @@ function renderE(dd, sp) {
   renderELoungeChart(dd, sp);
 
   const loungePrograms = [
-    ['\ub77c\uc6b4\uc9c0_\ud0d5\ube44','??'],
-    ['\ub77c\uc6b4\uc9c0_\uce74\ud398','??'],
-    ['\ub77c\uc6b4\uc9c0_\uc5d4\ud130','??????'],
-    ['\ub77c\uc6b4\uc9c0_\ud734\uac8c','??'],
-    ['\ub77c\uc6b4\uc9c0_\uc774\ubca4\ud2b8','???'],
-    ['\ub77c\uc6b4\uc9c0_\uc5c5\ubb34\uc624\ud508','??(??)'],
-    ['\ub77c\uc6b4\uc9c0_\uc5c5\ubb34\ub8f8','??(?)'],
-    ['\ub77c\uc6b4\uc9c0_\ud3f0\ubd80\uc2a4','???']
+    ['\ub77c\uc6b4\uc9c0_\ud0d5\ube44','탕비'],
+    ['\ub77c\uc6b4\uc9c0_\uce74\ud398','카페'],
+    ['\ub77c\uc6b4\uc9c0_\uc5d4\ud130','엔터'],
+    ['\ub77c\uc6b4\uc9c0_\ud734\uac8c','휴게'],
+    ['\ub77c\uc6b4\uc9c0_\uc774\ubca4\ud2b8','이벤트'],
+    ['\ub77c\uc6b4\uc9c0_\uc5c5\ubb34\uc624\ud508','업무(오픈)'],
+    ['\ub77c\uc6b4\uc9c0_\uc5c5\ubb34\ub8f8','업무(룸)'],
+    ['\ub77c\uc6b4\uc9c0_\ud3f0\ubd80\uc2a4','폰부스']
   ];
   const loungeIdx = filteredIdx.filter(i => loungeDrawingIds.has(i));
   const sortedPrograms = loungePrograms.map(([col,label]) => ({
@@ -1634,11 +1747,11 @@ function arrangeDashboardLayout() {
 // INIT
 Chart.register(ChartDataLabels);
 arrangeDashboardLayout();
+setupCardAnchors();
+renderToc();
 renderFilterGroups();
 setSidebarCollapsed(false);
 refresh();
-setupCardAnchors();
-renderToc();
 updateStickyOffsets();
 window.addEventListener('resize', updateStickyOffsets);
 </script>
