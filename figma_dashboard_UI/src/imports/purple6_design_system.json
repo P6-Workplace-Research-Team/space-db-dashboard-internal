@@ -1,0 +1,532 @@
+{
+  "brand": {
+    "name": "Purple6 Studio",
+    "nameKo": "퍼플식스 스튜디오",
+    "tagline": "We design workplace experience",
+    "description": "오피스 인테리어 전문 브랜드 — 기업의 비전을 실현하는 공간을 구현합니다",
+    "url": "https://purple6.studio",
+    "parent": "퍼시스 (fursys Inc.)"
+  },
+
+  "colors": {
+    "primary": "#7800f5",
+    "primary_light": "#b8a2f9",
+    "primary_lighter": "#eae5fe",
+    "black": "#000000",
+    "white": "#FFFFFF",
+
+    "gray": {
+      "100": "#f0f0f0",
+      "200": "#e8e8e8",
+      "300": "#d4d4d4",
+      "400": "#a7a7a7",
+      "500": "#868686",
+      "600": "#515151"
+    },
+
+    "status": {
+      "success": "#e5ffb1",
+      "success_text": "#3a6600",
+      "error": "#ee3a24",
+      "error_light": "#fff0ee",
+      "warning": "#fff3cd",
+      "warning_text": "#7a5200",
+      "info": "#eae5fe",
+      "info_text": "#7800f5"
+    },
+
+    "background": {
+      "default": "#FFFFFF",
+      "light_purple": "rgba(184, 162, 249, 0.3)",
+      "gray": "hsla(0, 0%, 94%, 0.4)",
+      "dark": "#0a0a0a",
+      "section_alt": "#f7f7f7"
+    },
+
+    "semantic": {
+      "text_primary": "#000000",
+      "text_secondary": "#515151",
+      "text_tertiary": "#868686",
+      "text_disabled": "#a7a7a7",
+      "text_on_dark": "#FFFFFF",
+      "text_on_primary": "#FFFFFF",
+      "border_default": "#e8e8e8",
+      "border_strong": "#d4d4d4",
+      "border_focus": "#7800f5",
+      "overlay_light": "rgba(255, 255, 255, 0.6)",
+      "overlay_dark": "rgba(0, 0, 0, 0.5)",
+      "overlay_brand": "rgba(120, 0, 245, 0.15)"
+    }
+  },
+
+  "typography": {
+    "font_family": {
+      "primary": "Pretendard, -apple-system, BlinkMacSystemFont, sans-serif",
+      "mono": "'Fira Code', 'Courier New', monospace"
+    },
+    "font_import": "https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css",
+
+    "scale": {
+      "display": {
+        "font_size": "72px",
+        "font_weight": "400",
+        "line_height": "1.2",
+        "letter_spacing": "-0.02em",
+        "usage": "히어로 메인 헤드라인"
+      },
+      "h1": {
+        "font_size": "72px",
+        "font_weight": "400",
+        "line_height": "1.4",
+        "letter_spacing": "-0.01em",
+        "usage": "페이지 대표 제목"
+      },
+      "h2": {
+        "font_size": "48px",
+        "font_weight": "400",
+        "line_height": "1.4",
+        "letter_spacing": "-0.01em",
+        "usage": "섹션 제목"
+      },
+      "h3": {
+        "font_size": "32px",
+        "font_weight": "500",
+        "line_height": "1.4",
+        "usage": "서브 섹션 제목"
+      },
+      "h4": {
+        "font_size": "24px",
+        "font_weight": "500",
+        "line_height": "1.4",
+        "usage": "카드 제목, 항목 제목"
+      },
+      "h5": {
+        "font_size": "20px",
+        "font_weight": "600",
+        "line_height": "1.4",
+        "usage": "소제목"
+      },
+      "body_lg": {
+        "font_size": "20px",
+        "font_weight": "400",
+        "line_height": "1.7",
+        "usage": "주요 본문, 리드 텍스트"
+      },
+      "body": {
+        "font_size": "16px",
+        "font_weight": "400",
+        "line_height": "1.7",
+        "usage": "일반 본문"
+      },
+      "body_sm": {
+        "font_size": "14px",
+        "font_weight": "400",
+        "line_height": "1.6",
+        "usage": "보조 본문, 설명"
+      },
+      "caption": {
+        "font_size": "12px",
+        "font_weight": "400",
+        "line_height": "1.5",
+        "usage": "캡션, 메타 정보"
+      },
+      "label": {
+        "font_size": "11px",
+        "font_weight": "500",
+        "line_height": "1.4",
+        "letter_spacing": "0.08em",
+        "text_transform": "uppercase",
+        "usage": "태그, 배지, 카테고리 레이블"
+      },
+      "overline": {
+        "font_size": "12px",
+        "font_weight": "500",
+        "line_height": "1.4",
+        "letter_spacing": "0.12em",
+        "text_transform": "uppercase",
+        "usage": "섹션 상단 레이블 (예: 'Who we are')"
+      }
+    }
+  },
+
+  "spacing": {
+    "unit": 8,
+    "scale": {
+      "0": "0px",
+      "1": "4px",
+      "2": "8px",
+      "3": "12px",
+      "4": "16px",
+      "5": "20px",
+      "6": "24px",
+      "8": "32px",
+      "10": "40px",
+      "12": "48px",
+      "16": "64px",
+      "20": "80px",
+      "24": "96px",
+      "32": "128px",
+      "40": "160px"
+    },
+    "section": {
+      "padding_y": "80px",
+      "padding_y_mobile": "48px"
+    },
+    "container": {
+      "max_width": "1280px",
+      "padding_x": "40px",
+      "padding_x_tablet": "24px",
+      "padding_x_mobile": "20px"
+    }
+  },
+
+  "border_radius": {
+    "none": "0px",
+    "sm": "4px",
+    "md": "8px",
+    "lg": "12px",
+    "full": "9999px",
+    "card": "4px",
+    "button": "0px",
+    "tag": "4px",
+    "note": "브랜드 기조는 직선(0px) 위주. sm/md는 카드·입력 등에 한정 사용"
+  },
+
+  "effects": {
+    "transition": {
+      "fast": "150ms ease",
+      "default": "0.3s ease",
+      "slow": "0.5s ease",
+      "page": "0.7s cubic-bezier(0.4, 0, 0.2, 1)"
+    },
+    "box_shadow": {
+      "sm": "0 1px 3px rgba(0, 0, 0, 0.08)",
+      "md": "0 2px 8px rgba(0, 0, 0, 0.1)",
+      "lg": "0 8px 24px rgba(0, 0, 0, 0.10)",
+      "card": "0 2px 8px rgba(0, 0, 0, 0.06)",
+      "brand": "0 4px 20px rgba(120, 0, 245, 0.18)",
+      "hover": "0 8px 20px rgba(120, 0, 245, 0.15)"
+    },
+    "backdrop_blur": "blur(12px)"
+  },
+
+  "components": {
+    "button": {
+      "primary": {
+        "background": "#000000",
+        "color": "#FFFFFF",
+        "border": "none",
+        "border_radius": "0px",
+        "padding": "10px 20px",
+        "font_size": "14px",
+        "font_weight": "500",
+        "letter_spacing": "0.04em",
+        "transition": "0.3s ease",
+        "hover": {
+          "background": "#7800f5"
+        }
+      },
+      "secondary": {
+        "background": "transparent",
+        "color": "#000000",
+        "border": "1px solid #000000",
+        "border_radius": "0px",
+        "padding": "9px 19px",
+        "hover": {
+          "background": "#000000",
+          "color": "#FFFFFF"
+        }
+      },
+      "brand": {
+        "background": "#7800f5",
+        "color": "#FFFFFF",
+        "border": "none",
+        "border_radius": "0px",
+        "padding": "12px 24px",
+        "hover": {
+          "background": "#6200cc"
+        }
+      },
+      "ghost": {
+        "background": "transparent",
+        "color": "#7800f5",
+        "border": "none",
+        "text_decoration": "underline",
+        "padding": "8px 0"
+      },
+      "sizes": {
+        "sm": { "padding": "6px 14px", "font_size": "12px" },
+        "md": { "padding": "10px 20px", "font_size": "14px" },
+        "lg": { "padding": "14px 28px", "font_size": "16px" }
+      }
+    },
+
+    "card": {
+      "default": {
+        "background": "#FFFFFF",
+        "border_radius": "4px",
+        "shadow": "0 2px 8px rgba(0, 0, 0, 0.06)",
+        "overflow": "hidden",
+        "transition": "transform 0.3s ease, box-shadow 0.3s ease"
+      },
+      "hover": {
+        "transform": "translateY(-4px)",
+        "shadow": "0 8px 24px rgba(0, 0, 0, 0.10)"
+      },
+      "outlined": {
+        "background": "#FFFFFF",
+        "border": "1px solid #e8e8e8",
+        "border_radius": "4px"
+      },
+      "brand": {
+        "background": "rgba(184, 162, 249, 0.3)",
+        "border": "none",
+        "border_radius": "4px"
+      },
+      "image": {
+        "aspect_ratio": "4/3",
+        "object_fit": "cover",
+        "overlay_on_hover": "rgba(0, 0, 0, 0.5)"
+      }
+    },
+
+    "navigation": {
+      "height": "72px",
+      "background": "#FFFFFF",
+      "border_bottom": "1px solid #e8e8e8",
+      "font_size": "14px",
+      "font_weight": "500",
+      "letter_spacing": "0.05em",
+      "text_transform": "uppercase",
+      "color": "#000000",
+      "active_color": "#7800f5",
+      "hover_color": "#7800f5",
+      "cta_button": {
+        "background": "#000000",
+        "color": "#FFFFFF",
+        "border_radius": "0px",
+        "padding": "8px 20px"
+      }
+    },
+
+    "badge": {
+      "new": {
+        "background": "#7800f5",
+        "color": "#FFFFFF",
+        "border_radius": "4px",
+        "padding": "2px 8px",
+        "font_size": "11px",
+        "font_weight": "500"
+      },
+      "best": {
+        "background": "#000000",
+        "color": "#FFFFFF",
+        "border_radius": "4px",
+        "padding": "2px 8px",
+        "font_size": "11px",
+        "font_weight": "500"
+      },
+      "category": {
+        "background": "#f0f0f0",
+        "color": "#515151",
+        "border_radius": "4px",
+        "padding": "3px 10px",
+        "font_size": "11px",
+        "font_weight": "500",
+        "letter_spacing": "0.06em"
+      }
+    },
+
+    "tag": {
+      "background": "#f0f0f0",
+      "color": "#515151",
+      "border_radius": "4px",
+      "padding": "4px 10px",
+      "font_size": "12px",
+      "font_weight": "400",
+      "hover": {
+        "background": "#eae5fe",
+        "color": "#7800f5"
+      }
+    },
+
+    "input": {
+      "background": "#FFFFFF",
+      "border": "1px solid #d4d4d4",
+      "border_radius": "0px",
+      "padding": "12px 16px",
+      "font_size": "14px",
+      "color": "#000000",
+      "placeholder_color": "#a7a7a7",
+      "focus_border": "#7800f5",
+      "focus_shadow": "0 0 0 3px rgba(120, 0, 245, 0.1)",
+      "error_border": "#ee3a24",
+      "disabled_background": "#f0f0f0"
+    },
+
+    "divider": {
+      "color": "#e8e8e8",
+      "thickness": "1px",
+      "accent_color": "#7800f5",
+      "accent_width": "40px"
+    },
+
+    "table": {
+      "header_background": "#f0f0f0",
+      "header_color": "#000000",
+      "header_font_weight": "600",
+      "row_border": "1px solid #e8e8e8",
+      "row_hover_background": "rgba(184, 162, 249, 0.15)",
+      "stripe_background": "hsla(0, 0%, 94%, 0.4)"
+    },
+
+    "tooltip": {
+      "background": "#000000",
+      "color": "#FFFFFF",
+      "border_radius": "4px",
+      "padding": "6px 12px",
+      "font_size": "12px"
+    },
+
+    "progress_bar": {
+      "background": "#e8e8e8",
+      "fill": "#7800f5",
+      "height": "4px",
+      "border_radius": "0px"
+    },
+
+    "chart": {
+      "colors": [
+        "#7800f5",
+        "#b8a2f9",
+        "#000000",
+        "#868686",
+        "#eae5fe",
+        "#d4d4d4"
+      ],
+      "grid_color": "#e8e8e8",
+      "axis_color": "#a7a7a7",
+      "tooltip_background": "#000000",
+      "tooltip_color": "#FFFFFF"
+    }
+  },
+
+  "layout": {
+    "grid": {
+      "columns": 12,
+      "gutter": "24px",
+      "gutter_mobile": "16px"
+    },
+    "breakpoints": {
+      "mobile": "375px",
+      "tablet": "768px",
+      "desktop": "1024px",
+      "wide": "1280px"
+    },
+    "content_width": {
+      "narrow": "640px",
+      "medium": "960px",
+      "wide": "1280px"
+    }
+  },
+
+  "motion": {
+    "duration": {
+      "fast": "150ms",
+      "normal": "300ms",
+      "slow": "500ms",
+      "page": "700ms"
+    },
+    "easing": {
+      "default": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "enter": "cubic-bezier(0, 0, 0.2, 1)",
+      "exit": "cubic-bezier(0.4, 0, 1, 1)",
+      "spring": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+    },
+    "patterns": {
+      "fade_up": "opacity 0→1, translateY 20px→0",
+      "fade_in": "opacity 0→1",
+      "slide_in": "translateX -20px→0, opacity 0→1",
+      "scale_in": "scale 0.95→1, opacity 0→1"
+    }
+  },
+
+  "imagery": {
+    "style": "고화질 오피스 공간 사진, 자연광 강조, 따뜻하고 세련된 톤",
+    "color_tone": "따뜻한 중립 톤, 과도한 채도 지양",
+    "aspect_ratios": {
+      "hero": "16/9",
+      "card": "4/3",
+      "portrait": "3/4",
+      "thumbnail": "1/1"
+    },
+    "overlay": {
+      "light": "rgba(255, 255, 255, 0.3)",
+      "dark": "rgba(0, 0, 0, 0.5)",
+      "brand": "rgba(120, 0, 245, 0.15)"
+    }
+  },
+
+  "iconography": {
+    "style": "선형(Line) 아이콘, 최소한의 장식",
+    "stroke_width": "1.5px",
+    "size": {
+      "xs": "12px",
+      "sm": "16px",
+      "md": "20px",
+      "lg": "24px",
+      "xl": "32px"
+    }
+  },
+
+  "visual_style": {
+    "keywords": ["Minimal", "Modern", "Purple-accented", "High-contrast", "Clean"],
+    "description": "고대비 블랙-화이트 베이스에 선명한 퍼플(#7800f5)을 포인트로 사용. Pretendard 타입페이스로 모던하고 깔끔한 인상. 직선 위주의 기하학적 레이아웃."
+  },
+
+  "dashboard_guidelines": {
+    "sidebar": {
+      "width": "240px",
+      "background": "#000000",
+      "text_color": "#FFFFFF",
+      "active_item_background": "#7800f5",
+      "hover_item_background": "rgba(255, 255, 255, 0.08)",
+      "logo_area_height": "72px"
+    },
+    "topbar": {
+      "height": "64px",
+      "background": "#FFFFFF",
+      "border_bottom": "1px solid #e8e8e8",
+      "shadow": "0 1px 3px rgba(0, 0, 0, 0.06)"
+    },
+    "content_area": {
+      "background": "#f7f7f7",
+      "padding": "32px",
+      "padding_mobile": "16px"
+    },
+    "stat_card": {
+      "background": "#FFFFFF",
+      "border": "none",
+      "border_radius": "4px",
+      "shadow": "0 2px 8px rgba(0, 0, 0, 0.06)",
+      "padding": "24px",
+      "accent_bar_width": "4px",
+      "accent_color": "#7800f5"
+    },
+    "kpi_highlight": {
+      "background": "#7800f5",
+      "color": "#FFFFFF",
+      "border_radius": "4px"
+    }
+  },
+
+  "meta": {
+    "version": "2.0.0",
+    "created_at": "2026-04-15",
+    "sources": [
+      "purple6_design_system.json (AI-extracted)",
+      "https://purple6.studio (web analysis)"
+    ],
+    "notes": "두 소스를 병합하여 완성. 실제 CSS 값(#7800f5 등)을 기준으로 정교화함. dashboard_guidelines는 대시보드 제작 전용 가이드."
+  }
+}

@@ -1,0 +1,5 @@
+2026/04/15-10:53:20.069 2124 Creating DB C:\Users\HP\Documents\Claude\Projects\spacedatabase dashboard\.codex-edge-profile-g-wrapper\Default\EdgeCoupons/coupons_data.db since it was missing.
+2026/04/15-10:53:20.088 2124 Reusing MANIFEST C:\Users\HP\Documents\Claude\Projects\spacedatabase dashboard\.codex-edge-profile-g-wrapper\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/04/15-10:53:20.275 6090 Level-0 table #5: started
+2026/04/15-10:53:20.285 6090 Level-0 table #5: 682105 bytes OK
+2026/04/15-10:53:20.287 6090 Delete type=0 #3

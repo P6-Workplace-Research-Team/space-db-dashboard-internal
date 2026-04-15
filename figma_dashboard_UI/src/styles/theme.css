@@ -1,0 +1,243 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Purple6 Brand Colors */
+  --purple6-primary: #7800f5;
+  --purple6-primary-light: #b8a2f9;
+  --purple6-primary-lighter: #eae5fe;
+  --purple6-black: #000000;
+  --purple6-white: #FFFFFF;
+  
+  /* Purple6 Grays */
+  --purple6-gray-100: #f0f0f0;
+  --purple6-gray-200: #e8e8e8;
+  --purple6-gray-300: #d4d4d4;
+  --purple6-gray-400: #a7a7a7;
+  --purple6-gray-500: #868686;
+  --purple6-gray-600: #515151;
+  
+  /* Purple6 Status Colors */
+  --purple6-success: #e5ffb1;
+  --purple6-success-text: #3a6600;
+  --purple6-error: #ee3a24;
+  --purple6-error-light: #fff0ee;
+  --purple6-warning: #fff3cd;
+  --purple6-warning-text: #7a5200;
+  --purple6-info: #eae5fe;
+  --purple6-info-text: #7800f5;
+  
+  /* Purple6 Backgrounds */
+  --purple6-bg-default: #FFFFFF;
+  --purple6-bg-light-purple: rgba(184, 162, 249, 0.3);
+  --purple6-bg-gray: hsla(0, 0%, 94%, 0.4);
+  --purple6-bg-section-alt: #f7f7f7;
+  
+  /* Font Family */
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  /* Base variables mapped to Purple6 */
+  --font-size: 16px;
+  --background: var(--purple6-white);
+  --foreground: var(--purple6-black);
+  --card: var(--purple6-white);
+  --card-foreground: var(--purple6-black);
+  --popover: var(--purple6-white);
+  --popover-foreground: var(--purple6-black);
+  --primary: var(--purple6-primary);
+  --primary-foreground: var(--purple6-white);
+  --secondary: var(--purple6-gray-100);
+  --secondary-foreground: var(--purple6-gray-600);
+  --muted: var(--purple6-gray-100);
+  --muted-foreground: var(--purple6-gray-500);
+  --accent: var(--purple6-primary-lighter);
+  --accent-foreground: var(--purple6-primary);
+  --destructive: var(--purple6-error);
+  --destructive-foreground: var(--purple6-white);
+  --border: var(--purple6-gray-200);
+  --input: transparent;
+  --input-background: var(--purple6-white);
+  --switch-background: var(--purple6-gray-300);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: var(--purple6-primary);
+  --chart-1: var(--purple6-primary);
+  --chart-2: var(--purple6-primary-light);
+  --chart-3: var(--purple6-black);
+  --chart-4: var(--purple6-gray-500);
+  --chart-5: var(--purple6-primary-lighter);
+  --radius: 0.25rem; /* 4px - Purple6 uses minimal radius */
+  --sidebar: var(--purple6-black);
+  --sidebar-foreground: var(--purple6-white);
+  --sidebar-primary: var(--purple6-primary);
+  --sidebar-primary-foreground: var(--purple6-white);
+  --sidebar-accent: rgba(255, 255, 255, 0.08);
+  --sidebar-accent-foreground: var(--purple6-white);
+  --sidebar-border: var(--purple6-gray-600);
+  --sidebar-ring: var(--purple6-primary);
+}
+
+.dark {
+  --background: var(--purple6-black);
+  --foreground: var(--purple6-white);
+  --card: #0a0a0a;
+  --card-foreground: var(--purple6-white);
+  --popover: var(--purple6-black);
+  --popover-foreground: var(--purple6-white);
+  --primary: var(--purple6-primary);
+  --primary-foreground: var(--purple6-white);
+  --secondary: var(--purple6-gray-600);
+  --secondary-foreground: var(--purple6-white);
+  --muted: var(--purple6-gray-600);
+  --muted-foreground: var(--purple6-gray-400);
+  --accent: var(--purple6-gray-600);
+  --accent-foreground: var(--purple6-white);
+  --destructive: var(--purple6-error);
+  --destructive-foreground: var(--purple6-white);
+  --border: var(--purple6-gray-600);
+  --input: var(--purple6-gray-600);
+  --ring: var(--purple6-primary);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: var(--purple6-primary);
+  --chart-2: var(--purple6-primary-light);
+  --chart-3: var(--purple6-white);
+  --chart-4: var(--purple6-gray-400);
+  --chart-5: var(--purple6-primary-lighter);
+  --sidebar: var(--purple6-black);
+  --sidebar-foreground: var(--purple6-white);
+  --sidebar-primary: var(--purple6-primary);
+  --sidebar-primary-foreground: var(--purple6-white);
+  --sidebar-accent: rgba(255, 255, 255, 0.08);
+  --sidebar-accent-foreground: var(--purple6-white);
+  --sidebar-border: var(--purple6-gray-600);
+  --sidebar-ring: var(--purple6-primary);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  
+  /* Purple6 specific colors */
+  --color-purple6-primary: var(--purple6-primary);
+  --color-purple6-primary-light: var(--purple6-primary-light);
+  --color-purple6-primary-lighter: var(--purple6-primary-lighter);
+  --color-purple6-black: var(--purple6-black);
+  --color-purple6-white: var(--purple6-white);
+  --color-purple6-gray-100: var(--purple6-gray-100);
+  --color-purple6-gray-200: var(--purple6-gray-200);
+  --color-purple6-gray-300: var(--purple6-gray-300);
+  --color-purple6-gray-400: var(--purple6-gray-400);
+  --color-purple6-gray-500: var(--purple6-gray-500);
+  --color-purple6-gray-600: var(--purple6-gray-600);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  /**
+  * Purple6 Typography styles
+  */
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  h4 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  p {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  button {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  input {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+}

@@ -188,6 +188,79 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 .toc-item.preview .toc-link::before{background:var(--p2)}
 .kpi,.summary-pill,.value-panel,.rank-item,.mini-row{min-width:0}
 .cw canvas{max-width:100%}
+.guide-shell{display:flex;flex-direction:column;gap:18px}
+.guide-hero{padding:26px 28px;background:linear-gradient(135deg,#FBF6F7 0%,#F6F1FC 100%);border:1px solid #E9E0F3;border-radius:20px}
+.guide-hero h2{font-size:28px;font-weight:900;color:var(--tx);letter-spacing:-.4px;margin-bottom:8px}
+.guide-hero p{font-size:13px;color:#6E6790;line-height:1.7;max-width:920px}
+.guide-toolbar{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;align-items:start}
+.guide-filter-panel,.guide-summary-panel{background:#fff;border:1px solid var(--bd);border-radius:18px;padding:18px;box-shadow:0 8px 24px rgba(107,79,160,.06)}
+.guide-panel-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.guide-panel-title h3{font-size:14px;font-weight:800;color:var(--tx)}
+.guide-panel-title p{font-size:11px;color:var(--lt)}
+.guide-filter-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.guide-filter-box{display:flex;flex-direction:column;gap:7px}
+.guide-filter-box label{font-size:11px;font-weight:800;color:var(--p)}
+.guide-filter-box select{width:100%;padding:11px 12px;border:1.5px solid var(--bd);border-radius:12px;background:#fff;color:var(--tx);font:inherit}
+.guide-filter-box select:focus{outline:none;border-color:var(--p2);box-shadow:0 0 0 3px rgba(139,111,192,.12)}
+.guide-filter-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;flex-wrap:wrap}
+.guide-btn{padding:9px 14px;border:1.5px solid var(--bd);border-radius:999px;background:#fff;color:var(--mid);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:.18s}
+.guide-btn:hover{border-color:var(--p2);color:var(--p);background:#FAF7FE}
+.guide-btn.primary{border-color:var(--p);background:var(--p);color:#fff}
+.guide-btn.primary:hover{background:#5d448f}
+.guide-extra-panel{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--pale2)}
+.guide-extra-panel.open{display:block}
+.guide-extra-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.guide-summary-stack{display:flex;flex-direction:column;gap:10px}
+.guide-summary-main{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.guide-summary-card{border:1px solid var(--bd);border-radius:14px;padding:14px;background:linear-gradient(180deg,#FCFBFE 0%,#F7F4FB 100%)}
+.guide-summary-card .eyebrow{font-size:10px;font-weight:800;color:var(--p);letter-spacing:.4px;margin-bottom:8px}
+.guide-summary-card .big{font-size:26px;font-weight:900;color:var(--tx);line-height:1.08}
+.guide-summary-card .big span{font-size:13px;font-weight:700;color:var(--mid);margin-left:4px}
+.guide-summary-card .meta{font-size:11px;color:var(--mid);margin-top:6px;line-height:1.6}
+.guide-summary-list{display:flex;flex-wrap:wrap;gap:8px}
+.guide-chip{padding:7px 10px;border-radius:999px;background:#F6F1FC;color:#6E6790;font-size:11px;font-weight:700}
+.guide-chip strong{color:var(--p);margin-right:4px}
+.guide-step-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.guide-step-head h3{font-size:18px;font-weight:900;color:var(--tx)}
+.guide-step-head p{font-size:12px;color:var(--lt);margin-top:3px}
+.guide-step-actions{display:flex;gap:8px;flex-wrap:wrap}
+.guide-step-nav{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.guide-step-btn{border:none;border-radius:16px;padding:14px 14px 13px;background:#ECE7F5;color:#72698C;text-align:left;cursor:pointer;font-family:inherit;transition:.18s;min-width:0}
+.guide-step-btn:hover{background:#E4DCF1;color:var(--p)}
+.guide-step-btn.active{background:linear-gradient(135deg,#6B4FA0,#8B6FC0);color:#fff;box-shadow:0 10px 22px rgba(107,79,160,.22)}
+.guide-step-btn.dimmed{opacity:.72}
+.guide-step-btn .num{display:block;font-size:10px;font-weight:900;letter-spacing:.5px;margin-bottom:6px}
+.guide-step-btn .name{display:block;font-size:13px;font-weight:800;line-height:1.35}
+.guide-step-btn .sub{display:block;font-size:10px;line-height:1.45;margin-top:5px;opacity:.86}
+.guide-steps{display:flex;flex-direction:column;gap:14px}
+.guide-step-block{padding:0;overflow:hidden}
+.guide-step-block.collapsed{opacity:.92}
+.guide-step-anchor{scroll-margin-top:calc(var(--header-top,49px) + 26px)}
+.guide-step-header{padding:18px 20px 16px;border-bottom:1px solid transparent;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.guide-step-block.open .guide-step-header{border-bottom-color:var(--pale2)}
+.guide-step-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;color:var(--p);margin-bottom:8px}
+.guide-step-dot{width:10px;height:10px;border-radius:999px;background:var(--step-color,#6B4FA0);box-shadow:0 0 0 5px color-mix(in srgb,var(--step-color,#6B4FA0) 16%, white)}
+.guide-step-title{font-size:20px;font-weight:900;color:var(--tx);line-height:1.35}
+.guide-step-subtitle{font-size:13px;color:#6E6790;margin-top:6px}
+.guide-step-desc{font-size:12px;color:var(--lt);line-height:1.7;max-width:760px;margin-top:10px}
+.guide-step-state{font-size:11px;font-weight:800;color:var(--mid);white-space:nowrap;padding-top:3px}
+.guide-step-body{padding:18px 20px 20px;display:none}
+.guide-step-block.open .guide-step-body{display:block}
+.guide-metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.guide-metric{border:1px solid var(--bd);border-radius:16px;padding:16px;background:linear-gradient(180deg,#FFFFFF 0%,#FAF7FE 100%);min-width:0}
+.guide-metric .kind{font-size:10px;font-weight:900;color:var(--step-color,#6B4FA0);letter-spacing:.4px;margin-bottom:8px}
+.guide-metric .title{font-size:13px;font-weight:800;color:var(--tx);line-height:1.45;min-height:38px}
+.guide-metric .value{font-size:34px;font-weight:900;color:#1F1C2E;line-height:1.05;margin:14px 0 8px}
+.guide-metric .value span{font-size:14px;font-weight:700;color:#7B7396;margin-left:4px}
+.guide-metric.wide{grid-column:span 2}
+.guide-metric-detail{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.guide-mini-list{display:flex;flex-direction:column;gap:7px}
+.guide-mini-row{display:flex;justify-content:space-between;gap:12px;padding:8px 10px;border:1px solid var(--bd);border-radius:10px;background:#fff;font-size:11px;line-height:1.5}
+.guide-mini-row span{color:var(--mid);font-weight:700}
+.guide-mini-row b{color:var(--tx);font-weight:800}
+.guide-metric .hint{font-size:11px;color:var(--mid);line-height:1.65}
+.guide-metric.placeholder .value{color:#B3A9C9}
+.guide-step-note{margin-top:12px;padding:12px 14px;border-radius:14px;background:#F7F2FD;color:#6E6790;font-size:12px;line-height:1.7}
 
 @media (max-width:1680px){
   .content-col{margin-right:244px}
@@ -203,11 +276,16 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
   .krow,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
   .g3{grid-template-columns:repeat(2,minmax(0,1fr))}
   .g6{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .guide-toolbar{grid-template-columns:minmax(0,1fr)}
+  .guide-step-nav{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 
 @media (max-width:1180px){
   .g2,.g2.overview-range,.g2.social-bottom,.g3,.subgrid,.metric-grid4,.metric-grid4.compact{grid-template-columns:minmax(0,1fr)}
   .g6{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .guide-filter-grid,.guide-extra-grid,.guide-summary-main,.guide-metric-grid{grid-template-columns:minmax(0,1fr)}
+  .guide-metric.wide{grid-column:auto}
+  .guide-step-nav{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
 @media (max-width:900px){
@@ -217,6 +295,11 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
   .page-shell.sidebar-collapsed .fbar{width:auto;padding:14px;overflow:auto}
   .content-col,.page-shell.sidebar-collapsed .content-col{margin-left:0;margin-right:0}
   .krow,.g4,.g6{grid-template-columns:minmax(0,1fr)}
+  .guide-hero{padding:22px 18px}
+  .guide-hero h2{font-size:24px}
+  .guide-step-nav{grid-template-columns:minmax(0,1fr)}
+  .guide-step-header{padding:16px}
+  .guide-step-body{padding:16px}
 }
 </style>
 </head>
@@ -232,6 +315,7 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
       <button class="nv" onclick="showSec('D',this)"><span class="dot" style="background:var(--회의)"></span>회의공간</button>
       <button class="nv" onclick="showSec('E',this)"><span class="dot" style="background:var(--소셜)"></span>소셜공간</button>
       <button class="nv" onclick="showSec('F',this)"><span class="dot" style="background:var(--지원)"></span>지원공간</button>
+      <button class="nv" onclick="showSec('G',this)"><span class="dot" style="background:var(--p2)"></span>오피스는 어떻게 만들어야 하나요?</button>
     </nav>
   </div>
   <div class="hdr-badges">
@@ -422,6 +506,51 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
   </div>
 </section>
 
+<!-- ═══ G. 설계 가이드 ═══ -->
+<section class="sec" id="sec-G">
+  <div class="guide-shell">
+    <section class="guide-hero">
+      <h2>오피스는 어떻게 만들어야 하나요?</h2>
+      <p>공간DB의 여러 지표를 실제 설계 순서에 맞춰 다시 배치한 가이드 탭입니다. 조건을 먼저 고르고, 전체 조닝부터 지원 공간까지 스텝 바이 스텝으로 적정 값과 적정 범위를 확인할 수 있도록 구성합니다.</p>
+    </section>
+
+    <section class="guide-toolbar">
+      <div class="guide-filter-panel">
+        <div class="guide-panel-title">
+          <div>
+            <h3>보고자 하는 도면의 조건</h3>
+            <p>기존 필터 변수와 연동되는 설계용 요약 필터입니다.</p>
+          </div>
+        </div>
+        <div id="guide-filter-host"></div>
+      </div>
+      <div class="guide-summary-panel">
+        <div class="guide-panel-title">
+          <div>
+            <h3>현재 설계 기준</h3>
+            <p>선택한 조건에 맞는 도면 집합과 활용 포인트를 요약합니다.</p>
+          </div>
+        </div>
+        <div id="guide-summary-host"></div>
+      </div>
+    </section>
+
+    <section class="guide-step-head">
+      <div>
+        <h3>설계 스텝</h3>
+        <p>전체 조닝부터 지원 공간까지, 실제 설계 흐름에 맞춰 단계별로 확인합니다.</p>
+      </div>
+      <div class="guide-step-actions">
+        <button class="guide-btn" type="button" id="guide-extra-toggle" onclick="toggleGuideExtras()">기타 변수 펼치기</button>
+        <button class="guide-btn primary" type="button" id="guide-expand-toggle" onclick="toggleGuideExpandAll()">전체보기</button>
+      </div>
+    </section>
+
+    <section class="guide-step-nav" id="guide-step-nav"></section>
+    <div class="guide-steps" id="guide-steps"></div>
+  </div>
+</section>
+
 </div><!-- /main -->
 
 <script>
@@ -533,9 +662,99 @@ const FILTER_OPTION_ORDERS = {
   참고도면: ['O','X']
 };
 const F = Object.fromEntries(FILTER_KEYS.map(key => [key, []]));
+const GF = Object.fromEntries(FILTER_KEYS.map(key => [key, []]));
 let sidebarCollapsed = false;
 let unitStates = {};
 let viewStates = { 'C-furniture':'overall' };
+let guideStep = 1;
+let guideShowAll = false;
+let guideExtrasOpen = false;
+const GUIDE_PRIMARY_KEYS = ['가용면적구간','인원구간','업종'];
+const GUIDE_FILTER_LABELS = {
+  가용면적구간:'가용 면적',
+  인원구간:'인원 구간',
+  업종:'산업군'
+};
+const GUIDE_STEPS = [
+  {
+    id:1,
+    short:'전체 조닝',
+    subtitle:'층 내 조닝 배분',
+    title:'Step 1. 오피스 한 층에는 어떤 공간 프로그램을, 어떻게 배치해야 하나요?',
+    desc:'층 전체에서 어떤 공간을 얼마나 배분해야 하는지, 설계의 큰 프레임을 먼저 정리하는 단계입니다.',
+    color:'#6B4FA0',
+    metrics:[
+      { kind:'적정 비중', title:'핵심 공간 프로그램 비중', unit:'%', hint:'개괄 탭의 전체 프로그램 구성 비율을 이 위치에 연결할 예정입니다.' },
+      { kind:'적정 범위', title:'층당 가용 면적 범위', unit:'평', hint:'선택한 조건에 맞는 도면의 1사분위~3사분위 범위를 제시하는 자리입니다.' },
+      { kind:'대표 선택', title:'기준이 되는 조닝 배분 방식', unit:'', hint:'가장 빈도가 높은 공간 조합이나 계획 유형을 보여줄 예정입니다.' }
+    ]
+  },
+  {
+    id:2,
+    short:'업무',
+    subtitle:'업무 공간',
+    title:'Step 2. 불편하지 않은 업무 공간은 어떻게 만드나요?',
+    desc:'업무 공간의 비중, 인당 면적, 데스크와 배치 간격처럼 실제 좌석 계획에 바로 쓰이는 기준을 확인합니다.',
+    color:'#F0A040',
+    metrics:[
+      { kind:'적정 값', title:'업무 공간 비중', unit:'%', hint:'전체 유효 면적 대비 업무 공간의 중앙값이 들어갑니다.' },
+      { kind:'적정 범위', title:'인당 면적', unit:'㎡', hint:'업무공간 탭의 중앙값과 사분위 범위를 연결할 예정입니다.' },
+      { kind:'대표 선택', title:'주요 데스크/배치 기준', unit:'', hint:'가장 많이 선택된 데스크 형태, 너비, 등간격 정보를 요약합니다.' }
+    ]
+  },
+  {
+    id:3,
+    short:'임원',
+    subtitle:'임원 공간',
+    title:'Step 3. 임원실은 어떤 규모로, 어떤 분위기로 만들어야 하나요?',
+    desc:'임원 공간의 규모와 선호 가구 구성을 함께 보면서, 공간 크기와 분위기를 동시에 결정하는 단계입니다.',
+    color:'#E06060',
+    metrics:[
+      { kind:'적정 값', title:'임원실 평균 면적', unit:'㎡', hint:'실형 임원실 기준의 대표 면적 값을 연결할 예정입니다.' },
+      { kind:'대표 선택', title:'가장 많이 쓰는 가구 구성', unit:'', hint:'책상, 소파, 회의테이블 구성의 우세 조합을 보여줍니다.' },
+      { kind:'적정 값', title:'임원 공간 개소', unit:'개소', hint:'층당 또는 도면당 필요한 개소 기준을 담을 수 있는 자리입니다.' }
+    ]
+  },
+  {
+    id:4,
+    short:'회의',
+    subtitle:'회의 공간',
+    title:'Step 4. 회의실은 몇 개, 어느 정도 규모로 만들어야 하나요?',
+    desc:'회의실 개소와 규모별 면적을 같이 보며 소형실부터 대형실까지 필요한 구성을 정리하는 단계입니다.',
+    color:'#45B8AC',
+    metrics:[
+      { kind:'적정 값', title:'회의실 평균 개소', unit:'개소', hint:'회의실이 있는 도면 기준의 중앙값이 들어갑니다.' },
+      { kind:'적정 값', title:'4인 이하 회의실 평균 면적', unit:'㎡', hint:'작은 회의실의 기준 면적을 먼저 보여주기 위한 자리입니다.' },
+      { kind:'적정 범위', title:'규모별 회의실 개소/면적', unit:'', hint:'4인 이하, 5-8인, 9-16인, 17인 이상 구간 기준을 넣을 예정입니다.' }
+    ]
+  },
+  {
+    id:5,
+    short:'소셜',
+    subtitle:'소셜 공간',
+    title:'Step 5. 소셜 공간은 얼마나 할애해야 하고, 어떤 프로그램을 넣어야 할까요?',
+    desc:'라운지와 탕비 등 소셜 공간의 비중과 프로그램 우선순위를 보며 휴게 경험의 방향을 정리합니다.',
+    color:'#5CAB6A',
+    metrics:[
+      { kind:'적정 값', title:'소셜 공간 비중', unit:'%', hint:'전체 유효 면적 대비 권장 비중을 보여주는 자리입니다.' },
+      { kind:'대표 선택', title:'대표 라운지 유형', unit:'', hint:'가장 많이 채택된 라운지 유형 또는 분위기를 연결합니다.' },
+      { kind:'적정 값', title:'탕비/라운지 평균 면적', unit:'㎡', hint:'탕비와 라운지의 기준 면적을 한 눈에 정리할 예정입니다.' }
+    ]
+  },
+  {
+    id:6,
+    short:'지원',
+    subtitle:'지원 공간',
+    title:'Step 6. 폰부스, OA 공간은 몇 개, 어느 정도 규모로 만들어야 하나요?',
+    desc:'폰부스, 선택업무, OA처럼 업무를 보조하는 공간의 최소 확보 기준을 확인하는 마지막 단계입니다.',
+    color:'#9980B0',
+    metrics:[
+      { kind:'적정 값', title:'폰부스/선택업무 평균 개소', unit:'개소', hint:'지원공간 탭의 개소 기준을 직접 가져올 예정입니다.' },
+      { kind:'적정 값', title:'OA 평균 개소', unit:'개소', hint:'OA가 있는 도면 기준의 대표 값이 들어갑니다.' },
+      { kind:'적정 범위', title:'지원 공간 평균 면적', unit:'㎡', hint:'면적 기준이 확정되면 함께 연결할 수 있도록 비워둔 슬롯입니다.' }
+    ]
+  }
+];
 
 function normalizeFlag(v) {
   return String(v ?? '').trim() === 'O' ? 'O' : 'X';
@@ -645,6 +864,822 @@ function resetFilters() {
   document.querySelectorAll('.fdrop').forEach(drop => { drop.open = false; });
   refresh();
 }
+function setGuideFilter(key, encodedValue) {
+  const value = encodedValue ? decodeURIComponent(encodedValue) : '';
+  GF[key] = value ? [value] : [];
+  refresh();
+}
+function resetGuideFilters() {
+  Object.keys(GF).forEach(k => GF[k] = []);
+  refresh();
+}
+function toggleGuideExtras() {
+  guideExtrasOpen = !guideExtrasOpen;
+  renderGuideTab();
+  if (activeSec === 'G') renderGuideAwareToc();
+}
+function toggleGuideExpandAll() {
+  guideShowAll = !guideShowAll;
+  renderGuideTab();
+  if (activeSec === 'G') renderGuideAwareToc();
+}
+function jumpGuideStep(stepId) {
+  guideStep = stepId;
+  guideShowAll = false;
+  renderGuideTab();
+  if (activeSec === 'G') renderGuideAwareToc();
+  requestAnimationFrame(() => {
+    document.getElementById(`guide-step-${stepId}`)?.scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+}
+
+function drawingMatchesFilters(d, filters) {
+  return FILTER_KEYS.every(key => !filters[key].length || filters[key].includes(getFilterValue(d, key)));
+}
+function getGuideFilteredIdx() {
+  const idx = [];
+  for (let i=0; i<DRAWINGS.length; i++) {
+    const d = DRAWINGS[i];
+    if (!drawingMatchesFilters(d, F)) continue;
+    if (!drawingMatchesFilters(d, GF)) continue;
+    idx.push(i);
+  }
+  return idx;
+}
+function getGuideFilterValues(key) {
+  return GF[key].length ? GF[key] : F[key];
+}
+function summarizeGuideFilter(key) {
+  const values = getGuideFilterValues(key);
+  if (!values.length) return ': 전체';
+  return ': ' + values.map(value => formatFilterValue(key, value)).join(', ');
+}
+function guideValueHtml(value, unit='') {
+  if (value == null || value === '') return '&mdash;';
+  return `${value}${unit ? `<span>${unit}</span>` : ''}`;
+}
+function guideMetricCard({ kind, title, value, unit='', detail='', hint='', className='' }) {
+  return `
+    <article class="guide-metric ${className}">
+      <div class="kind">${kind}</div>
+      <div class="title">${title}</div>
+      <div class="value">${guideValueHtml(value, unit)}</div>
+      ${detail ? `<div class="guide-metric-detail">${detail}</div>` : ''}
+      ${hint ? `<div class="hint">${hint}</div>` : ''}
+    </article>
+  `;
+}
+function guideStatBlock(values) {
+  const nums = values.filter(v => v != null && isFinite(v));
+  if (!nums.length) return null;
+  return {
+    q1: percentile(nums, 25),
+    q2: percentile(nums, 50),
+    q3: percentile(nums, 75)
+  };
+}
+function guideLabelByRatio(value) {
+  if (value == null || !isFinite(value)) return '—';
+  if (value <= 30) return `낮음 (${fmt1(value)}%)`;
+  if (value <= 60) return `보통 (${fmt1(value)}%)`;
+  return `높음 (${fmt1(value)}%)`;
+}
+function guideListHtml(items) {
+  return `<div class="guide-mini-list">${items.map(item => `<div class="guide-mini-row"><span>${item.label}</span><b>${item.value}</b></div>`).join('')}</div>`;
+}
+function guideProgramShareRows(spaces, idxs) {
+  const mappings = [
+    ['업무', '업무'],
+    ['임원', '임원'],
+    ['회의', '회의'],
+    ['소셜', '공용'],
+    ['지원', '지원'],
+    ['통로 및 여유 공간', '통로 및 여유면적']
+  ];
+  return mappings.map(([label, prog]) => {
+    const ratios = idxs.map(i => {
+      const denom = DRAWINGS[i]['가용면적'];
+      if (!denom) return null;
+      const area = sum(spaces.filter(s => s[S_DID]===i && s[S_PROG]===prog).map(s => s[S_AREA] || 0));
+      return area ? area / denom * 100 : 0;
+    }).filter(v => v != null && isFinite(v));
+    return { label, value: `${fmt1(mean(ratios))}%` };
+  });
+}
+/* Legacy broken guide renderer retained for reference.
+function renderGuideTab() {
+  const filterHost = document.getElementById('guide-filter-host');
+  const summaryHost = document.getElementById('guide-summary-host');
+  const navHost = document.getElementById('guide-step-nav');
+  const stepsHost = document.getElementById('guide-steps');
+  if (!filterHost || !summaryHost || !navHost || !stepsHost) return;
+
+  const extraKeys = FILTER_KEYS.filter(key => !GUIDE_PRIMARY_KEYS.includes(key));
+  const renderSelect = key => {
+    const options = getFilterOptions(key);
+    const selected = F[key][0] || '';
+    const label = GUIDE_FILTER_LABELS[key] || key;
+    return `
+      <div class="guide-filter-box">
+        <label>${label}</label>
+        <select onchange="setGuideFilter('${key}', this.value)">
+          <option value="">전체</option>
+          ${options.map(value => `<option value="${encodeURIComponent(value)}" ${selected === value ? 'selected' : ''}>${formatFilterValue(key, value)}</option>`).join('')}
+        </select>
+      </div>
+    `;
+  };
+
+  filterHost.innerHTML = `
+    <div class="guide-filter-grid">
+      ${GUIDE_PRIMARY_KEYS.map(renderSelect).join('')}
+    </div>
+    <div class="guide-filter-actions">
+      <div class="guide-summary-list">
+        ${GUIDE_PRIMARY_KEYS.map(key => `<span class="guide-chip"><strong>${GUIDE_FILTER_LABELS[key] || key}</strong>${summarizeFilter(key)}</span>`).join('')}
+      </div>
+      <button class="guide-btn" type="button" onclick="resetGuideFilters()">조건 초기화</button>
+    </div>
+    <div class="guide-extra-panel ${guideExtrasOpen ? 'open' : ''}">
+      <div class="guide-extra-grid">
+        ${extraKeys.map(renderSelect).join('')}
+      </div>
+    </div>
+  `;
+
+  const activeGuideFilters = FILTER_KEYS.filter(key => F[key].length);
+  summaryHost.innerHTML = `
+    <div class="guide-summary-stack">
+      <div class="guide-summary-main">
+        <div class="guide-summary-card">
+          <div class="eyebrow">도면 수</div>
+          <div class="big">${filteredIdx.length}<span>건</span></div>
+          <div class="meta">현재 선택 조건으로 바로 설계 기준을 확인할 수 있는 도면 수입니다.</div>
+        </div>
+        <div class="guide-summary-card">
+          <div class="eyebrow">활용 방식</div>
+          <div class="big">${guideShowAll ? '전체 보기' : `Step ${guideStep}`}</div>
+          <div class="meta">${guideShowAll ? '모든 설계 단계를 한 번에 펼쳐 비교합니다.' : '현재 단계에 집중하고, 이전 단계는 접힌 상태로 유지합니다.'}</div>
+        </div>
+      </div>
+      <div class="guide-summary-list">
+        ${(activeGuideFilters.length ? activeGuideFilters : GUIDE_PRIMARY_KEYS).map(key => `<span class="guide-chip"><strong>${GUIDE_FILTER_LABELS[key] || key}</strong>${summarizeFilter(key)}</span>`).join('')}
+      </div>
+    </div>
+  `;
+
+  const expandBtn = document.getElementById('guide-expand-toggle');
+  if (expandBtn) expandBtn.textContent = guideShowAll ? '현재 단계만 보기' : '전체보기';
+  const extraBtn = document.getElementById('guide-extra-toggle');
+  if (extraBtn) extraBtn.textContent = guideExtrasOpen ? '기타 변수 접기' : '기타 변수 펼치기';
+
+  navHost.innerHTML = GUIDE_STEPS.map(step => {
+    const isActive = guideShowAll ? true : step.id === guideStep;
+    const isDimmed = !guideShowAll && step.id < guideStep;
+    return `
+      <button class="guide-step-btn ${isActive ? 'active' : ''} ${isDimmed ? 'dimmed' : ''}" type="button" onclick="jumpGuideStep(${step.id})">
+        <span class="num">STEP ${step.id}</span>
+        <span class="name">${step.short}</span>
+        <span class="sub">${step.subtitle}</span>
+      </button>
+    `;
+  }).join('');
+
+  stepsHost.innerHTML = GUIDE_STEPS.map(step => {
+    const isOpen = guideShowAll || step.id === guideStep;
+    const stateLabel = guideShowAll ? '전체보기' : (step.id === guideStep ? '현재 단계' : step.id < guideStep ? '이전 단계' : '다음 단계');
+    return `
+      <section class="card guide-step-block guide-step-anchor ${isOpen ? 'open' : 'collapsed'}" id="guide-step-${step.id}" style="--step-color:${step.color}">
+        <div class="guide-step-header" onclick="jumpGuideStep(${step.id})">
+          <div>
+            <div class="guide-step-tag"><span class="guide-step-dot"></span>STEP ${step.id} · ${step.short}</div>
+            <div class="guide-step-title">${step.title}</div>
+            <div class="guide-step-subtitle">${step.subtitle}</div>
+            <div class="guide-step-desc">${step.desc}</div>
+          </div>
+          <div class="guide-step-state">${stateLabel}</div>
+        </div>
+        <div class="guide-step-body">
+          <div class="guide-metric-grid">
+            ${step.metrics.map(metric => `
+              <article class="guide-metric placeholder">
+                <div class="kind">${metric.kind}</div>
+                <div class="title">${metric.title}</div>
+                <div class="value">—${metric.unit ? `<span>${metric.unit}</span>` : ''}</div>
+                <div class="hint">${metric.hint}</div>
+              </article>
+            `).join('')}
+          </div>
+          <div class="guide-step-note">이 영역에는 추세 그래프보다 설계에 바로 활용할 수 있는 구체적인 숫자를 우선 배치합니다. 지표 정의가 확정되면 중앙값은 적정 값, 1사분위~3사분위는 적정 범위로 연결합니다.</div>
+        </div>
+      </section>
+    `;
+  }).join('');
+}
+*/
+/*
+function renderGuideTab() {
+  const filterHost = document.getElementById('guide-filter-host');
+  const summaryHost = document.getElementById('guide-summary-host');
+  const navHost = document.getElementById('guide-step-nav');
+  const stepsHost = document.getElementById('guide-steps');
+  if (!filterHost || !summaryHost || !navHost || !stepsHost) return;
+
+  const extraKeys = FILTER_KEYS.filter(key => !GUIDE_PRIMARY_KEYS.includes(key));
+  const renderSelect = key => {
+    const options = getFilterOptions(key);
+    const selected = F[key][0] || '';
+    const label = GUIDE_FILTER_LABELS[key] || key;
+    return `
+      <div class="guide-filter-box">
+        <label>${label}</label>
+        <select onchange="setGuideFilter('${key}', this.value)">
+          <option value="">전체</option>
+          ${options.map(value => `<option value="${encodeURIComponent(value)}" ${selected === value ? 'selected' : ''}>${formatFilterValue(key, value)}</option>`).join('')}
+        </select>
+      </div>
+    `;
+  };
+
+  filterHost.innerHTML = `
+    <div class="guide-filter-grid">
+      ${GUIDE_PRIMARY_KEYS.map(renderSelect).join('')}
+    </div>
+    <div class="guide-filter-actions">
+      <div class="guide-summary-list">
+        ${GUIDE_PRIMARY_KEYS.map(key => `<span class="guide-chip"><strong>${GUIDE_FILTER_LABELS[key] || key}</strong>${summarizeFilter(key)}</span>`).join('')}
+      </div>
+      <button class="guide-btn" type="button" onclick="resetGuideFilters()">조건 초기화</button>
+    </div>
+    <div class="guide-extra-panel ${guideExtrasOpen ? 'open' : ''}">
+      <div class="guide-extra-grid">
+        ${extraKeys.map(renderSelect).join('')}
+      </div>
+    </div>
+  `;
+
+  const activeGuideFilters = FILTER_KEYS.filter(key => F[key].length);
+  summaryHost.innerHTML = `
+    <div class="guide-summary-stack">
+      <div class="guide-summary-main">
+        <div class="guide-summary-card">
+          <div class="eyebrow">도면 수</div>
+          <div class="big">${filteredIdx.length}<span>건</span></div>
+          <div class="meta">현재 선택 조건으로 참고 가능한 도면 수입니다.</div>
+        </div>
+        <div class="guide-summary-card">
+          <div class="eyebrow">열람 방식</div>
+          <div class="big">${guideShowAll ? '전체 보기' : `Step ${guideStep}`}</div>
+          <div class="meta">${guideShowAll ? '모든 설계 단계를 한 번에 펼쳐 비교합니다.' : '현재 단계에 집중하고 이전 단계는 접어둡니다.'}</div>
+        </div>
+      </div>
+      <div class="guide-summary-list">
+        ${(activeGuideFilters.length ? activeGuideFilters : GUIDE_PRIMARY_KEYS).map(key => `<span class="guide-chip"><strong>${GUIDE_FILTER_LABELS[key] || key}</strong>${summarizeFilter(key)}</span>`).join('')}
+      </div>
+    </div>
+  `;
+
+  const expandBtn = document.getElementById('guide-expand-toggle');
+  if (expandBtn) expandBtn.textContent = guideShowAll ? '현재 단계만 보기' : '전체보기';
+  const extraBtn = document.getElementById('guide-extra-toggle');
+  if (extraBtn) extraBtn.textContent = guideExtrasOpen ? '기타 변수 접기' : '기타 변수 펼치기';
+
+  navHost.innerHTML = GUIDE_STEPS.map(step => {
+    const isActive = guideShowAll ? true : step.id === guideStep;
+    const isDimmed = !guideShowAll && step.id < guideStep;
+    return `
+      <button class="guide-step-btn ${isActive ? 'active' : ''} ${isDimmed ? 'dimmed' : ''}" type="button" onclick="jumpGuideStep(${step.id})">
+        <span class="num">STEP ${step.id}</span>
+        <span class="name">${step.short}</span>
+        <span class="sub">${step.subtitle}</span>
+      </button>
+    `;
+  }).join('');
+
+  stepsHost.innerHTML = GUIDE_STEPS.map(step => {
+    const isOpen = guideShowAll || step.id === guideStep;
+    const stateLabel = guideShowAll ? '전체보기' : (step.id === guideStep ? '현재 단계' : step.id < guideStep ? '이전 단계' : '다음 단계');
+    return `
+      <section class="card guide-step-block guide-step-anchor ${isOpen ? 'open' : 'collapsed'}" id="guide-step-${step.id}" style="--step-color:${step.color}">
+        <div class="guide-step-header" onclick="jumpGuideStep(${step.id})">
+          <div>
+            <div class="guide-step-tag"><span class="guide-step-dot"></span>STEP ${step.id} · ${step.short}</div>
+            <div class="guide-step-title">${step.title}</div>
+            <div class="guide-step-subtitle">${step.subtitle}</div>
+            <div class="guide-step-desc">${step.desc}</div>
+          </div>
+          <div class="guide-step-state">${stateLabel}</div>
+        </div>
+        <div class="guide-step-body">
+          <div class="guide-metric-grid">
+            ${step.metrics.map(metric => `
+              <article class="guide-metric placeholder">
+                <div class="kind">${metric.kind}</div>
+                <div class="title">${metric.title}</div>
+                <div class="value">—${metric.unit ? `<span>${metric.unit}</span>` : ''}</div>
+                <div class="hint">${metric.hint}</div>
+              </article>
+            `).join('')}
+          </div>
+          <div class="guide-step-note">이 영역에는 추세 그래프보다 설계에 바로 활용할 수 있는 구체적인 숫자를 우선 배치합니다. 지표 정의가 확정되면 중앙값은 적정 값, 1사분위~3사분위는 적정 범위로 연결합니다.</div>
+        </div>
+      </section>
+    `;
+  }).join('');
+}
+*/
+
+function renderGuideTab() {
+  const filterHost = document.getElementById('guide-filter-host');
+  const summaryHost = document.getElementById('guide-summary-host');
+  const navHost = document.getElementById('guide-step-nav');
+  const stepsHost = document.getElementById('guide-steps');
+  if (!filterHost || !summaryHost || !navHost || !stepsHost) return;
+  const guideIdx = getGuideFilteredIdx();
+  const guideDd = guideIdx.map(i => DRAWINGS[i]);
+  const guideSp = getSpaces(guideIdx);
+
+  const extraKeys = FILTER_KEYS.filter(key => !GUIDE_PRIMARY_KEYS.includes(key));
+  const renderSelect = key => {
+    const options = getFilterOptions(key);
+    const selected = GF[key][0] || '';
+    const label = GUIDE_FILTER_LABELS[key] || key;
+    return `
+      <div class="guide-filter-box">
+        <label>${label}</label>
+        <select onchange="setGuideFilter('${key}', this.value)">
+          <option value="">전체</option>
+          ${options.map(value => `<option value="${encodeURIComponent(value)}" ${selected === value ? 'selected' : ''}>${formatFilterValue(key, value)}</option>`).join('')}
+        </select>
+      </div>
+    `;
+  };
+
+  filterHost.innerHTML = `
+    <div class="guide-filter-grid">
+      ${GUIDE_PRIMARY_KEYS.map(renderSelect).join('')}
+    </div>
+    <div class="guide-filter-actions">
+      <div class="guide-summary-list">
+        ${GUIDE_PRIMARY_KEYS.map(key => `<span class="guide-chip"><strong>${GUIDE_FILTER_LABELS[key] || key}</strong>${summarizeGuideFilter(key)}</span>`).join('')}
+      </div>
+      <button class="guide-btn" type="button" onclick="resetGuideFilters()">가이드 조건 초기화</button>
+    </div>
+    <div class="guide-extra-panel ${guideExtrasOpen ? 'open' : ''}">
+      <div class="guide-extra-grid">
+        ${extraKeys.map(renderSelect).join('')}
+      </div>
+    </div>
+  `;
+
+  const activeGuideFilters = FILTER_KEYS.filter(key => F[key].length || GF[key].length);
+  summaryHost.innerHTML = `
+    <div class="guide-summary-stack">
+      <div class="guide-summary-main">
+        <div class="guide-summary-card">
+          <div class="eyebrow">도면 수</div>
+          <div class="big">${guideIdx.length}<span>건</span></div>
+          <div class="meta">사이드바 필터와 가이드 상단 조건을 모두 반영한 설계 기준 집합입니다.</div>
+        </div>
+        <div class="guide-summary-card">
+          <div class="eyebrow">현재 보기</div>
+          <div class="big">${guideShowAll ? '전체 스텝' : `Step ${guideStep}`}</div>
+          <div class="meta">${guideShowAll ? '설계 흐름 전체를 한 번에 비교하는 모드입니다.' : '현재 단계에 집중하면서 이전 단계는 접힌 상태로 유지합니다.'}</div>
+        </div>
+      </div>
+      <div class="guide-summary-list">
+        ${(activeGuideFilters.length ? activeGuideFilters : GUIDE_PRIMARY_KEYS).map(key => `<span class="guide-chip"><strong>${GUIDE_FILTER_LABELS[key] || key}</strong>${summarizeGuideFilter(key)}</span>`).join('')}
+      </div>
+    </div>
+  `;
+
+  const expandBtn = document.getElementById('guide-expand-toggle');
+  if (expandBtn) expandBtn.textContent = guideShowAll ? '현재 스텝만 보기' : '전체보기';
+  const extraBtn = document.getElementById('guide-extra-toggle');
+  if (extraBtn) extraBtn.textContent = guideExtrasOpen ? '기타 변수 접기' : '기타 변수 펼치기';
+
+  try {
+  const areaValuesP = guideDd.map(d => (d['가용면적'] || 0) * M2_TO_PYEONG).filter(v => v > 0);
+  const areaValuesM2 = guideDd.map(d => d['가용면적']).filter(v => v > 0);
+  const personValues = guideDd.map(d => d['인원수']).filter(v => v > 0);
+  const ppaValuesM2 = guideDd.map(d => (d['가용면적'] && d['인원수']) ? d['가용면적'] / d['인원수'] : null).filter(v => v > 0);
+  const zoningAreaStat = guideStatBlock(areaValuesP);
+  const zoningPersonStat = guideStatBlock(personValues);
+  const zoningPpaStat = guideStatBlock(ppaValuesM2);
+  const selectedArea = getGuideFilterValues('가용면적구간');
+  const selectedPeople = getGuideFilterValues('인원구간');
+
+  const deskTypeCounts = {
+    '일자형': 0,
+    'L자형': 0,
+    '120도형': 0,
+    '비정형': 0
+  };
+  const deskWidthCounts = { 1200: 0, 1400: 0, 1600: 0, 1800: 0 };
+  guideDd.forEach(d => {
+    const typeMap = {
+      '일자형': (d['일자형_1200 사용 인원']||0)+(d['일자형_1400 사용 인원']||0)+(d['일자형_1600 사용 인원']||0)+(d['일자형_1800 사용 인원']||0),
+      'L자형': (d['L자형_1400 사용 인원']||0)+(d['L자형_1600 사용 인원']||0)+(d['L자형_1800 사용 인원']||0),
+      '120도형': d['120도형_1800 사용 인원']||0,
+      '비정형': d['비정형_1200 사용 인원']||0
+    };
+    const widthMap = {
+      1200: (d['비정형_1200 사용 인원']||0)+(d['일자형_1200 사용 인원']||0),
+      1400: (d['L자형_1400 사용 인원']||0)+(d['일자형_1400 사용 인원']||0),
+      1600: (d['L자형_1600 사용 인원']||0)+(d['일자형_1600 사용 인원']||0),
+      1800: (d['L자형_1800 사용 인원']||0)+(d['일자형_1800 사용 인원']||0)+(d['120도형_1800 사용 인원']||0)
+    };
+    const topType = Object.entries(typeMap).sort((a,b) => b[1] - a[1])[0];
+    const topWidth = Object.entries(widthMap).sort((a,b) => b[1] - a[1])[0];
+    if (topType?.[1] > 0) deskTypeCounts[topType[0]]++;
+    if (topWidth?.[1] > 0) deskWidthCounts[topWidth[0]]++;
+  });
+  const topDeskType = Object.entries(deskTypeCounts).sort((a,b) => b[1] - a[1])[0];
+  const topDeskWidth = Object.entries(deskWidthCounts).sort((a,b) => b[1] - a[1])[0];
+  const workRatio = mean(guideIdx.map(i => {
+    const denom = DRAWINGS[i]['가용면적'];
+    if (!denom) return null;
+    const area = sum(guideSp.filter(s => s[S_DID]===i && s[S_PROG]==='업무').map(s => s[S_AREA] || 0));
+    return area / denom * 100;
+  }).filter(v => v != null && isFinite(v)));
+
+  const execSubs = ['책상','책상+소파','책상+회의테이블','책상+소파+회의테이블'];
+  const execRoomMap = {'책상':'책상실','책상+소파':'책상+소파실','책상+회의테이블':'책상+회의테이블실','책상+소파+회의테이블':'책상+소파+회의테이블실'};
+  const execOpenMap = {'책상':'책상오픈','책상+소파':'책상+소파오픈','책상+회의테이블':'책상+회의테이블오픈','책상+소파+회의테이블':'책상+소파+회의테이블오픈'};
+  const execAllSubs = [...Object.values(execRoomMap), ...Object.values(execOpenMap)];
+  const execSpaces = guideSp.filter(s => s[S_PROG]==='임원');
+  const execRoom = execSpaces.filter(s => s[S_OPEN]==='실' && Object.values(execRoomMap).includes(s[S_SUB]));
+  const execRoomCounts = execSubs.map(sub => execRoom.filter(s => s[S_SUB]===execRoomMap[sub]).length);
+  const topExecIdx = execRoomCounts.indexOf(Math.max(...execRoomCounts, 0));
+  const topExecConfig = execRoomCounts.some(v => v > 0) ? execSubs[topExecIdx] : null;
+  const topExecAreaM2 = topExecConfig
+    ? mean(execRoom.filter(s => s[S_SUB]===execRoomMap[topExecConfig]).map(s => s[S_AREA]).filter(v => v > 0))
+    : null;
+  const execDrawingIds = new Set(execSpaces.map(s => s[S_DID]));
+  const execOpenIds = new Set(execSpaces.filter(s => s[S_OPEN]==='오픈' && Object.values(execOpenMap).includes(s[S_SUB])).map(s => s[S_DID]));
+  const execOpenRatio = pct(execOpenIds.size, execDrawingIds.size);
+  const execCountAvg = meanPositive(guideIdx, i => guideSp.filter(s => s[S_DID]===i && s[S_PROG]==='임원' && execAllSubs.includes(s[S_SUB])).length);
+  const execRatio = mean(guideIdx.map(i => {
+    const denom = DRAWINGS[i]['가용면적'];
+    if (!denom) return null;
+    const area = sum(guideSp.filter(s => s[S_DID]===i && s[S_PROG]==='임원').map(s => s[S_AREA] || 0));
+    return area / denom * 100;
+  }).filter(v => v != null && isFinite(v)));
+
+  const meetingSubs = ['4인이하실','5-8인실','9-16인실','17인이상실'];
+  const meetingLabels = {
+    '4인이하실':'4인 이하 회의실',
+    '5-8인실':'5-8인 회의실',
+    '9-16인실':'9-16인 회의실',
+    '17인이상실':'17인 이상 회의실'
+  };
+  const isMeetingRoom = s => s[S_PROG]==='회의' && s[S_OPEN]==='실' && s[S_SUB] !== '기타회의공간';
+  const meetingRooms = guideSp.filter(isMeetingRoom);
+  const meetingAll = guideSp.filter(s => s[S_PROG]==='회의' && s[S_SUB] !== '기타회의공간');
+  const meetingRoomCount = i => guideSp.filter(s => s[S_DID]===i && isMeetingRoom(s)).length;
+  const meetingRatio = mean(guideIdx.map(i => {
+    const denom = DRAWINGS[i]['가용면적'];
+    if (!denom) return null;
+    const area = sum(guideSp.filter(s => s[S_DID]===i && s[S_PROG]==='회의' && s[S_SUB] !== '기타회의공간').map(s => s[S_AREA] || 0));
+    return area / denom * 100;
+  }).filter(v => v != null && isFinite(v)));
+  const meetingCards = meetingSubs.map(sub => {
+    const areaM2 = mean(meetingRooms.filter(s => s[S_SUB]===sub).map(s => s[S_AREA]).filter(v => v > 0));
+    const countAvg = meanPositive(guideIdx, i => guideSp.filter(s => s[S_DID]===i && isMeetingRoom(s) && s[S_SUB]===sub).length);
+    return guideMetricCard({
+      kind:'평균 개소 및 면적',
+      title:meetingLabels[sub],
+      value:countAvg != null ? fmt1(countAvg) : null,
+      unit:'개소',
+      detail:guideListHtml([
+        { label:'평균 면적', value: areaM2 != null ? `${fmt1(areaM2)}㎡ / ${fmt1(areaM2 * M2_TO_PYEONG)}평` : '—' },
+        { label:'산정 기준', value:'해당 규모 회의실 보유 도면 기준' }
+      ]),
+      hint:'기존 회의공간 탭의 규모별 평균 개소·평균 면적 로직을 설계값 카드로 재구성했습니다.'
+    });
+  });
+
+  const socialRatio = mean(guideIdx.map(i => {
+    const denom = DRAWINGS[i]['가용면적'];
+    if (!denom) return null;
+    const area = sum(guideSp.filter(s => s[S_DID]===i && s[S_PROG]==='공용').map(s => s[S_AREA] || 0));
+    return area / denom * 100;
+  }).filter(v => v != null && isFinite(v)));
+  const loungeSpaces = guideSp.filter(s => s[S_PROG]==='공용' && s[S_SUB]==='라운지');
+  const tangSpaces = guideSp.filter(s => s[S_PROG]==='공용' && s[S_SUB]==='탕비');
+  const loungeIds = new Set(loungeSpaces.map(s => s[S_DID]));
+  const tangIds = new Set(tangSpaces.map(s => s[S_DID]));
+  const loungeRatio = pct(loungeIds.size, guideDd.length);
+  const loungeTypeEntries = Object.entries(groupBy(
+    guideIdx.filter(i => loungeIds.has(i) && DRAWINGS[i]['라운지유형'] && DRAWINGS[i]['라운지유형'] !== 'None'),
+    i => DRAWINGS[i]['라운지유형']
+  )).sort((a,b) => b[1].length - a[1].length);
+  const topLoungeType = loungeTypeEntries[0]?.[0]?.replace(' / None', '') || null;
+  const topLoungeAreaM2 = topLoungeType
+    ? mean(loungeSpaces.filter(s => loungeTypeEntries[0][1].includes(s[S_DID])).map(s => s[S_AREA]).filter(v => v > 0))
+    : null;
+  const loungeCountAvg = meanPositive(guideIdx, i => guideSp.filter(s => s[S_DID]===i && s[S_PROG]==='공용' && s[S_SUB]==='라운지').length);
+  const tangCountAvg = meanPositive(guideIdx, i => guideSp.filter(s => s[S_DID]===i && s[S_PROG]==='공용' && s[S_SUB]==='탕비').length);
+  const tangAreaM2 = mean(tangSpaces.map(s => s[S_AREA]).filter(v => v > 0));
+
+  const supportRatio = mean(guideIdx.map(i => {
+    const denom = DRAWINGS[i]['가용면적'];
+    if (!denom) return null;
+    const area = sum(guideSp.filter(s => s[S_DID]===i && s[S_PROG]==='지원').map(s => s[S_AREA] || 0));
+    return area / denom * 100;
+  }).filter(v => v != null && isFinite(v)));
+  const onePersonSubs = ['폰부스','선택업무공간실'];
+  const onePersonCountAvg = meanPositive(guideIdx, i => guideSp.filter(s => s[S_DID]===i && onePersonSubs.includes(s[S_SUB])).length);
+  const onePersonAreaM2 = mean(guideSp.filter(s => onePersonSubs.includes(s[S_SUB])).map(s => s[S_AREA]).filter(v => v > 0));
+  const swCountAvg = meanPositive(guideIdx, i => guideSp.filter(s => s[S_DID]===i && s[S_SUB]==='선택업무공간실').length);
+  const oaCountAvg = meanPositive(guideIdx, i => guideSp.filter(s => s[S_DID]===i && s[S_SUB]==='OA').length);
+  const oaAreaM2 = mean(guideSp.filter(s => s[S_SUB]==='OA').map(s => s[S_AREA]).filter(v => v > 0));
+
+  const stepCards = {
+    1: [
+      guideMetricCard({
+        kind:'적정 범위',
+        title:'한 층의 적정 면적 범위',
+        value:selectedArea.length ? selectedArea.map(value => formatFilterValue('가용면적구간', value)).join(' · ') : (zoningAreaStat ? `${fmt1(zoningAreaStat.q1)} - ${fmt1(zoningAreaStat.q3)}` : null),
+        unit:selectedArea.length ? '' : '평',
+        detail:selectedArea.length
+          ? guideListHtml([{ label:'상단 선택값', value:selectedArea.map(value => formatFilterValue('가용면적구간', value)).join(', ') }])
+          : guideListHtml([
+              { label:'중앙값', value: zoningAreaStat ? `${fmt1(zoningAreaStat.q2)}평` : '—' },
+              { label:'㎡ 환산', value: areaValuesM2.length ? `${fmt1(percentile(areaValuesM2, 25))} - ${fmt1(percentile(areaValuesM2, 75))}㎡` : '—' }
+            ]),
+        hint:'가용 면적 조건을 직접 고르면 선택 범위를 그대로 보여주고, 비어 있으면 필터링된 도면의 1사분위~3사분위를 제시합니다.'
+      }),
+      guideMetricCard({
+        kind:'적정 범위',
+        title:'한 층의 적정 인원 수 범위',
+        value:selectedPeople.length ? selectedPeople.map(value => formatFilterValue('인원구간', value)).join(' · ') : (zoningPersonStat ? `${fmt0(zoningPersonStat.q1)} - ${fmt0(zoningPersonStat.q3)}` : null),
+        unit:selectedPeople.length ? '' : '인',
+        detail:selectedPeople.length
+          ? guideListHtml([{ label:'상단 선택값', value:selectedPeople.map(value => formatFilterValue('인원구간', value)).join(', ') }])
+          : guideListHtml([{ label:'중앙값', value: zoningPersonStat ? `${fmt0(zoningPersonStat.q2)}인` : '—' }]),
+        hint:'인원 구간도 상단에서 선택하면 해당 구간을 우선 보여주고, 선택이 없으면 실제 도면 분포의 적정 범위를 계산합니다.'
+      }),
+      guideMetricCard({
+        kind:'적정 범위',
+        title:'적정 인당 면적 범위',
+        value:zoningPpaStat ? `${fmt1(zoningPpaStat.q1)} - ${fmt1(zoningPpaStat.q3)}` : null,
+        unit:'㎡',
+        detail:guideListHtml([
+          { label:'중앙값', value: zoningPpaStat ? `${fmt1(zoningPpaStat.q2)}㎡` : '—' },
+          { label:'평 환산', value: zoningPpaStat ? `${fmt1(zoningPpaStat.q1 * M2_TO_PYEONG)} - ${fmt1(zoningPpaStat.q3 * M2_TO_PYEONG)}평` : '—' }
+        ]),
+        hint:'기존 업무공간 일반 탭의 인당 면적 계산을 그대로 재사용한 설계 기준값입니다.'
+      }),
+      guideMetricCard({
+        kind:'면적 배분',
+        title:'공간 프로그램 면적 배분',
+        value:'프로그램별 비중',
+        detail:guideListHtml(guideProgramShareRows(guideSp, guideIdx)),
+        hint:'업무, 임원, 회의, 소셜, 지원, 통로 및 여유 공간을 전체 가용 면적 대비 평균 비율로 요약했습니다.',
+        className:'wide'
+      })
+    ],
+    2: [
+      guideMetricCard({
+        kind:'적정 값',
+        title:'업무 공간 평균 비율',
+        value:workRatio != null ? fmt1(workRatio) : null,
+        unit:'%',
+        hint:'전체 층 내 가용 면적 중 업무 프로그램이 차지하는 평균 비중입니다.'
+      }),
+      guideMetricCard({
+        kind:'권장 기준',
+        title:'주통로 / 부통로 너비',
+        value:'1800-2000',
+        unit:'mm',
+        detail:guideListHtml([
+          { label:'주통로 최소값', value:'1700mm' },
+          { label:'부통로 권장값', value:'1200-1500mm' },
+          { label:'고정 기준', value:'필터 영향 없음' }
+        ]),
+        hint:'기존 DB에는 없는 값으로, 설계 가이드 탭에서 고정 권장값으로 제시합니다.'
+      }),
+      guideMetricCard({
+        kind:'대표 선택',
+        title:'가장 많이 쓰는 데스크 형태 및 너비',
+        value:topDeskType?.[0] && topDeskWidth?.[0] ? `${topDeskType[0]} / ${topDeskWidth[0]}mm` : null,
+        detail:guideListHtml([
+          { label:'데스크 형태', value: topDeskType?.[0] ? `${topDeskType[0]} (${fmt1(pct(topDeskType[1], guideDd.length))}%)` : '—' },
+          { label:'데스크 너비', value: topDeskWidth?.[0] ? `${topDeskWidth[0]}mm (${fmt1(pct(topDeskWidth[1], guideDd.length))}%)` : '—' }
+        ]),
+        hint:'각 도면의 우세 데스크 형태와 우세 너비를 집계해 가장 많이 채택된 조합을 보여줍니다.'
+      }),
+      guideMetricCard({
+        kind:'권장 기준',
+        title:'권장 등간격 너비',
+        value:'2000',
+        unit:'mm',
+        detail:guideListHtml([
+          { label:'3열 배치', value:'2000mm' },
+          { label:'4열 이상 / 중앙 회의테이블', value:'2200mm' }
+        ]),
+        hint:'필터와 무관한 고정 설계 기준입니다.'
+      }),
+      guideMetricCard({
+        kind:'권장 기준',
+        title:'권장 열 배치',
+        value:'3',
+        unit:'열',
+        hint:'업무 공간 설계 시 기본 권장 배치를 3열로 안내합니다.'
+      })
+    ],
+    3: [
+      guideMetricCard({
+        kind:'적정 값',
+        title:'임원 공간 평균 비율',
+        value:execRatio != null ? fmt1(execRatio) : null,
+        unit:'%',
+        hint:'전체 층 내 가용 면적 중 임원 프로그램의 평균 비중입니다.'
+      }),
+      guideMetricCard({
+        kind:'대표 선택',
+        title:'가장 많이 쓰는 가구 구성',
+        value:topExecConfig || null,
+        detail:guideListHtml([{ label:'산정 기준', value:'실형 임원실 구성 비율' }]),
+        hint:'기존 임원 탭의 실형 구성 비율 로직을 기준으로 가장 우세한 구성을 보여줍니다.'
+      }),
+      guideMetricCard({
+        kind:'적정 값',
+        title:'대표 가구 구성의 평균 면적',
+        value:topExecAreaM2 != null ? fmt1(topExecAreaM2) : null,
+        unit:'㎡',
+        detail:guideListHtml([{ label:'평 환산', value: topExecAreaM2 != null ? `${fmt1(topExecAreaM2 * M2_TO_PYEONG)}평` : '—' }]),
+        hint:'가장 많이 쓰는 가구 구성에 해당하는 임원실의 평균 면적입니다.'
+      }),
+      guideMetricCard({
+        kind:'사용도',
+        title:'오픈 임원석 사용도',
+        value:guideLabelByRatio(execOpenRatio),
+        detail:guideListHtml([{ label:'산정 기준', value:'오픈 임원석 1개 이상 보유 도면 비율' }]),
+        hint:'30% 이하 낮음, 30~60% 보통, 61% 이상 높음 기준으로 해석합니다.'
+      }),
+      guideMetricCard({
+        kind:'적정 값',
+        title:'임원 공간 평균 개소',
+        value:execCountAvg != null ? fmt1(execCountAvg) : null,
+        unit:'개소',
+        hint:'실형/오픈형을 포함한 대표 임원 세부유형 8종의 평균 개소입니다.'
+      })
+    ],
+    4: [
+      guideMetricCard({
+        kind:'적정 값',
+        title:'회의 공간 평균 비율',
+        value:meetingRatio != null ? fmt1(meetingRatio) : null,
+        unit:'%',
+        hint:'전체 층 내 가용 면적 중 회의 프로그램의 평균 비중입니다.'
+      }),
+      guideMetricCard({
+        kind:'적정 값',
+        title:'회의실 전체 평균 개소',
+        value:meanPositive(guideIdx, meetingRoomCount) != null ? fmt1(meanPositive(guideIdx, meetingRoomCount)) : null,
+        unit:'개소',
+        detail:guideListHtml([{ label:'산정 기준', value:'실형 회의실 보유 도면 기준' }]),
+        hint:'기존 회의공간 탭의 평균 개소 값을 설계용 카드로 옮겼습니다.'
+      }),
+      ...meetingCards
+    ],
+    5: [
+      guideMetricCard({
+        kind:'적정 값',
+        title:'소셜 공간 평균 비율',
+        value:socialRatio != null ? fmt1(socialRatio) : null,
+        unit:'%',
+        hint:'전체 층 내 가용 면적 중 소셜 프로그램이 차지하는 평균 비중입니다.'
+      }),
+      guideMetricCard({
+        kind:'조성 비율',
+        title:'라운지 조성 비율',
+        value:guideLabelByRatio(loungeRatio),
+        detail:guideListHtml([{ label:'실제 비율', value: isFinite(loungeRatio) ? `${fmt1(loungeRatio)}%` : '—' }]),
+        hint:'라운지를 1개 이상 포함한 도면 비율을 낮음/보통/높음으로 함께 해석합니다.'
+      }),
+      guideMetricCard({
+        kind:'대표 선택',
+        title:'가장 많이 쓰는 라운지 유형 및 면적',
+        value:topLoungeType || null,
+        detail:guideListHtml([
+          { label:'평균 면적', value: topLoungeAreaM2 != null ? `${fmt1(topLoungeAreaM2)}㎡ / ${fmt1(topLoungeAreaM2 * M2_TO_PYEONG)}평` : '—' },
+          { label:'산정 기준', value:'라운지 보유 도면 중 최다 선택 유형' }
+        ]),
+        hint:'라운지를 보유한 도면에서 가장 많이 쓰는 라운지 유형과 해당 유형의 평균 면적을 보여줍니다.'
+      }),
+      guideMetricCard({
+        kind:'적정 값',
+        title:'라운지 평균 개소',
+        value:loungeCountAvg != null ? fmt1(loungeCountAvg) : null,
+        unit:'개소',
+        hint:'라운지를 보유한 도면에서 세부유형이 라운지인 네모의 평균 개소입니다.'
+      }),
+      guideMetricCard({
+        kind:'적정 값',
+        title:'탕비 공간 평균 개소 및 면적',
+        value:tangCountAvg != null ? fmt1(tangCountAvg) : null,
+        unit:'개소',
+        detail:guideListHtml([
+          { label:'평균 면적', value: tangAreaM2 != null ? `${fmt1(tangAreaM2)}㎡ / ${fmt1(tangAreaM2 * M2_TO_PYEONG)}평` : '—' },
+          { label:'산정 기준', value:'탕비(소셜) 보유 도면 기준' }
+        ]),
+        hint:'세부유형이 탕비인 소셜 공간의 평균 개소와 평균 면적입니다.'
+      })
+    ],
+    6: [
+      guideMetricCard({
+        kind:'적정 값',
+        title:'지원 공간 평균 비율',
+        value:supportRatio != null ? fmt1(supportRatio) : null,
+        unit:'%',
+        hint:'전체 층 내 가용 면적 중 지원 프로그램의 평균 비중입니다.'
+      }),
+      guideMetricCard({
+        kind:'적정 값',
+        title:'1인 단위 공간 평균 개소 및 면적',
+        value:onePersonCountAvg != null ? fmt1(onePersonCountAvg) : null,
+        unit:'개소',
+        detail:guideListHtml([
+          { label:'평균 면적', value: onePersonAreaM2 != null ? `${fmt1(onePersonAreaM2)}㎡ / ${fmt1(onePersonAreaM2 * M2_TO_PYEONG)}평` : '—' },
+          { label:'대상', value:'폰부스 + 선택업무공간_실' }
+        ]),
+        hint:'기존 지원 탭의 폰부스+선택업무공간_실 개소 계산을 기반으로 면적까지 함께 보여줍니다.'
+      }),
+      guideMetricCard({
+        kind:'적정 값',
+        title:'선택업무공간_실 평균 개소',
+        value:swCountAvg != null ? fmt1(swCountAvg) : null,
+        unit:'개소',
+        hint:'선택업무공간_실을 보유한 도면 기준 평균 개소입니다.'
+      }),
+      guideMetricCard({
+        kind:'적정 값',
+        title:'OA 평균 개소 및 면적',
+        value:oaCountAvg != null ? fmt1(oaCountAvg) : null,
+        unit:'개소',
+        detail:guideListHtml([
+          { label:'평균 면적', value: oaAreaM2 != null ? `${fmt1(oaAreaM2)}㎡ / ${fmt1(oaAreaM2 * M2_TO_PYEONG)}평` : '—' },
+          { label:'산정 기준', value:'OA 보유 도면 기준' }
+        ]),
+        hint:'OA를 보유한 도면 내 세부유형이 OA인 네모의 평균 개소와 평균 면적입니다.'
+      })
+    ]
+  };
+
+  const stepNotes = {
+    1:'조닝 단계에서는 전체 층의 면적·인원 범위를 먼저 확인한 뒤, 업무/임원/회의/소셜/지원/통로 비중을 큰 그림으로 맞추는 것이 핵심입니다.',
+    2:'업무 공간 단계는 좌석 효율을 해치지 않는 범위 안에서 데스크 형식, 통로, 배치 간격을 함께 결정하는 구간입니다.',
+    3:'임원 공간은 전체 비중보다도 어떤 구성과 분위기를 택할지에 따라 면적 편차가 커서, 우세 구성과 평균 면적을 함께 보는 것이 중요합니다.',
+    4:'회의 공간은 전체 개소보다도 규모별 조합이 중요하므로, 소형실부터 대형실까지 평균 개소와 면적을 묶어 설계 기준으로 사용합니다.',
+    5:'소셜 공간은 비중뿐 아니라 라운지 조성 여부, 라운지 유형, 탕비 규모까지 함께 봐야 실제 체감 품질을 맞출 수 있습니다.',
+    6:'지원 공간은 업무 보조 역할이 강해 과도하게 키우기보다, 필요한 개소와 최소 확보 면적을 안정적으로 맞추는 쪽이 설계 포인트입니다.'
+  };
+
+  navHost.innerHTML = GUIDE_STEPS.map(step => {
+    const isActive = guideShowAll ? true : step.id === guideStep;
+    const isDimmed = !guideShowAll && step.id < guideStep;
+    return `
+      <button class="guide-step-btn ${isActive ? 'active' : ''} ${isDimmed ? 'dimmed' : ''}" type="button" onclick="jumpGuideStep(${step.id})">
+        <span class="num">STEP ${step.id}</span>
+        <span class="name">${step.short}</span>
+        <span class="sub">${step.subtitle}</span>
+      </button>
+    `;
+  }).join('');
+
+  stepsHost.innerHTML = GUIDE_STEPS.map(step => {
+    const isOpen = guideShowAll || step.id === guideStep;
+    const stateLabel = guideShowAll ? '전체 펼침' : (step.id === guideStep ? '현재 단계' : step.id < guideStep ? '이전 단계' : '다음 단계');
+    return `
+      <section class="card guide-step-block guide-step-anchor ${isOpen ? 'open' : 'collapsed'}" id="guide-step-${step.id}" style="--step-color:${step.color}">
+        <div class="guide-step-header" onclick="jumpGuideStep(${step.id})">
+          <div>
+            <div class="guide-step-tag"><span class="guide-step-dot"></span>STEP ${step.id} / ${step.short}</div>
+            <div class="guide-step-title">${step.title}</div>
+            <div class="guide-step-subtitle">${step.subtitle}</div>
+            <div class="guide-step-desc">${step.desc}</div>
+          </div>
+          <div class="guide-step-state">${stateLabel}</div>
+        </div>
+        <div class="guide-step-body">
+          <div class="guide-metric-grid">
+            ${(stepCards[step.id] || []).join('')}
+          </div>
+          <div class="guide-step-note">${stepNotes[step.id] || ''}</div>
+        </div>
+      </section>
+    `;
+  }).join('');
+  } catch (error) {
+    console.error(error);
+    navHost.innerHTML = '';
+    stepsHost.innerHTML = `<div class="guide-step-note">설계 가이드 탭 렌더 중 오류가 발생했습니다: ${error?.message || error}</div>`;
+  }
+}
+
 function setSidebarCollapsed(collapsed) {
   sidebarCollapsed = collapsed;
   const shell = document.querySelector('.page-shell');
@@ -966,7 +2001,9 @@ function observeCurrentCards() {
   if (tocObserver) tocObserver.disconnect();
   const sec = document.getElementById(`sec-${activeSec}`);
   if (!sec) return;
-  const cards = [...sec.querySelectorAll('.card')];
+  const cards = activeSec === 'G'
+    ? [...sec.querySelectorAll('.guide-step-block')]
+    : [...sec.querySelectorAll('.card')];
   if (!cards.length) return;
   tocObserver = new IntersectionObserver(entries => {
     const visible = entries
@@ -988,11 +2025,17 @@ function renderToc() {
   const host = document.getElementById('toc-links');
   const sec = document.getElementById(`sec-${activeSec}`);
   if (!host || !sec) return;
-  const cards = [...sec.querySelectorAll('.card')];
+  const cards = activeSec === 'G'
+    ? [...sec.querySelectorAll('.guide-step-block')]
+    : [...sec.querySelectorAll('.card')];
   tocPreviewCardId = null;
   tocFocusedCardId = null;
   clearCardState('toc-hover');
   clearCardState('toc-focus');
+  if (!cards.length) {
+    host.innerHTML = '<div class="toc-item active"><span class="toc-link">바로 이동할 항목이 없습니다.</span></div>';
+    return;
+  }
   host.innerHTML = cards.map((card, idx) => {
     const title = card.querySelector('.ct')?.textContent?.trim() || `지표 ${idx+1}`;
     return `
@@ -1058,7 +2101,8 @@ function showSec(id, btn) {
   document.querySelectorAll('.nv').forEach(b=>b.classList.remove('on'));
   document.getElementById('sec-'+id).classList.add('on');
   btn.classList.add('on');
-  renderToc();
+  if (id === 'G') renderGuideAwareToc();
+  else renderToc();
 }
 
 // ════════════════════════════════════════════
@@ -1750,6 +2794,47 @@ function renderF(dd, sp) {
 // ════════════════════════════════════════════
 // MAIN REFRESH
 // ════════════════════════════════════════════
+function renderGuideAwareToc() {
+  const host = document.getElementById('toc-links');
+  const sec = document.getElementById(`sec-${activeSec}`);
+  if (!host || !sec) return;
+  const cards = activeSec === 'G'
+    ? [...sec.querySelectorAll('.guide-step-block')]
+    : [...sec.querySelectorAll('.card')];
+  tocPreviewCardId = null;
+  tocFocusedCardId = null;
+  clearCardState('toc-hover');
+  clearCardState('toc-focus');
+  if (!cards.length) {
+    host.innerHTML = '<div class="toc-item active"><span class="toc-link">바로 이동할 항목이 없습니다.</span></div>';
+    return;
+  }
+  host.innerHTML = cards.map((card, idx) => {
+    const title = activeSec === 'G'
+      ? (card.querySelector('.guide-step-title')?.textContent?.trim() || `스텝 ${idx+1}`)
+      : (card.querySelector('.ct')?.textContent?.trim() || `지표 ${idx+1}`);
+    return `
+      <div class="toc-item${idx===0 ? ' active' : ''}" data-target="${card.id}">
+        <a class="toc-link" href="#${card.id}">${title}</a>
+      </div>
+    `;
+  }).join('');
+  host.querySelectorAll('.toc-link').forEach(link => {
+    const targetId = link.getAttribute('href').slice(1);
+    link.addEventListener('mouseenter', () => setPreviewCard(targetId));
+    link.addEventListener('mouseleave', () => setPreviewCard(null));
+    link.addEventListener('focus', () => setPreviewCard(targetId));
+    link.addEventListener('blur', () => setPreviewCard(null));
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      scrollToCard(targetId);
+      if (history.replaceState) history.replaceState(null, '', `#${targetId}`);
+      else location.hash = targetId;
+    });
+  });
+  observeCurrentCards();
+}
+
 function refresh() {
   filteredIdx = getFilteredIdx();
   document.getElementById('cnt').textContent = filteredIdx.length;
@@ -1762,6 +2847,8 @@ function refresh() {
   renderD(dd, sp);
   renderE(dd, sp);
   renderF(dd, sp);
+  renderGuideTab();
+  if (activeSec === 'G') renderGuideAwareToc();
 }
 
 function updateStickyOffsets() {

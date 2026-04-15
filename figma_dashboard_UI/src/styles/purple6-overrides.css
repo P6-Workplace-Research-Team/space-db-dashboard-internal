@@ -1,0 +1,125 @@
+/* Purple6 Design System Color Overrides */
+
+/* Purple-50 → Purple6 Primary Lighter */
+.bg-purple-50, .bg-purple-50\/50 {
+  background-color: #eae5fe !important;
+}
+
+/* Purple-100 */
+.bg-purple-100 {
+  background-color: rgba(184, 162, 249, 0.5) !important;
+}
+
+/* Purple-200 → Border color */
+.border-purple-200 {
+  border-color: #b8a2f9 !important;
+}
+
+/* Purple-300 → Border color */
+.border-purple-300 {
+  border-color: rgba(120, 0, 245, 0.4) !important;
+}
+
+/* Purple-500 → Primary */
+.border-purple-500, .bg-purple-500 {
+  background-color: #7800f5 !important;
+  border-color: #7800f5 !important;
+}
+
+/* Purple-600 → Icon color */
+.text-purple-600 {
+  color: #7800f5 !important;
+}
+
+/* Purple-700 → Secondary text */
+.text-purple-700 {
+  color: #6200cc !important;
+}
+
+/* Purple-900 → Primary text on brand bg */
+.text-purple-900 {
+  color: #7800f5 !important;
+}
+
+/* Indigo colors → Purple6 Primary */
+.bg-indigo-50 {
+  background-color: #eae5fe !important;
+}
+
+.border-indigo-200 {
+  border-color: #b8a2f9 !important;
+}
+
+.text-indigo-700 {
+  color: #7800f5 !important;
+}
+
+.text-indigo-900 {
+  color: #7800f5 !important;
+}
+
+/* Pink → Purple6 for social sections */
+.bg-pink-50 {
+  background-color: #eae5fe !important;
+}
+
+.border-pink-200 {
+  border-color: #b8a2f9 !important;
+}
+
+.text-pink-900 {
+  color: #7800f5 !important;
+}
+
+/* Slate overrides for Purple6 gray system */
+.text-slate-900 {
+  color: #000000 !important;
+}
+
+.text-slate-600 {
+  color: #515151 !important;
+}
+
+.text-slate-500 {
+  color: #868686 !important;
+}
+
+.text-slate-400 {
+  color: #a7a7a7 !important;
+}
+
+.border-slate-200 {
+  border-color: #e8e8e8 !important;
+}
+
+.bg-slate-50 {
+  background-color: #f0f0f0 !important;
+}
+
+/* Card radius - Purple6 uses 4px */
+.rounded-lg {
+  border-radius: 4px !important;
+}
+
+/* Button hover states */
+.hover\:bg-purple-50:hover {
+  background-color: #eae5fe !important;
+}
+
+.hover\:border-purple-300:hover {
+  border-color: rgba(120, 0, 245, 0.4) !important;
+}
+
+/* Shadow */
+.shadow-sm {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+.shadow-md {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Transitions */
+.transition-all {
+  transition: all 0.3s ease !important;
+}
