@@ -1,0 +1,51 @@
+{
+   "checksum": "43565213ef7aaaf837a27650aa3e3d6e",
+   "roots": {
+      "bookmark_bar": {
+         "children": [  ],
+         "date_added": "13420689290826325",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "0bc5d13f-2cba-5d74-951f-3f233fe6c908",
+         "id": "1",
+         "name": "즐겨찾기 모음",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13420689290826325",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "82b081ec-3dd3-529c-8475-ab6c344590dd",
+         "id": "2",
+         "name": "다른 즐겨찾기",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13420689290826325",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "4cf2e351-0e85-532b-bb37-df045d8f8d0f",
+         "id": "3",
+         "name": "모바일 즐겨찾기",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "workspaces_v2": {
+         "children": [  ],
+         "date_added": "13420689290826325",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "75aa6670-344f-549d-b742-660f029506ab",
+         "id": "5",
+         "name": "작업 영역",
+         "source": "unknown",
+         "type": "folder"
+      }
+   },
+   "sync_metadata": "CpsBCh4IiIECEggsArCOnQEAACoOEAAYASAAKAUwADgAQAASABpYVW1KODNXWjFvb3ZydDFOb1J4cktlcXlEdVllOXd4WXBkRzdhSVBieCtXa213cFdGU2N4dzZJSS9aa3JCU1hqU3l6QUZFUVhpWVFBRWVwb3dONTV1R3c9PSoYOXFUMFp5ZHMxS3VoY0YvYm56WUV6Zz09SAOgBgwSjgEIBRKJAQocd1JCclpMKzZQQTlhdktnak5QN0pYRExjZnZzPRIkM2IyMTVhOWMtZWM2Mi01MjYxLThhZjEtMjg1MGQwMzFkNzM0GAAgACgAMNLgzoSyMzj04c6EsjNA9OHOhLIzShxubXg2NXNRRHZ4SThUZ0VlditBK250dG9TbjQ9WgBlAAAAAMI+AmAAEo4BCAMSiQEKHG5qZ0R1ODhlQ3J2WHA4NnBEN2ZIR2NxRnA4OD0SJDhiZjYzZjhkLTIxNWQtNTkwNC1iMjEyLWJjODJmMjI2N2RlMxgAIAAoADDqoriryTI4uqq4q8kyQLqquKvJMkoceXpOQjAxY241NEE3Y1JVMHVUKy9QZ21UdFVvPVoAZQAAAADCPgJgABKOAQgBEokBChx5eEovNmZ2a2VjcjdrcDVFUXpCNHRXTHBkYkU9EiQ2ZjRmZTVmMy00YjAzLTUwOWEtYTFlMi00ZTRmMzQyZjYwMmMYACAAKAAw5KK4q8kyOLKpuKvJMkCyqbiryTJKHGFSQ1dMZ2hGOWI1SW5xS0lEdnVKL2p2UWtGYz1aAGUAAAAAwj4CYAASjgEIAhKJAQocWWNTVG9udkVTUHdxQ3M0TDJjclZodjY4TDk4PRIkYjdjN2ViMmYtY2QzMS01YzlkLTliNDYtYWJkYTY5Y2I2ZTM0GAAgACgAMOWiuKvJMjjjqbiryTJA46m4q8kyShxvUFZraHdCUmJWNjVLQ1dSMitJT05IV29PdTg9WgBlAAAAAMI+AmAAMAA4AA==",
+   "version": 1
+}
