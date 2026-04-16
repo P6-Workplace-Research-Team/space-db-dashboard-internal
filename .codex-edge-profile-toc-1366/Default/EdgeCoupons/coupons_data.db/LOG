@@ -1,6 +1,0 @@
-2026/04/15-10:14:53.257 7f4 Reusing MANIFEST C:\Users\HP\Documents\Claude\Projects\spacedatabase dashboard\.codex-edge-profile-toc-1366\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
-2026/04/15-10:14:53.258 7f4 Recovering log #4
-2026/04/15-10:14:53.260 7f4 Reusing old log C:\Users\HP\Documents\Claude\Projects\spacedatabase dashboard\.codex-edge-profile-toc-1366\Default\EdgeCoupons/coupons_data.db/000004.log 
-2026/04/15-10:14:53.454 6a64 Level-0 table #8: started
-2026/04/15-10:14:53.461 6a64 Level-0 table #8: 682208 bytes OK
-2026/04/15-10:14:53.465 6a64 Delete type=0 #4

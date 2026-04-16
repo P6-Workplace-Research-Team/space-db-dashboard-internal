@@ -1,4 +1,0 @@
-{"logTime": "0415/011419", "correlationVector":"u37GmfFAGGJiLu6Sc6hja/.1","action":"SyncServerConnectionManagerRequest", "result":"SYNC_SERVER_OK", "context":{"environment":"Prod_japanwest_prod-s01-066-apac-japanwest", "migrationStage":"NotStarted", "server":"akswtt112000002"}}
-{"logTime": "0415/011419", "correlationVector":"u37GmfFAGGJiLu6Sc6hja/.2","action":"AAD.Mip.Unpack", "result":"Fail", "context":MIP_CLOUD_COMMERCIAL:Network error}
-{"logTime": "0415/011419", "correlationVector":"u37GmfFAGGJiLu6Sc6hja/.3","action":"AAD.GetKeyResponse", "result":"Fail", "context":Keys=-1.LastKeyStatus=.State=None. Tags: . Emails: ["jinseul_park@fursys.com"]}
-{"logTime": "0415/011419", "correlationVector":"u37GmfFAGGJiLu6Sc6hja/.4","action":"ProcessGetUpdates", "result":"Done", "context":{"dataType":"Encryption Keys", "deleted":"0", "process_failed_to_decrypt":"0", "process_pending_decryption":"0", "process_success":"1", "total":"1"}}

@@ -1,2 +1,10 @@
 *.twbr
 .codex-edge-profile-g/
+.codex-edge-profile-*/
+spacedatabase_dashboard_test_*.html
+spacedatabase_dashboard_wrapper_*.html
+dashboard_script*_check.js
+tab_*_check.png
+tab_*_dump.html
+toc_*_check.png
+02_Database/~$*.xlsx
