@@ -24,9 +24,15 @@ body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Noto Sans KR',sa
 .hdr-main{display:flex;align-items:center;gap:12px;min-width:0}
 .logo{font-size:17px;font-weight:700;letter-spacing:-0.03em;color:var(--p)}
 .logo em{color:var(--tx);font-style:normal;font-weight:500}
-.hdr-badges{display:flex;gap:6px;align-items:center}
+.hdr-badges{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .badge{background:var(--ds-gray-100,#f0f0f0);color:var(--mid);font-size:10px;font-weight:600;padding:3px 9px;border-radius:4px;letter-spacing:.06em}
 .badge-yr{background:var(--p);color:#fff}
+.mobile-toolbar{display:none;position:sticky;top:var(--header-top,49px);z-index:290;padding:10px 20px 0;background:linear-gradient(180deg,#f7f7f7 0%,rgba(247,247,247,.92) 100%)}
+.mobile-toolbar-inner{display:flex;gap:10px}
+.mobile-tool-btn{flex:1;border:1px solid var(--bd);border-radius:10px;background:#fff;color:var(--tx);padding:11px 14px;font-size:12px;font-weight:700;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,.06);cursor:pointer;transition:.18s}
+.mobile-tool-btn:hover,.mobile-tool-btn.active{border-color:var(--p);color:var(--p);background:var(--pale)}
+.mobile-backdrop{display:none;position:fixed;inset:0;background:rgba(17,18,24,.42);backdrop-filter:blur(2px);z-index:255}
+body.mobile-overlay-open .mobile-backdrop{display:block}
 /* FILTER SIDEBAR */
 .page-shell{padding:14px 20px 40px}
 .content-col{min-width:0;margin-left:360px;margin-right:272px;transition:margin-left .22s ease,margin-right .22s ease}
@@ -341,11 +347,32 @@ body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Noto Sans KR',sa
 
 @media (max-width:900px){
   .hdr{padding:10px 16px}
+  .hdr{align-items:flex-start;flex-direction:column}
+  .hdr-main,.hdr-badges{width:100%}
+  .hdr-badges{justify-content:flex-start}
+  .mobile-toolbar{display:block;padding:10px 14px 0}
   .page-shell{padding:14px 14px 48px}
-  .fbar{position:static;top:auto;bottom:auto;width:auto;margin-bottom:16px}
-  .page-shell.sidebar-collapsed .fbar{width:auto;padding:14px;overflow:auto}
+  .fbar,.toc-panel{position:fixed;top:calc(var(--header-top,49px) + 54px);bottom:14px;left:14px;right:14px;width:auto;max-width:none;margin:0;padding:16px;border-radius:14px;box-shadow:0 18px 40px rgba(12,12,18,.18);overflow:auto;opacity:0;pointer-events:none;transform:translateY(14px);transition:opacity .2s ease,transform .2s ease}
+  .fbar{z-index:270}
+  .toc-panel{z-index:268}
+  body.mobile-filter-open .fbar,body.mobile-toc-open .toc-panel{opacity:1;pointer-events:auto;transform:translateY(0)}
+  .page-shell.sidebar-collapsed .fbar{width:auto;padding:16px;overflow:auto}
   .content-col,.page-shell.sidebar-collapsed .content-col{margin-left:0;margin-right:0}
+  .fbar-top{align-items:flex-start}
+  .fbar-meta{width:100%;justify-content:space-between}
+  .btn-side{display:none}
+  .toc-title{margin-bottom:10px}
+  .toc-list{display:flex;flex-direction:column;grid-template-columns:none;gap:8px}
   .krow,.g4,.g6{grid-template-columns:minmax(0,1fr)}
+  .card,.kpi,.metric-block,.guide-filter-panel,.guide-summary-panel,.subcard{padding:16px}
+  .cw{height:200px}
+  .cw.t{height:240px}
+  .cw.xl{height:280px}
+  .value-panel{min-height:132px;font-size:28px}
+  .tbl{min-width:620px}
+  .tbl-wrap{margin:0 -4px;padding:0 4px}
+  .toggle{width:100%}
+  .tgl{flex:1}
   .guide-hero{padding:22px 0 18px}
   .guide-hero h2{font-size:26px}
   .guide-step-nav{flex-wrap:wrap}
@@ -353,6 +380,21 @@ body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Noto Sans KR',sa
   .guide-index-stage.single .guide-metric-grid{grid-template-columns:minmax(0,1fr)}
   .guide-step-header{padding:16px}
   .guide-step-body{padding:16px}
+}
+
+@media (max-width:640px){
+  .logo{font-size:15px}
+  .badge{font-size:9px;padding:3px 7px}
+  .nv{padding:10px 10px;font-size:11px}
+  .mobile-tool-btn{padding:10px 12px;font-size:11px}
+  .card,.kpi,.metric-block,.guide-filter-panel,.guide-summary-panel,.subcard{padding:14px}
+  .ct{font-size:12px}
+  .cs,.note{font-size:10px}
+  .cw{height:184px}
+  .cw.t{height:220px}
+  .cw.xl{height:240px}
+  .guide-step-title{font-size:15px}
+  .guide-metric .value{font-size:26px}
 }
 /* ═══════════════════════════════════════════════════════
    #sec-G — Purple6 Design System v2.0 + 레이아웃 픽스
@@ -700,6 +742,14 @@ body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Noto Sans KR',sa
   </div>
 </header>
 
+<div class="mobile-toolbar" aria-label="모바일 보조 메뉴">
+  <div class="mobile-toolbar-inner">
+    <button class="mobile-tool-btn" id="mobile-filter-toggle" type="button" onclick="toggleMobilePanel('filter')">필터 보기</button>
+    <button class="mobile-tool-btn" id="mobile-toc-toggle" type="button" onclick="toggleMobilePanel('toc')">목차 보기</button>
+  </div>
+</div>
+<div class="mobile-backdrop" id="mobile-backdrop" onclick="closeMobilePanels()" aria-hidden="true"></div>
+
 <div class="page-shell">
 <aside class="fbar">
   <div class="fbar-inner">
@@ -1043,6 +1093,8 @@ const FILTER_OPTION_ORDERS = {
 const F = Object.fromEntries(FILTER_KEYS.map(key => [key, []]));
 const GF = Object.fromEntries(FILTER_KEYS.map(key => [key, []]));
 let sidebarCollapsed = false;
+let mobilePanel = null;
+let responsiveMode = '';
 let unitStates = {};
 let viewStates = { 'C-furniture':'overall' };
 let guideStep = 1;
@@ -1868,6 +1920,77 @@ function renderGuideTab() {
   }
 }
 
+function isMobileViewport() {
+  return window.innerWidth <= 900;
+}
+function isTabletViewport() {
+  return window.innerWidth <= 1180;
+}
+function setMobilePanel(panel, open) {
+  const filterPanel = document.querySelector('.fbar');
+  const tocPanel = document.querySelector('.toc-panel');
+  const backdrop = document.getElementById('mobile-backdrop');
+  if (!isMobileViewport()) {
+    mobilePanel = null;
+    document.body.classList.remove('mobile-filter-open','mobile-toc-open','mobile-overlay-open');
+    [filterPanel, tocPanel].forEach(node => {
+      if (!node) return;
+      node.hidden = false;
+      node.removeAttribute('aria-hidden');
+      node.inert = false;
+    });
+    if (backdrop) backdrop.setAttribute('aria-hidden', 'true');
+    return;
+  }
+  const nextPanel = open ? panel : null;
+  mobilePanel = nextPanel;
+  document.body.classList.toggle('mobile-filter-open', nextPanel === 'filter');
+  document.body.classList.toggle('mobile-toc-open', nextPanel === 'toc');
+  document.body.classList.toggle('mobile-overlay-open', !!nextPanel);
+  if (filterPanel) {
+    const hidden = nextPanel !== 'filter';
+    filterPanel.hidden = hidden;
+    filterPanel.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+    filterPanel.inert = hidden;
+  }
+  if (tocPanel) {
+    const hidden = nextPanel !== 'toc';
+    tocPanel.hidden = hidden;
+    tocPanel.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+    tocPanel.inert = hidden;
+  }
+  if (backdrop) backdrop.setAttribute('aria-hidden', nextPanel ? 'false' : 'true');
+  const filterBtn = document.getElementById('mobile-filter-toggle');
+  const tocBtn = document.getElementById('mobile-toc-toggle');
+  if (filterBtn) {
+    const active = nextPanel === 'filter';
+    filterBtn.classList.toggle('active', active);
+    filterBtn.setAttribute('aria-expanded', active ? 'true' : 'false');
+  }
+  if (tocBtn) {
+    const active = nextPanel === 'toc';
+    tocBtn.classList.toggle('active', active);
+    tocBtn.setAttribute('aria-expanded', active ? 'true' : 'false');
+  }
+}
+function toggleMobilePanel(panel) {
+  setMobilePanel(panel, mobilePanel !== panel);
+}
+function closeMobilePanels() {
+  setMobilePanel(mobilePanel, false);
+}
+function syncResponsiveChrome() {
+  const mobile = isMobileViewport();
+  const toolbar = document.querySelector('.mobile-toolbar');
+  if (!mobile) setMobilePanel(mobilePanel, false);
+  const filterBtn = document.getElementById('mobile-filter-toggle');
+  const tocBtn = document.getElementById('mobile-toc-toggle');
+  const toolbarHidden = !mobile || activeSec === 'G';
+  if (toolbar) toolbar.hidden = toolbarHidden;
+  if (filterBtn) filterBtn.hidden = toolbarHidden;
+  if (tocBtn) tocBtn.hidden = toolbarHidden;
+}
+
 function setSidebarCollapsed(collapsed) {
   sidebarCollapsed = collapsed;
   const shell = document.querySelector('.page-shell');
@@ -1917,11 +2040,32 @@ function getSpaces(idxArr) {
 // CHART MANAGEMENT
 // ════════════════════════════════════════════
 const charts = {};
+function adaptChartConfig(cfg) {
+  const next = deepMerge({}, cfg);
+  const legend = next?.options?.plugins?.legend;
+  if (legend?.display && isTabletViewport() && (!legend.position || legend.position === 'right')) {
+    legend.position = 'bottom';
+  }
+  if (legend?.labels && isMobileViewport()) {
+    legend.labels.boxWidth = Math.min(legend.labels.boxWidth || 12, 10);
+    legend.labels.padding = Math.max(legend.labels.padding || 12, 10);
+  }
+  const scales = next?.options?.scales;
+  if (scales && isMobileViewport()) {
+    Object.values(scales).forEach(axis => {
+      if (!axis?.ticks) return;
+      axis.ticks.maxRotation = 0;
+      axis.ticks.autoSkip = true;
+      axis.ticks.maxTicksLimit = axis.ticks.maxTicksLimit || 6;
+    });
+  }
+  return next;
+}
 function mkChart(id, cfg) {
   if (charts[id]) charts[id].destroy();
   const ctx = document.getElementById(id);
   if (!ctx) return null;
-  charts[id] = new Chart(ctx, cfg);
+  charts[id] = new Chart(ctx, adaptChartConfig(cfg));
   return charts[id];
 }
 
@@ -2257,6 +2401,7 @@ function renderToc() {
   clearCardState('toc-focus');
   if (!cards.length) {
     host.innerHTML = '<div class="toc-item active"><span class="toc-link">바로 이동할 항목이 없습니다.</span></div>';
+    syncResponsiveChrome();
     return;
   }
   host.innerHTML = cards.map((card, idx) => {
@@ -2284,11 +2429,13 @@ function renderToc() {
     link.addEventListener('click', event => {
       event.preventDefault();
       scrollToCard(targetId);
+      closeMobilePanels();
       if (history.replaceState) history.replaceState(null, '', `#${targetId}`);
       else location.hash = targetId;
     });
   });
   observeCurrentCards();
+  syncResponsiveChrome();
 }
 function syncSectionChrome() {
   const shell = document.querySelector('.page-shell');
@@ -2298,6 +2445,8 @@ function syncSectionChrome() {
     if (host) host.innerHTML = '';
     if (tocObserver) tocObserver.disconnect();
   }
+  closeMobilePanels();
+  syncResponsiveChrome();
 }
 
 // ════════════════════════════════════════════
@@ -2336,6 +2485,7 @@ function showSec(id, btn) {
   if (_tabDirty[id]) _renderTab(id);
   syncSectionChrome();
   if (id !== 'G') renderToc();
+  else syncResponsiveChrome();
 }
 
 // ════════════════════════════════════════════
@@ -3097,6 +3247,10 @@ function updateStickyOffsets() {
   const hdr = document.querySelector('.hdr');
   if (!hdr) return;
   document.documentElement.style.setProperty('--header-top', `${hdr.offsetHeight}px`);
+  const nextMode = isMobileViewport() ? 'mobile' : (isTabletViewport() ? 'tablet' : 'desktop');
+  if (responsiveMode && responsiveMode !== nextMode) refresh();
+  responsiveMode = nextMode;
+  syncResponsiveChrome();
 }
 
 function arrangeDashboardLayout() {
@@ -3138,7 +3292,11 @@ renderFilterGroups();
 setSidebarCollapsed(false);
 refresh();
 updateStickyOffsets();
+syncResponsiveChrome();
 window.addEventListener('resize', updateStickyOffsets);
+window.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closeMobilePanels();
+});
 </script>
 </body>
 </html>
