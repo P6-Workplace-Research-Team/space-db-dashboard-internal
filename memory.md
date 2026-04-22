@@ -78,3 +78,8 @@
 - Cause: `#sec-G` had its own compact overrides for the flow strip and metric cards, with shallow button paddings and relatively short card internals compared with the expanded desktop canvas.
 - Fix: Increased the `#sec-G` flow-strip bottom spacing and button padding, enlarged the first-step header/body vertical padding, and raised the metric-card minimum height plus inner padding so the visible card block occupies more vertical space.
 - Verification: Captured another large desktop screenshot and confirmed the flow strip reads taller and the first metric row fills more of the viewport with less empty space below.
+
+- Symptom: In the shared left filter card, users had to scan multiple category blocks to find the most frequently used controls, which added unnecessary search effort before filtering.
+- Cause: High-traffic filters such as `가용면적구간`, `인원구간`, `산업군`, and `대기업 여부` were buried inside broader category groups with the same visual weight as every other field.
+- Fix: Added a new highlighted `많이 찾는 필터` section at the top of the filter card, moved those four controls into it, removed their duplicates from the lower groups, and styled the section with a distinct purple-accented border/background treatment.
+- Verification: Captured a desktop screenshot and confirmed the four priority filters now appear first and are visually easier to spot than the rest of the sidebar fields.
