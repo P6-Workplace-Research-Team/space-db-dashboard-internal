@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/spacedatabase_dashboard_test_G.html"
+      "destination": "/spacedatabase_dashboard.html"
     }
   ]
 }
