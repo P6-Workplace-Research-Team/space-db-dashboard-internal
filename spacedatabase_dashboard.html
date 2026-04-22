@@ -244,29 +244,28 @@ body.mobile-overlay-open .mobile-backdrop{display:block}
 .guide-warning{display:flex;align-items:flex-start;gap:10px;padding:10px 16px;border:1px solid #FFE083;border-radius:10px;background:#FFF3CD;font-size:12px;font-weight:500;color:#7A5200}
 .guide-warning .warn-icon{font-size:14px;line-height:1.2}
 .page-shell.guide-mode{padding-top:12px}
-.page-shell.guide-mode .fbar,
-.page-shell.guide-mode .toc-panel{display:none}
-.page-shell.guide-mode .content-col{margin-left:0!important;margin-right:0!important}
-.guide-shell{gap:14px}
-.guide-hero{padding:0 0 8px}
-.guide-hero h2{font-size:22px;letter-spacing:-.6px;margin-bottom:0}
-.guide-hero p{display:none}
-.guide-filter-panel{padding:14px 16px}
+.page-shell.guide-mode .content-col{margin-left:360px!important;margin-right:0!important}
+.page-shell.guide-mode.sidebar-collapsed .content-col{margin-left:92px!important}
+body.guide-active .toc-panel,
+body.guide-active #mobile-toc-toggle{display:none!important}
+.guide-shell{gap:8px}
+.guide-hero,.guide-toolbar,#guide-warning-host{display:none}
+.sec#sec-G .sec-hd{margin-bottom:8px}
 .guide-panel-title{margin-bottom:10px}
 .guide-filter-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .guide-filter-chip{display:inline-flex;align-items:center;gap:6px}
 .guide-filter-chip input{display:none}
 .guide-step-head p{display:none}
-.guide-step-flow{display:flex;align-items:center;gap:0;padding:2px 0 6px;overflow-x:auto}
+.guide-step-flow{display:flex;align-items:center;gap:0;padding:8px 0 12px;overflow-x:auto}
 .guide-step-flow .guide-step-btn{min-width:100px}
 .guide-index-stage{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
 .guide-index-stage.single .guide-step-block{margin:0}
-.guide-index-stage.single .guide-step-body{display:block;padding:14px 16px 16px}
+.guide-index-stage.single .guide-step-body{display:block;padding:18px 16px 22px}
 .guide-index-stage.single .guide-step-note{display:none}
 .guide-index-stage.single .guide-step-header{cursor:default}
 .guide-index-stage.single .guide-step-state{color:var(--p);font-weight:700}
 .guide-index-stage.single .guide-metric-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.guide-index-stage.single .guide-metric{padding:12px 14px}
+.guide-index-stage.single .guide-metric{padding:18px 14px 20px}
 .guide-index-stage.single .guide-metric .title{font-size:11px}
 .guide-index-stage.single .guide-metric .value{font-size:23px;margin:8px 0 5px}
 .guide-index-stage.single .guide-metric .value span{font-size:11px}
@@ -288,7 +287,7 @@ body.mobile-overlay-open .mobile-backdrop{display:block}
 .guide-step-btn .sub{display:none}
 .step-sep{font-size:14px;color:#DDD8E8;margin:0 2px;flex-shrink:0;line-height:1;user-select:none}
 .guide-steps{display:flex;flex-direction:column;gap:8px}
-.guide-step-block{padding:0;overflow:hidden;border:1.5px solid #EEE9F5!important;border-radius:10px!important;box-shadow:none;background:#fff}
+.guide-step-block{padding:0;overflow:hidden;border:1px solid #e8e8e8;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.06);background:#fff}
 .guide-step-block.collapsed{opacity:.92}
 .guide-step-anchor{scroll-margin-top:calc(var(--header-top,49px) + 20px)}
 .guide-step-header{padding:16px 20px 14px;border-bottom:1px solid transparent;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;cursor:pointer}
@@ -517,7 +516,7 @@ body.mobile-overlay-open .mobile-backdrop{display:block}
   display: flex;
   align-items: stretch;
   gap: 0;
-  padding: 0 0 6px;
+  padding: 4px 0 14px;
   overflow: visible;
   border-bottom: 1px solid var(--ds-border);
 }
@@ -526,7 +525,7 @@ body.mobile-overlay-open .mobile-backdrop{display:block}
   flex: 1;                            /* ★ 꽉 차게 */
   border: none;
   clip-path: none;
-  padding: 6px 8px 7px;
+  padding: 12px 10px 13px;
   background: transparent;
   border-radius: 0;
   color: var(--ds-text-disabled);
@@ -568,7 +567,7 @@ body.mobile-overlay-open .mobile-backdrop{display:block}
   transition: box-shadow 300ms ease;
 }
 #sec-G .card.guide-step-block:hover { box-shadow: var(--ds-shadow-hover); }
-#sec-G .guide-step-header { padding: 14px 20px 12px; }
+#sec-G .guide-step-header { padding: 18px 20px 14px; }
 #sec-G .guide-step-tag {
   font-size: 9.5px; font-weight: 600;
   letter-spacing: 0.06em; text-transform: uppercase;
@@ -589,7 +588,7 @@ body.mobile-overlay-open .mobile-backdrop{display:block}
 #sec-G .guide-step-state {
   font-size: 10px; font-weight: 500; color: var(--ds-gray-300);
 }
-#sec-G .guide-step-body { padding: 14px 20px 18px; }
+#sec-G .guide-step-body { padding: 20px 20px 26px; }
 #sec-G .card.guide-step-block.open .guide-step-header {
   border-bottom-color: var(--ds-border);
 }
@@ -607,7 +606,8 @@ body.mobile-overlay-open .mobile-backdrop{display:block}
   border: 1px solid var(--ds-border);
   border-radius: var(--ds-radius-sm);
   background: var(--ds-bg-default);
-  padding: 14px 16px;
+  min-height: 342px;
+  padding: 18px 16px 24px;
   box-shadow: var(--ds-shadow-sm);
 }
 #sec-G .guide-metric.wide { flex: 2 1 0; }
@@ -933,6 +933,7 @@ body.mobile-overlay-open .mobile-backdrop{display:block}
 
 <!-- ═══ G. 설계 가이드 ═══ -->
 <section class="sec on" id="sec-G">
+  <div class="sec-hd"><h2>오피스 핵심 Index</h2><p>설계 단계별 적정 값과 범위를 빠르게 확인하는 핵심 지표 탭</p></div>
   <div class="guide-shell">
     <section class="guide-hero">
       <h2>오피스 핵심 Index</h2>
@@ -1379,13 +1380,7 @@ function drawingMatchesFilters(d, filters) {
   return FILTER_KEYS.every(key => !filters[key].length || filters[key].includes(getFilterValue(d, key)));
 }
 function getGuideFilteredIdx() {
-  const idx = [];
-  for (let i=0; i<DRAWINGS.length; i++) {
-    const d = DRAWINGS[i];
-    if (!drawingMatchesFilters(d, GF)) continue;
-    idx.push(i);
-  }
-  return idx;
+  return [...filteredIdx];
 }
 function getGuideFilterValues(key) {
   return GF[key];
@@ -1985,10 +1980,10 @@ function syncResponsiveChrome() {
   if (!mobile) setMobilePanel(mobilePanel, false);
   const filterBtn = document.getElementById('mobile-filter-toggle');
   const tocBtn = document.getElementById('mobile-toc-toggle');
-  const toolbarHidden = !mobile || activeSec === 'G';
+  const toolbarHidden = !mobile;
   if (toolbar) toolbar.hidden = toolbarHidden;
-  if (filterBtn) filterBtn.hidden = toolbarHidden;
-  if (tocBtn) tocBtn.hidden = toolbarHidden;
+  if (filterBtn) filterBtn.hidden = !mobile;
+  if (tocBtn) tocBtn.hidden = !mobile || activeSec === 'G';
 }
 
 function setSidebarCollapsed(collapsed) {
@@ -2439,14 +2434,25 @@ function renderToc() {
 }
 function syncSectionChrome() {
   const shell = document.querySelector('.page-shell');
+  const tocPanel = document.querySelector('.toc-panel');
+  document.body.classList.toggle('guide-active', activeSec === 'G');
   if (shell) shell.classList.toggle('guide-mode', activeSec === 'G');
+  closeMobilePanels();
+  syncResponsiveChrome();
   if (activeSec === 'G') {
     const host = document.getElementById('toc-links');
     if (host) host.innerHTML = '';
     if (tocObserver) tocObserver.disconnect();
+    if (tocPanel) {
+      tocPanel.hidden = true;
+      tocPanel.setAttribute('aria-hidden', 'true');
+      tocPanel.inert = true;
+    }
+  } else if (tocPanel && !isMobileViewport()) {
+    tocPanel.hidden = false;
+    tocPanel.removeAttribute('aria-hidden');
+    tocPanel.inert = false;
   }
-  closeMobilePanels();
-  syncResponsiveChrome();
 }
 
 // ════════════════════════════════════════════
