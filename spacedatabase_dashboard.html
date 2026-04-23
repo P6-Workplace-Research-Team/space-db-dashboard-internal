@@ -821,6 +821,7 @@ body.guide-active #mobile-toc-toggle{display:none!important}
 .guide-detail-label{font-size:10px;font-weight:700;color:#8B90A1;letter-spacing:.03em}
 .guide-detail-core{font-size:18px;font-weight:700;color:#1F1C2E;line-height:1.2}
 .guide-detail-sub{font-size:10.5px;font-weight:600;color:#9CA3AF;line-height:1.45}
+.guide-detail-sub.muted{font-size:10px;font-weight:500;color:#A0A7B8}
 .guide-metric.muted-value .guide-single-value{font-size:18px;font-weight:600;color:#6B7280;line-height:1.3}
 .guide-metric.muted-value .guide-value-main{color:#6B7280;font-size:1em;font-weight:600}
 .guide-metric.muted-value .guide-value-unit{color:#9CA3AF;font-size:.72em;font-weight:600}
@@ -1528,9 +1529,12 @@ function summarizeGuideFilter(key) {
   if (!values.length) return ': 전체';
   return ': ' + values.map(value => formatFilterValue(key, value)).join(', ');
 }
-function guideValueHtml(value, unit='') {
+function guideValueMarkup(value, unit='') {
   if (value == null || value === '') return '&mdash;';
-  return `${value}${unit ? `<span>${unit}</span>` : ''}`;
+  return `${guideValueEscaped(value)}${unit ? `<span class="guide-value-unit">${guideValueEscaped(unit)}</span>` : ''}`;
+}
+function guideValueHtml(value, unit='') {
+  return guideValueMarkup(value, unit);
 }
 function getGuideAreaUnitLabel(suffix='') {
   return `${guideAreaUnit === 'm2' ? '㎡' : '평'}${suffix}`;
@@ -1558,16 +1562,17 @@ function guideValueEscaped(value) {
   return String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 function guideAreaValueHtml(m2, suffix='') {
-  const value = formatGuideAreaText(m2, suffix);
-  return `<span class="guide-dynamic-value" data-guide-value="area" data-m2="${m2 ?? ''}" data-suffix="${guideValueEscaped(suffix)}">${guideValueEscaped(value ?? '—')}</span>`;
+  const main = formatGuideAreaNumber(m2);
+  const initial = main == null ? '&mdash;' : guideValueMarkup(main, getGuideAreaUnitLabel(suffix));
+  return `<span class="guide-dynamic-value" data-guide-value="area" data-m2="${m2 ?? ''}" data-suffix="${guideValueEscaped(suffix)}">${initial}</span>`;
 }
 function guideNumberValueHtml(value, unit='') {
-  const text = value == null || !isFinite(value) ? '—' : `${fmt0(value)}${unit}`;
-  return `<span class="guide-dynamic-value" data-guide-value="number" data-number="${value ?? ''}" data-unit="${guideValueEscaped(unit)}">${guideValueEscaped(text)}</span>`;
+  const initial = value == null || !isFinite(value) ? '&mdash;' : guideValueMarkup(fmt0(value), unit);
+  return `<span class="guide-dynamic-value" data-guide-value="number" data-number="${value ?? ''}" data-unit="${guideValueEscaped(unit)}">${initial}</span>`;
 }
 function guideIntegerValueHtml(value, unit='') {
-  const text = value == null || !isFinite(value) ? '—' : `${Math.round(Number(value))}${unit}`;
-  return `<span class="guide-dynamic-value" data-guide-value="integer" data-number="${value ?? ''}" data-unit="${guideValueEscaped(unit)}">${guideValueEscaped(text)}</span>`;
+  const initial = value == null || !isFinite(value) ? '&mdash;' : guideValueMarkup(Math.round(Number(value)), unit);
+  return `<span class="guide-dynamic-value" data-guide-value="integer" data-number="${value ?? ''}" data-unit="${guideValueEscaped(unit)}">${initial}</span>`;
 }
 function guideAreaRangeValueHtml(minM2, maxM2, suffix='') {
   const value = formatGuideAreaRangeText(minM2, maxM2, suffix);
@@ -1674,11 +1679,21 @@ function renderGuideDynamicValue(node) {
   const unit = node.dataset.unit || '';
   const text = node.dataset.text || '';
   let value = '—';
-  if (type === 'area') value = formatGuideAreaText(m2, suffix) || '—';
+  if (type === 'area') {
+    const main = formatGuideAreaNumber(m2);
+    node.innerHTML = main == null ? '&mdash;' : guideValueMarkup(main, getGuideAreaUnitLabel(suffix));
+    return;
+  }
+  if (type === 'number') {
+    node.innerHTML = number == null || !isFinite(number) ? '&mdash;' : guideValueMarkup(fmt0(number), unit);
+    return;
+  }
+  if (type === 'integer') {
+    node.innerHTML = number == null || !isFinite(number) ? '&mdash;' : guideValueMarkup(Math.round(number), unit);
+    return;
+  }
   if (type === 'area-range') value = formatGuideAreaRangeText(minM2, maxM2, suffix) || '—';
   if (type === 'count-area') value = formatGuideCountAreaText(count, m2) || '—';
-  if (type === 'number') value = number == null || !isFinite(number) ? '—' : `${fmt0(number)}${unit}`;
-  if (type === 'integer') value = number == null || !isFinite(number) ? '—' : `${Math.round(number)}${unit}`;
   if (type === 'text-area') value = (text && formatGuideAreaText(m2, suffix)) ? `${text} / ${formatGuideAreaText(m2, suffix)}` : (text || formatGuideAreaText(m2, suffix) || '—');
   node.textContent = value;
 }
@@ -1697,9 +1712,10 @@ function toggleGuideAreaUnit(unit) {
   updateGuideAreaToggleUI();
   updateGuideMetricAreaValues();
 }
-function guideMetricCard({ kind, title, value, unit='', detail='', hint='', className='', valueLabel='', subValue='' }) {
+function guideMetricCard({ kind, title, value, unit='', detail='', hint='', className='', valueLabel='', subValue='', valueIsHtml=false }) {
   const lbl = valueLabel || (className.includes('program-share') || unit === '%' ? '%' : '값');
   const hasValue = value != null && value !== '';
+  const valueHtml = valueIsHtml ? value : guideValueHtml(value, unit);
   return `
     <article class="guide-metric range-card single-card ${className}">
       <div class="title">${title}</div>
@@ -1707,7 +1723,7 @@ function guideMetricCard({ kind, title, value, unit='', detail='', hint='', clas
         ${hasValue ? `
         <div class="guide-range-median">
           <div class="guide-range-median-label">${lbl}</div>
-          <div class="guide-single-value">${guideValueHtml(value, unit)}</div>
+          <div class="guide-single-value">${valueHtml}</div>
           ${subValue ? `<div class="guide-metric-sub">${subValue}</div>` : ''}
         </div>` : ''}
         ${detail ? `<div class="guide-metric-detail">${detail}</div>` : ''}
@@ -1739,7 +1755,7 @@ function guideDetailStackHtml(items) {
     <div class="guide-detail-block">
       <div class="guide-detail-label">${item.label}</div>
       <div class="guide-detail-core">${item.core}</div>
-      ${item.sub ? `<div class="guide-detail-sub">${item.sub}</div>` : ''}
+      ${item.sub ? `<div class="guide-detail-sub${item.subMuted ? ' muted' : ''}">${item.sub}</div>` : ''}
     </div>
   `).join('')}</div>`;
 }
@@ -1992,9 +2008,10 @@ function renderGuideTab() {
         suffix:'/인'
       }),
       guideMetricCard({
-        title:'프로그램 비중',
+        title:'1개층 공간 프로그램별 면적 비중',
         value:guideProgramShareValueHtml(guideSp, guideIdx),
-        className:'wide program-share'
+        className:'wide program-share',
+        valueIsHtml:true
       })
     ],
     2: [
@@ -2004,29 +2021,35 @@ function renderGuideTab() {
         unit:'%'
       }),
       guideMetricCard({
-        title:'권장 주통로/부통로 너비',
-        value:'',
-        detail:guideDetailStackHtml([
-          { label:'주통로', core:'1800 - 2000mm', sub:'최소 : 1700mm' },
-          { label:'부통로', core:'1200 - 1500mm', sub:'최소 : 1800mm' }
-        ])
-      }),
-      guideMetricCard({
         title:'대표 데스크 형태 / 너비',
         value:topDeskType?.[0] && topDeskWidth?.[0] ? '1순위' : null,
         valueLabel:'1순위',
-        subValue:(topDeskTypePct != null && topDeskWidthPct != null && topDeskType?.[0] && topDeskWidth?.[0])
-          ? `${topDeskType[0]} ${topDeskTypePct}% / ${topDeskWidth[0]}mm ${topDeskWidthPct}%`
+        detail:(topDeskType?.[0] && topDeskWidth?.[0])
+          ? guideDetailStackHtml([
+              { label:'데스크 형태', core:topDeskType[0], sub:`선택 비율 ${topDeskTypePct}%`, subMuted:true },
+              { label:'데스크 너비', core:`${topDeskWidth[0]}mm`, sub:`선택 비율 ${topDeskWidthPct}%`, subMuted:true }
+            ])
           : '',
         className:'muted-value'
       }),
       guideMetricCard({
+        title:'권장 주통로/부통로 너비',
+        value:'',
+        detail:guideDetailStackHtml([
+          { label:'주통로', core:'1800 - 2000mm', sub:'최소 : 1700mm', subMuted:true },
+          { label:'부통로', core:'1200 - 1500mm', sub:'최소 : 1800mm', subMuted:true }
+        ])
+      }),
+      guideMetricCard({
         title:'권장 등간격 너비',
-        value:'권장값'
+        value:'2000mm(3열배치시)',
+        valueLabel:'권장값',
+        subValue:'*4열 이상, 데스크 중앙 내 회의 테이블 배치시 2200mm을 따릅니다.'
       }),
       guideMetricCard({
         title:'권장 열 배치',
-        value:'권장값'
+        value:'3열',
+        valueLabel:'권장값'
       })
     ],
     3: [
