@@ -1,7 +1,9 @@
 *.twbr
 .codex-edge-profile-g/
 .codex-edge-profile-*/
-spacedatabase_dashboard_test_*.html
+/filter_featured_check.png
+/g_*_check.png
+/spacedatabase_dashboard_test_*.html
 spacedatabase_dashboard_wrapper_*.html
 dashboard_script*_check.js
 tab_*_check.png
