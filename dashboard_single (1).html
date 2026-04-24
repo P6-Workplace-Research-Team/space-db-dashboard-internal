@@ -1,0 +1,2001 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>공간DB — 설계 가이드</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"/>
+<style>/* Purple6 v2.0 design tokens — 공간DB */
+:root {
+  /* Brand */
+  --p6-purple: #7800f5;
+  --p6-purple-50: #f5ecff;
+  --p6-purple-100: #ead6ff;
+  --p6-purple-200: #d4adff;
+  --p6-purple-300: #b77aff;
+  --p6-purple-400: #9a47ff;
+  --p6-purple-500: #7800f5;
+  --p6-purple-600: #6000c4;
+  --p6-purple-700: #480093;
+
+  /* Program palette — 공간 프로그램별 상징 색 (Purple6 확장) */
+  --prog-work:    #7800f5;  /* 업무 — 메인 퍼플 */
+  --prog-exec:    #ff7a3d;  /* 임원 — 버밀리언 */
+  --prog-meet:    #00b789;  /* 회의 — 그린 */
+  --prog-social:  #ffb200;  /* 소셜 — 앰버 */
+  --prog-support: #3a6ff5;  /* 지원 — 블루 */
+  --prog-circ:    #c9c2d8;  /* 동선/기타 — 뉴트럴 */
+
+  /* Neutral */
+  --ink-900: #0e0a18;
+  --ink-800: #1f1a2d;
+  --ink-700: #3a3350;
+  --ink-600: #5a5470;
+  --ink-500: #8a8498;
+  --ink-400: #b0aabe;
+  --ink-300: #d4cfdd;
+  --ink-200: #e8e8e8;
+  --ink-100: #f3f0f8;
+  --ink-50:  #faf9fc;
+  --bg:      #ffffff;
+  --bg-soft: #faf8fd;
+
+  /* Radii */
+  --r-card: 4px;
+  --r-btn: 0px;
+  --r-chip: 999px;
+
+  /* Shadows */
+  --sh-card: 0 2px 8px rgba(20, 8, 50, 0.06);
+  --sh-card-hover: 0 4px 16px rgba(20, 8, 50, 0.10);
+
+  /* Type scale (clamp-based) */
+  --f-hero:  clamp(40px, 5.2vw, 72px);
+  --f-big:   clamp(28px, 3.2vw, 44px);
+  --f-mid:   clamp(20px, 2.2vw, 28px);
+  --f-body:  15px;
+  --f-small: 13px;
+  --f-micro: 11px;
+
+  /* Spacing */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink-900);
+  font-family: 'Pretendard', 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-feature-settings: "tnum" 1, "ss01" 1;
+  -webkit-font-smoothing: antialiased;
+  font-size: var(--f-body);
+  line-height: 1.45;
+}
+button { font-family: inherit; cursor: pointer; }
+h1, h2, h3, h4 { margin: 0; font-weight: 700; letter-spacing: -0.01em; }
+.mono { font-family: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace; font-feature-settings: "tnum" 1; }
+.tnum { font-variant-numeric: tabular-nums; }
+
+/* card shell */
+.card {
+  background: var(--bg);
+  border: 1px solid var(--ink-200);
+  border-radius: var(--r-card);
+  box-shadow: var(--sh-card);
+  padding: var(--s-5);
+}
+
+/* chip / pill */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: var(--f-small);
+  border: 1px solid var(--ink-200);
+  background: var(--bg);
+  color: var(--ink-700);
+  border-radius: var(--r-chip);
+  cursor: pointer;
+  transition: all 0.12s;
+  white-space: nowrap;
+}
+.chip:hover { border-color: var(--ink-400); color: var(--ink-900); }
+.chip.active {
+  background: var(--p6-purple-500);
+  color: #fff;
+  border-color: var(--p6-purple-500);
+}
+.chip.all { font-weight: 600; }
+
+/* step color helpers */
+.step-1 { --step: var(--p6-purple-500); }
+.step-2 { --step: var(--prog-work); }
+.step-3 { --step: var(--prog-exec); }
+.step-4 { --step: var(--prog-meet); }
+.step-5 { --step: var(--prog-social); }
+.step-6 { --step: var(--prog-support); }
+</style>
+<style>/* 공간DB — App-level layout & components */
+
+/* ---------- Top Bar ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: saturate(180%) blur(8px);
+  border-bottom: 1px solid var(--ink-200);
+}
+.topbar-inner {
+  display: flex; align-items: center; gap: var(--s-5);
+  padding: 14px 32px;
+}
+.brand {
+  display: flex; align-items: baseline; gap: 8px;
+  font-weight: 700; letter-spacing: -0.02em; font-size: 20px;
+}
+.brand .dot {
+  width: 10px; height: 10px; background: var(--p6-purple-500);
+  display: inline-block; transform: translateY(1px);
+}
+.brand .sub { color: var(--ink-500); font-weight: 500; font-size: 13px; margin-left: 4px; }
+.tabs { display: flex; gap: 2px; margin-left: 16px; }
+.tab {
+  padding: 8px 14px; font-size: 13px; color: var(--ink-600);
+  background: transparent; border: none; border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+.tab.active { color: var(--ink-900); border-bottom-color: var(--p6-purple-500); font-weight: 600; }
+.topbar-meta {
+  margin-left: auto; display: flex; gap: 16px; align-items: center;
+  color: var(--ink-500); font-size: 12px;
+}
+.topbar-meta .pill {
+  padding: 4px 10px; background: var(--ink-100); color: var(--ink-700);
+  border-radius: 999px; font-size: 12px; font-weight: 500;
+}
+
+/* ---------- Filter Bar (G탭) ---------- */
+.filterbar {
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--ink-200);
+  padding: 16px 32px 14px;
+}
+.filter-row {
+  display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;
+}
+.filter-group {
+  display: flex; align-items: center; gap: 10px;
+}
+.filter-group-label {
+  font-size: 12px; font-weight: 600; color: var(--ink-600);
+  min-width: 72px; flex-shrink: 0;
+}
+.filter-chips {
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.filter-expand {
+  margin-top: 8px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--p6-purple-500); font-weight: 600;
+  background: none; border: none; padding: 0; cursor: pointer;
+}
+.filter-summary {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px dashed var(--ink-200);
+  font-size: 13px; color: var(--ink-700);
+}
+.filter-summary .count {
+  font-weight: 700; color: var(--p6-purple-500); font-size: 18px;
+  font-variant-numeric: tabular-nums;
+}
+.filter-summary .warn {
+  margin-left: auto; padding: 6px 12px; background: #fff4e5;
+  color: #a35a00; font-size: 12px; border-radius: 4px;
+}
+
+/* ---------- Step Navigator ---------- */
+.stepnav {
+  display: flex; align-items: stretch; gap: 0;
+  padding: 12px 32px;
+  overflow-x: auto;
+  background: var(--bg);
+  border-bottom: 1px solid var(--ink-200);
+  position: sticky; top: 54px; z-index: 30;
+}
+.stepnav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 18px 8px 0;
+  background: none; border: none;
+  color: var(--ink-500); cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  border-right: 1px solid var(--ink-200);
+  padding-right: 24px;
+  margin-right: 4px;
+}
+.stepnav-item:last-child { border-right: none; }
+.stepnav-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+  color: var(--ink-400);
+  padding: 3px 7px; background: var(--ink-100);
+  border-radius: 2px;
+}
+.stepnav-item.active .stepnav-num { color: #fff; background: var(--step, var(--p6-purple-500)); }
+.stepnav-item.active { color: var(--ink-900); font-weight: 700; }
+.stepnav-item.active .stepnav-label { color: var(--step, var(--p6-purple-500)); }
+
+/* ---------- Step Section ---------- */
+.step-section {
+  padding: 56px 32px;
+  border-bottom: 1px solid var(--ink-100);
+  scroll-margin-top: 110px;
+}
+.step-section:nth-child(even) { background: var(--bg-soft); }
+
+.step-hero {
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) 1fr;
+  gap: 48px;
+  margin-bottom: 40px;
+  align-items: end;
+}
+.step-hero-left .step-tag {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; font-weight: 700;
+  color: var(--step, var(--p6-purple-500));
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+.step-hero-left .step-tag::before {
+  content: ''; width: 28px; height: 2px; background: currentColor;
+}
+.step-hero-left h2 {
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink-900);
+}
+.step-hero-left h2 .accent { color: var(--step, var(--p6-purple-500)); }
+
+.step-hero-right {
+  font-size: clamp(16px, 1.4vw, 18px);
+  color: var(--ink-600);
+  line-height: 1.55;
+  padding-bottom: 6px;
+  max-width: 520px;
+}
+.step-hero-right .q {
+  font-size: clamp(18px, 1.6vw, 22px);
+  color: var(--ink-900);
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Grid helpers ---------- */
+.grid { display: grid; gap: 16px; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-6 { grid-template-columns: repeat(6, 1fr); }
+.grid-3-fr { grid-template-columns: 1.4fr 1fr 1fr; }
+
+/* ---------- Cards (shared shell) ---------- */
+.c {
+  background: var(--bg);
+  border: 1px solid var(--ink-200);
+  border-radius: var(--r-card);
+  box-shadow: var(--sh-card);
+  padding: 20px 22px;
+  display: flex; flex-direction: column; gap: 12px;
+  min-height: 180px;
+}
+.c-title {
+  font-size: 13px; font-weight: 600; color: var(--ink-700);
+  letter-spacing: -0.005em;
+  display: flex; align-items: center; gap: 8px;
+}
+.c-title .tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  padding: 2px 6px; background: var(--ink-100); color: var(--ink-500);
+  border-radius: 2px; letter-spacing: 0.04em;
+}
+.c-sub { font-size: 12px; color: var(--ink-500); margin-top: -4px; }
+.c-footer { margin-top: auto; font-size: 12px; color: var(--ink-500); }
+
+/* 범위형 카드 */
+.rangecard-main {
+  display: flex; align-items: baseline; gap: 8px;
+  justify-content: center;
+  padding: 8px 0;
+}
+.rangecard-main .val {
+  font-size: clamp(40px, 5vw, 62px);
+  font-weight: 800; letter-spacing: -0.03em;
+  color: var(--step, var(--p6-purple-500));
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.rangecard-main .unit {
+  font-size: 14px; color: var(--ink-500); font-weight: 500;
+}
+.rangecard-range {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  gap: 10px; color: var(--ink-500); font-size: 13px;
+  text-align: center;
+  padding-top: 8px;
+  border-top: 1px dashed var(--ink-200);
+}
+.rangecard-range .minmax { font-variant-numeric: tabular-nums; }
+.rangecard-range .minmax .n { color: var(--ink-700); font-weight: 600; font-size: 16px; }
+.rangecard-range .dash { color: var(--ink-300); font-weight: 400; }
+
+/* 강조 %형 카드 */
+.pctcard {
+  display: flex; flex-direction: column; gap: 4px; flex: 1; justify-content: center;
+}
+.pctcard .label { font-size: 11px; color: var(--ink-500); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.pctcard .val {
+  font-size: clamp(44px, 5.4vw, 68px);
+  font-weight: 800; letter-spacing: -0.03em; line-height: 1;
+  color: var(--step, var(--p6-purple-500));
+  font-variant-numeric: tabular-nums;
+}
+.pctcard .val .u { font-size: 0.4em; font-weight: 600; color: var(--ink-500); margin-left: 4px; }
+.pctcard .desc { font-size: 13px; color: var(--ink-600); margin-top: 8px; }
+
+/* 단순 값형 */
+.valcard .val {
+  font-size: clamp(36px, 4.4vw, 54px);
+  font-weight: 800; letter-spacing: -0.03em; line-height: 1;
+  color: var(--ink-900);
+  font-variant-numeric: tabular-nums;
+}
+.valcard .val .u { font-size: 0.36em; color: var(--ink-500); margin-left: 4px; }
+
+/* 리스트형 카드 */
+.listcard ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.listcard li {
+  display: grid; grid-template-columns: 1fr auto; align-items: baseline;
+  gap: 12px; padding-bottom: 8px;
+  border-bottom: 1px dotted var(--ink-200);
+}
+.listcard li:last-child { border-bottom: none; padding-bottom: 0; }
+.listcard .lc-label { font-size: 14px; color: var(--ink-800); }
+.listcard .lc-val {
+  font-size: 18px; font-weight: 700; color: var(--ink-900);
+  font-variant-numeric: tabular-nums;
+}
+.listcard .lc-val .u { font-size: 11px; color: var(--ink-500); font-weight: 500; margin-left: 2px; }
+
+/* horizontal bar */
+.hbar { height: 6px; background: var(--ink-100); position: relative; overflow: hidden; border-radius: 2px; margin-top: 4px; }
+.hbar > span { position: absolute; inset: 0 auto 0 0; background: var(--step, var(--p6-purple-500)); }
+
+/* ---------- Floor Plan visual (STEP 1) ---------- */
+.floorplan {
+  display: grid;
+  grid-template-columns: repeat(100, 1fr);
+  grid-auto-rows: 14px;
+  gap: 0;
+  padding: 8px;
+  background: #f8f4fe;
+  border: 1px solid var(--ink-200);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.fp-zone {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 11px; font-weight: 600;
+  overflow: hidden;
+  padding: 4px 8px;
+  letter-spacing: -0.01em;
+}
+.fp-zone .pct {
+  position: absolute; top: 6px; right: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; opacity: 0.9;
+}
+.fp-legend {
+  display: flex; flex-wrap: wrap; gap: 14px 18px;
+  margin-top: 14px;
+  font-size: 12px; color: var(--ink-700);
+}
+.fp-legend .sw {
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.fp-legend .sw::before {
+  content: ''; width: 10px; height: 10px; background: currentColor; display: inline-block;
+}
+
+/* ---------- Dumbbell (min-med-max visual) ---------- */
+.dumbbell {
+  position: relative; height: 40px; margin: 6px 0 4px;
+}
+.dumbbell .line {
+  position: absolute; left: 0; right: 0; top: 50%;
+  height: 2px; background: var(--ink-200); transform: translateY(-50%);
+}
+.dumbbell .seg {
+  position: absolute; top: 50%; height: 4px;
+  background: var(--step, var(--p6-purple-500));
+  transform: translateY(-50%); opacity: 0.25;
+}
+.dumbbell .dot {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 10px; height: 10px; border-radius: 999px;
+  background: var(--ink-400); border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--ink-300);
+}
+.dumbbell .dot.med {
+  width: 16px; height: 16px; background: var(--step, var(--p6-purple-500));
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--step, var(--p6-purple-500));
+  z-index: 2;
+}
+.dumbbell .tick {
+  position: absolute; top: 100%; margin-top: 2px;
+  transform: translateX(-50%);
+  font-size: 11px; color: var(--ink-500);
+  font-variant-numeric: tabular-nums;
+}
+.dumbbell .tick.med { font-size: 14px; color: var(--ink-900); font-weight: 700; }
+
+/* ---------- Stacked 100 bar (program mix) ---------- */
+.stack100 {
+  display: flex; width: 100%; height: 48px;
+  border-radius: 4px; overflow: hidden;
+  border: 1px solid var(--ink-200);
+}
+.stack100 .seg {
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 12px; font-weight: 700;
+  position: relative;
+}
+
+/* ---------- Donut ---------- */
+.donut-wrap { display: flex; align-items: center; gap: 18px; }
+.donut { width: 120px; height: 120px; flex-shrink: 0; }
+.donut .c-center {
+  font-size: 22px; font-weight: 800; fill: var(--ink-900);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Meeting room iso grid ---------- */
+.meet-sizes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.meet-box {
+  border: 1px solid var(--ink-200);
+  border-radius: 4px;
+  padding: 12px;
+  position: relative;
+  aspect-ratio: 1.4 / 1;
+  background: var(--bg);
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.meet-box .glyph {
+  position: absolute; inset: 12px; display: grid;
+  place-items: center;
+  opacity: 0.08;
+}
+.meet-box .size-label {
+  font-size: 12px; font-weight: 600; color: var(--ink-600);
+  position: relative; z-index: 1;
+}
+.meet-box .size-val {
+  font-size: 28px; font-weight: 800; color: var(--step);
+  font-variant-numeric: tabular-nums;
+  position: relative; z-index: 1; line-height: 1;
+}
+.meet-box .size-val .u { font-size: 12px; font-weight: 500; color: var(--ink-500); margin-left: 2px; }
+.meet-box .size-meta {
+  font-size: 11px; color: var(--ink-500); position: relative; z-index: 1; margin-top: 4px;
+}
+
+/* ---------- Question/Answer strip ---------- */
+.qa {
+  display: grid; grid-template-columns: auto 1fr;
+  gap: 14px 20px; align-items: baseline;
+  padding: 18px 22px;
+  background: var(--bg);
+  border: 1px solid var(--ink-200);
+  border-left: 3px solid var(--step, var(--p6-purple-500));
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+.qa .q-mark {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; font-weight: 700;
+  color: var(--step, var(--p6-purple-500));
+  letter-spacing: 0.05em;
+}
+.qa .q-text { font-size: 15px; color: var(--ink-700); font-weight: 500; }
+.qa .a-mark {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; font-weight: 700;
+  color: var(--ink-500); letter-spacing: 0.05em;
+}
+.qa .a-text {
+  font-size: 18px; color: var(--ink-900); font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.qa .a-text .accent { color: var(--step, var(--p6-purple-500)); }
+
+/* ---------- Person matrix (인원 시각화) ---------- */
+.person-matrix {
+  display: flex; flex-wrap: wrap; gap: 3px;
+  padding: 12px 0;
+}
+.person-matrix .p {
+  width: 10px; height: 14px; background: var(--ink-300);
+  clip-path: polygon(50% 0, 65% 30%, 100% 45%, 100% 100%, 0 100%, 0 45%, 35% 30%);
+}
+.person-matrix .p.on { background: var(--step, var(--p6-purple-500)); }
+
+/* ---------- Bar chart (연도별) ---------- */
+.ybar-row {
+  display: grid; grid-template-columns: 60px 1fr auto;
+  align-items: center; gap: 14px;
+  padding: 6px 0;
+}
+.ybar-row .y { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-500); }
+.ybar-row .track { height: 22px; background: var(--ink-100); position: relative; border-radius: 2px; overflow: hidden; }
+.ybar-row .fill { position: absolute; inset: 0 auto 0 0; background: var(--step, var(--p6-purple-500)); }
+.ybar-row .v { font-size: 13px; font-weight: 700; color: var(--ink-800); font-variant-numeric: tabular-nums; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-6 { grid-template-columns: repeat(3, 1fr); }
+  .grid-3-fr { grid-template-columns: 1fr 1fr; }
+  .step-hero { grid-template-columns: 1fr; gap: 16px; }
+  .meet-sizes { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 680px) {
+  .topbar-inner { padding: 12px 16px; flex-wrap: wrap; gap: 10px; }
+  .tabs { order: 3; width: 100%; overflow-x: auto; }
+  .topbar-meta { display: none; }
+  .filterbar { padding: 12px 16px; }
+  .filter-group-label { min-width: 60px; font-size: 11px; }
+  .stepnav { padding: 10px 16px; top: 96px; }
+  .step-section { padding: 40px 16px; }
+  .grid-2, .grid-3, .grid-4, .grid-6 { grid-template-columns: 1fr; }
+  .meet-sizes { grid-template-columns: repeat(2, 1fr); }
+  .rangecard-main .val { font-size: 44px; }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script>// Mock data grounded in PRD calculation principles.
+// 540건 도면 기준, 필터가 적용되면 scaleFactor 로 일부 수치가 반응하도록 함.
+
+window.SPACE_DB = (function(){
+  const baseTotal = 540;
+
+  // 공간 프로그램 비중 (면적 기준 평균) — 합계 100%
+  const programMix = [
+    { key: 'work',    label: '업무',   pct: 42, desc: '업무 책상·팀장석·그룹업무' },
+    { key: 'meet',    label: '회의',   pct: 14, desc: '회의실·기타회의공간' },
+    { key: 'social',  label: '소셜',   pct: 11, desc: '라운지·탕비·카페' },
+    { key: 'exec',    label: '임원',   pct:  8, desc: '임원실·오픈 임원석' },
+    { key: 'support', label: '지원',   pct: 10, desc: '폰부스·OA·물품' },
+    { key: 'circ',    label: '동선/기타', pct: 15, desc: '통로·코어·진입' },
+  ];
+
+  // 인원 구간별 도면 수
+  const headcountBuckets = [
+    { label: '~30인',   n: 46 },
+    { label: '31~60',   n: 98 },
+    { label: '61~100',  n: 124 },
+    { label: '101~200', n: 142 },
+    { label: '201~400', n: 86 },
+    { label: '401인~',  n: 44 },
+  ];
+
+  // 가용면적 구간별 도면 수
+  const areaBuckets = [
+    { label: '~500㎡',       n: 42 },
+    { label: '500~1,000',    n: 96 },
+    { label: '1,000~2,000',  n: 138 },
+    { label: '2,000~4,000',  n: 156 },
+    { label: '4,000~8,000',  n: 72 },
+    { label: '8,000㎡~',     n: 36 },
+  ];
+
+  // STEP 1: 1개층 적정 인원 (범위형)
+  const zoning = {
+    headcountPerFloor: { min: 42, med: 96, max: 218 },     // 인
+    areaPerFloor:      { min: 320, med: 1180, max: 3240 }, // m²
+    areaPerPerson:     { min: 6.8, med: 9.4, max: 14.2 },  // m²/인
+  };
+
+  // STEP 2: 업무공간
+  const work = {
+    share: 42,                // %
+    areaPerPerson: 4.12,      // m²/인 (업무공간 한정)
+    deskShapes: [
+      { label: '일자형', pct: 58 },
+      { label: 'L자형',  pct: 27 },
+      { label: '클러스터', pct: 11 },
+      { label: '기타',   pct:  4 },
+    ],
+    deskWidths: [
+      { label: '1,400mm', pct:  9 },
+      { label: '1,500mm', pct: 42 },
+      { label: '1,600mm', pct: 31 },
+      { label: '1,800mm', pct: 18 },
+    ],
+    teamLead: [
+      { label: '동일 데스크',   pct: 48 },
+      { label: '확장 데스크',   pct: 27 },
+      { label: '독립 팀장석',   pct: 19 },
+      { label: '없음',          pct:  6 },
+    ],
+    freeSeating: 31,          // % 자율좌석제
+    groupWorkRoom: 64,        // % 보유
+    corridor: {
+      main: { min: 1500, med: 1800, max: 2200 },   // mm 주통로
+      sub:  { min: 900,  med: 1200, max: 1500 },   // mm 부통로
+      desk: { min: 800,  med: 900,  max: 1100 },   // mm 등간격
+    },
+  };
+
+  // STEP 3: 임원공간
+  const exec = {
+    share: 8,
+    roomArea: 28.4,           // m² (실형 평균)
+    openExecRatio: 36,        // %  임원공간 보유 도면 중 오픈 임원석 비율
+    furnitureMix: [
+      { label: '책상+미팅',       pct: 42, area: 32.1 },
+      { label: '책상+미팅+응접',   pct: 24, area: 41.6 },
+      { label: '책상만',          pct: 22, area: 18.8 },
+      { label: '책상+응접',       pct: 12, area: 27.4 },
+    ],
+  };
+
+  // STEP 4: 회의공간
+  const meet = {
+    share: 14,
+    avgCount: 6.8,            // 평균 개소
+    bySize: [                 // 규모별
+      { label: '소 (~4인)',   count: 3.2, area: 9.1 },
+      { label: '중 (5~8인)',  count: 2.1, area: 18.4 },
+      { label: '대 (9~16인)', count: 1.1, area: 32.6 },
+      { label: '특대 (17인~)', count: 0.4, area: 58.2 },
+    ],
+    openMeet: 42,             // % 오픈 회의 비중
+    furnitureStyle: [
+      { label: '고정 테이블', pct: 54 },
+      { label: '모듈 결합형', pct: 28 },
+      { label: '라운지 스타일', pct: 12 },
+      { label: '스탠딩',    pct:  6 },
+    ],
+  };
+
+  // STEP 5: 소셜공간
+  const social = {
+    share: 11,
+    loungeRatio: 68,          // % 라운지 계획 비율
+    tangbi: {
+      avgArea: 14.2,          // m²
+      byHeadcount: [
+        { label: '~60인',    area: 8.8 },
+        { label: '61~100',   area: 11.4 },
+        { label: '101~200',  area: 14.6 },
+        { label: '201~400',  area: 19.2 },
+        { label: '401인~',   area: 26.4 },
+      ],
+    },
+    loungeType: [
+      { label: '카페형',    area: 34.6 },
+      { label: '라이브러리', area: 28.2 },
+      { label: '다목적홀',  area: 58.4 },
+      { label: '휴게형',    area: 22.1 },
+    ],
+    loungePrograms: [
+      { label: '커피바',    pct: 78 },
+      { label: '다양한 좌석', pct: 64 },
+      { label: '대형 테이블', pct: 52 },
+      { label: '미디어월',  pct: 38 },
+      { label: '게임·엔터', pct: 24 },
+      { label: '업무 겸용', pct: 18 },
+    ],
+  };
+
+  // STEP 6: 지원공간
+  const support = {
+    share: 10,
+    phoneBooth: {
+      ratio: 72,              // % 조성 비율
+      avgCount: 4.6,          // 평균 개소
+      byHeadcount: [
+        { label: '~60인',    count: 1.8 },
+        { label: '61~100',   count: 3.2 },
+        { label: '101~200',  count: 4.8 },
+        { label: '201~400',  count: 7.4 },
+        { label: '401인~',   count: 12.2 },
+      ],
+    },
+    oaCount: 2.4,             // 평균 개소
+  };
+
+  // 연도별 추이 (2019~2025)
+  const yearly = {
+    years: [2019, 2020, 2021, 2022, 2023, 2024, 2025],
+    programMix: [  // stacked 100% by year
+      { year: 2019, work: 48, meet: 13, social:  8, exec: 10, support:  8, circ: 13 },
+      { year: 2020, work: 46, meet: 13, social:  9, exec:  9, support:  9, circ: 14 },
+      { year: 2021, work: 44, meet: 13, social: 10, exec:  9, support:  9, circ: 15 },
+      { year: 2022, work: 43, meet: 14, social: 10, exec:  9, support:  9, circ: 15 },
+      { year: 2023, work: 42, meet: 14, social: 11, exec:  8, support: 10, circ: 15 },
+      { year: 2024, work: 41, meet: 14, social: 12, exec:  8, support: 10, circ: 15 },
+      { year: 2025, work: 40, meet: 15, social: 12, exec:  8, support: 10, circ: 15 },
+    ],
+    loungeRatio: [42, 48, 54, 58, 62, 66, 68],
+    phoneBoothRatio: [38, 46, 55, 62, 67, 70, 72],
+  };
+
+  // 필터 옵션
+  const filters = {
+    area: ['전체', '~500㎡', '500~1,000', '1,000~2,000', '2,000~4,000', '4,000~8,000', '8,000㎡~'],
+    headcount: ['전체', '~30', '31~60', '61~100', '101~200', '201~400', '401~'],
+    industry: ['전체', 'IT·플랫폼', '금융', '제조', '제약·바이오', '컨설팅·법무', '유통·커머스', '미디어', '공공'],
+    region: ['전체', '강남권', '시청·종로권', '여의도권', '성수·왕십리', '판교·분당', '지방광역'],
+    year: ['전체', '2021', '2022', '2023', '2024', '2025'],
+    primeOffice: ['전체', '프라임', '일반'],
+    corpType: ['전체', '대기업', '중견', '중소', '외국계', '공공'],
+  };
+
+  return {
+    baseTotal, programMix, headcountBuckets, areaBuckets,
+    zoning, work, exec, meet, social, support, yearly, filters,
+  };
+})();
+</script>
+<script type="text/babel">
+// tweaks-panel.jsx
+// Reusable Tweaks shell + form-control helpers.
+//
+// Owns the host protocol (listens for __activate_edit_mode / __deactivate_edit_mode,
+// posts __edit_mode_available / __edit_mode_set_keys / __edit_mode_dismissed) so
+// individual prototypes don't re-roll it. Ships a consistent set of controls so you
+// don't hand-draw <input type="range">, segmented radios, steppers, etc.
+//
+// Usage (in an HTML file that loads React + Babel):
+//
+//   const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+//     "primaryColor": "#D97757",
+//     "fontSize": 16,
+//     "density": "regular",
+//     "dark": false
+//   }/*EDITMODE-END*/;
+//
+//   function App() {
+//     const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+//     return (
+//       <div style={{ fontSize: t.fontSize, color: t.primaryColor }}>
+//         Hello
+//         <TweaksPanel>
+//           <TweakSection label="Typography" />
+//           <TweakSlider label="Font size" value={t.fontSize} min={10} max={32} unit="px"
+//                        onChange={(v) => setTweak('fontSize', v)} />
+//           <TweakRadio  label="Density" value={t.density}
+//                        options={['compact', 'regular', 'comfy']}
+//                        onChange={(v) => setTweak('density', v)} />
+//           <TweakSection label="Theme" />
+//           <TweakColor  label="Primary" value={t.primaryColor}
+//                        onChange={(v) => setTweak('primaryColor', v)} />
+//           <TweakToggle label="Dark mode" value={t.dark}
+//                        onChange={(v) => setTweak('dark', v)} />
+//         </TweaksPanel>
+//       </div>
+//     );
+//   }
+//
+// ─────────────────────────────────────────────────────────────────────────────
+
+const __TWEAKS_STYLE = `
+  .twk-panel{position:fixed;right:16px;bottom:16px;z-index:2147483646;width:280px;
+    max-height:calc(100vh - 32px);display:flex;flex-direction:column;
+    background:rgba(250,249,247,.78);color:#29261b;
+    -webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);
+    border:.5px solid rgba(255,255,255,.6);border-radius:14px;
+    box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 12px 40px rgba(0,0,0,.18);
+    font:11.5px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif;overflow:hidden}
+  .twk-hd{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 8px 10px 14px;cursor:move;user-select:none}
+  .twk-hd b{font-size:12px;font-weight:600;letter-spacing:.01em}
+  .twk-x{appearance:none;border:0;background:transparent;color:rgba(41,38,27,.55);
+    width:22px;height:22px;border-radius:6px;cursor:default;font-size:13px;line-height:1}
+  .twk-x:hover{background:rgba(0,0,0,.06);color:#29261b}
+  .twk-body{padding:2px 14px 14px;display:flex;flex-direction:column;gap:10px;
+    overflow-y:auto;overflow-x:hidden;min-height:0;
+    scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.15) transparent}
+  .twk-body::-webkit-scrollbar{width:8px}
+  .twk-body::-webkit-scrollbar-track{background:transparent;margin:2px}
+  .twk-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:4px;
+    border:2px solid transparent;background-clip:content-box}
+  .twk-body::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.25);
+    border:2px solid transparent;background-clip:content-box}
+  .twk-row{display:flex;flex-direction:column;gap:5px}
+  .twk-row-h{flex-direction:row;align-items:center;justify-content:space-between;gap:10px}
+  .twk-lbl{display:flex;justify-content:space-between;align-items:baseline;
+    color:rgba(41,38,27,.72)}
+  .twk-lbl>span:first-child{font-weight:500}
+  .twk-val{color:rgba(41,38,27,.5);font-variant-numeric:tabular-nums}
+
+  .twk-sect{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    color:rgba(41,38,27,.45);padding:10px 0 0}
+  .twk-sect:first-child{padding-top:0}
+
+  .twk-field{appearance:none;width:100%;height:26px;padding:0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;
+    background:rgba(255,255,255,.6);color:inherit;font:inherit;outline:none}
+  .twk-field:focus{border-color:rgba(0,0,0,.25);background:rgba(255,255,255,.85)}
+  select.twk-field{padding-right:22px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='rgba(0,0,0,.5)' d='M0 0h10L5 6z'/></svg>");
+    background-repeat:no-repeat;background-position:right 8px center}
+
+  .twk-slider{appearance:none;-webkit-appearance:none;width:100%;height:4px;margin:6px 0;
+    border-radius:999px;background:rgba(0,0,0,.12);outline:none}
+  .twk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
+    width:14px;height:14px;border-radius:50%;background:#fff;
+    border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+  .twk-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
+    background:#fff;border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+
+  .twk-seg{position:relative;display:flex;padding:2px;border-radius:8px;
+    background:rgba(0,0,0,.06);user-select:none}
+  .twk-seg-thumb{position:absolute;top:2px;bottom:2px;border-radius:6px;
+    background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.12);
+    transition:left .15s cubic-bezier(.3,.7,.4,1),width .15s}
+  .twk-seg.dragging .twk-seg-thumb{transition:none}
+  .twk-seg button{appearance:none;position:relative;z-index:1;flex:1;border:0;
+    background:transparent;color:inherit;font:inherit;font-weight:500;height:22px;
+    border-radius:6px;cursor:default;padding:0}
+
+  .twk-toggle{position:relative;width:32px;height:18px;border:0;border-radius:999px;
+    background:rgba(0,0,0,.15);transition:background .15s;cursor:default;padding:0}
+  .twk-toggle[data-on="1"]{background:#34c759}
+  .twk-toggle i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+    background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+  .twk-toggle[data-on="1"] i{transform:translateX(14px)}
+
+  .twk-num{display:flex;align-items:center;height:26px;padding:0 0 0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;background:rgba(255,255,255,.6)}
+  .twk-num-lbl{font-weight:500;color:rgba(41,38,27,.6);cursor:ew-resize;
+    user-select:none;padding-right:8px}
+  .twk-num input{flex:1;min-width:0;height:100%;border:0;background:transparent;
+    font:inherit;font-variant-numeric:tabular-nums;text-align:right;padding:0 8px 0 0;
+    outline:none;color:inherit;-moz-appearance:textfield}
+  .twk-num input::-webkit-inner-spin-button,.twk-num input::-webkit-outer-spin-button{
+    -webkit-appearance:none;margin:0}
+  .twk-num-unit{padding-right:8px;color:rgba(41,38,27,.45)}
+
+  .twk-btn{appearance:none;height:26px;padding:0 12px;border:0;border-radius:7px;
+    background:rgba(0,0,0,.78);color:#fff;font:inherit;font-weight:500;cursor:default}
+  .twk-btn:hover{background:rgba(0,0,0,.88)}
+  .twk-btn.secondary{background:rgba(0,0,0,.06);color:inherit}
+  .twk-btn.secondary:hover{background:rgba(0,0,0,.1)}
+
+  .twk-swatch{appearance:none;-webkit-appearance:none;width:56px;height:22px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:6px;padding:0;cursor:default;
+    background:transparent;flex-shrink:0}
+  .twk-swatch::-webkit-color-swatch-wrapper{padding:0}
+  .twk-swatch::-webkit-color-swatch{border:0;border-radius:5.5px}
+  .twk-swatch::-moz-color-swatch{border:0;border-radius:5.5px}
+`;
+
+// ── useTweaks ───────────────────────────────────────────────────────────────
+// Single source of truth for tweak values. setTweak persists via the host
+// (__edit_mode_set_keys → host rewrites the EDITMODE block on disk).
+function useTweaks(defaults) {
+  const [values, setValues] = React.useState(defaults);
+  const setTweak = React.useCallback((key, val) => {
+    setValues((prev) => ({ ...prev, [key]: val }));
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [key]: val } }, '*');
+  }, []);
+  return [values, setTweak];
+}
+
+// ── TweaksPanel ─────────────────────────────────────────────────────────────
+// Floating shell. Registers the protocol listener BEFORE announcing
+// availability — if the announce ran first, the host's activate could land
+// before our handler exists and the toolbar toggle would silently no-op.
+// The close button posts __edit_mode_dismissed so the host's toolbar toggle
+// flips off in lockstep; the host echoes __deactivate_edit_mode back which
+// is what actually hides the panel.
+function TweaksPanel({ title = 'Tweaks', children }) {
+  const [open, setOpen] = React.useState(false);
+  const dragRef = React.useRef(null);
+  const offsetRef = React.useRef({ x: 16, y: 16 });
+  const PAD = 16;
+
+  const clampToViewport = React.useCallback(() => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const w = panel.offsetWidth, h = panel.offsetHeight;
+    const maxRight = Math.max(PAD, window.innerWidth - w - PAD);
+    const maxBottom = Math.max(PAD, window.innerHeight - h - PAD);
+    offsetRef.current = {
+      x: Math.min(maxRight, Math.max(PAD, offsetRef.current.x)),
+      y: Math.min(maxBottom, Math.max(PAD, offsetRef.current.y)),
+    };
+    panel.style.right = offsetRef.current.x + 'px';
+    panel.style.bottom = offsetRef.current.y + 'px';
+  }, []);
+
+  React.useEffect(() => {
+    if (!open) return;
+    clampToViewport();
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', clampToViewport);
+      return () => window.removeEventListener('resize', clampToViewport);
+    }
+    const ro = new ResizeObserver(clampToViewport);
+    ro.observe(document.documentElement);
+    return () => ro.disconnect();
+  }, [open, clampToViewport]);
+
+  React.useEffect(() => {
+    const onMsg = (e) => {
+      const t = e?.data?.type;
+      if (t === '__activate_edit_mode') setOpen(true);
+      else if (t === '__deactivate_edit_mode') setOpen(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  const dismiss = () => {
+    setOpen(false);
+    window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
+  };
+
+  const onDragStart = (e) => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const r = panel.getBoundingClientRect();
+    const sx = e.clientX, sy = e.clientY;
+    const startRight = window.innerWidth - r.right;
+    const startBottom = window.innerHeight - r.bottom;
+    const move = (ev) => {
+      offsetRef.current = {
+        x: startRight - (ev.clientX - sx),
+        y: startBottom - (ev.clientY - sy),
+      };
+      clampToViewport();
+    };
+    const up = () => {
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseup', up);
+    };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+  };
+
+  if (!open) return null;
+  return (
+    <>
+      <style>{__TWEAKS_STYLE}</style>
+      <div ref={dragRef} className="twk-panel"
+           style={{ right: offsetRef.current.x, bottom: offsetRef.current.y }}>
+        <div className="twk-hd" onMouseDown={onDragStart}>
+          <b>{title}</b>
+          <button className="twk-x" aria-label="Close tweaks"
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onClick={dismiss}>✕</button>
+        </div>
+        <div className="twk-body">{children}</div>
+      </div>
+    </>
+  );
+}
+
+// ── Layout helpers ──────────────────────────────────────────────────────────
+
+function TweakSection({ label, children }) {
+  return (
+    <>
+      <div className="twk-sect">{label}</div>
+      {children}
+    </>
+  );
+}
+
+function TweakRow({ label, value, children, inline = false }) {
+  return (
+    <div className={inline ? 'twk-row twk-row-h' : 'twk-row'}>
+      <div className="twk-lbl">
+        <span>{label}</span>
+        {value != null && <span className="twk-val">{value}</span>}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+// ── Controls ────────────────────────────────────────────────────────────────
+
+function TweakSlider({ label, value, min = 0, max = 100, step = 1, unit = '', onChange }) {
+  return (
+    <TweakRow label={label} value={`${value}${unit}`}>
+      <input type="range" className="twk-slider" min={min} max={max} step={step}
+             value={value} onChange={(e) => onChange(Number(e.target.value))} />
+    </TweakRow>
+  );
+}
+
+function TweakToggle({ label, value, onChange }) {
+  return (
+    <div className="twk-row twk-row-h">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <button type="button" className="twk-toggle" data-on={value ? '1' : '0'}
+              role="switch" aria-checked={!!value}
+              onClick={() => onChange(!value)}><i /></button>
+    </div>
+  );
+}
+
+function TweakRadio({ label, value, options, onChange }) {
+  const trackRef = React.useRef(null);
+  const [dragging, setDragging] = React.useState(false);
+  const opts = options.map((o) => (typeof o === 'object' ? o : { value: o, label: o }));
+  const idx = Math.max(0, opts.findIndex((o) => o.value === value));
+  const n = opts.length;
+
+  // The active value is read by pointer-move handlers attached for the lifetime
+  // of a drag — ref it so a stale closure doesn't fire onChange for every move.
+  const valueRef = React.useRef(value);
+  valueRef.current = value;
+
+  const segAt = (clientX) => {
+    const r = trackRef.current.getBoundingClientRect();
+    const inner = r.width - 4;
+    const i = Math.floor(((clientX - r.left - 2) / inner) * n);
+    return opts[Math.max(0, Math.min(n - 1, i))].value;
+  };
+
+  const onPointerDown = (e) => {
+    setDragging(true);
+    const v0 = segAt(e.clientX);
+    if (v0 !== valueRef.current) onChange(v0);
+    const move = (ev) => {
+      if (!trackRef.current) return;
+      const v = segAt(ev.clientX);
+      if (v !== valueRef.current) onChange(v);
+    };
+    const up = () => {
+      setDragging(false);
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+
+  return (
+    <TweakRow label={label}>
+      <div ref={trackRef} role="radiogroup" onPointerDown={onPointerDown}
+           className={dragging ? 'twk-seg dragging' : 'twk-seg'}>
+        <div className="twk-seg-thumb"
+             style={{ left: `calc(2px + ${idx} * (100% - 4px) / ${n})`,
+                      width: `calc((100% - 4px) / ${n})` }} />
+        {opts.map((o) => (
+          <button key={o.value} type="button" role="radio" aria-checked={o.value === value}>
+            {o.label}
+          </button>
+        ))}
+      </div>
+    </TweakRow>
+  );
+}
+
+function TweakSelect({ label, value, options, onChange }) {
+  return (
+    <TweakRow label={label}>
+      <select className="twk-field" value={value} onChange={(e) => onChange(e.target.value)}>
+        {options.map((o) => {
+          const v = typeof o === 'object' ? o.value : o;
+          const l = typeof o === 'object' ? o.label : o;
+          return <option key={v} value={v}>{l}</option>;
+        })}
+      </select>
+    </TweakRow>
+  );
+}
+
+function TweakText({ label, value, placeholder, onChange }) {
+  return (
+    <TweakRow label={label}>
+      <input className="twk-field" type="text" value={value} placeholder={placeholder}
+             onChange={(e) => onChange(e.target.value)} />
+    </TweakRow>
+  );
+}
+
+function TweakNumber({ label, value, min, max, step = 1, unit = '', onChange }) {
+  const clamp = (n) => {
+    if (min != null && n < min) return min;
+    if (max != null && n > max) return max;
+    return n;
+  };
+  const startRef = React.useRef({ x: 0, val: 0 });
+  const onScrubStart = (e) => {
+    e.preventDefault();
+    startRef.current = { x: e.clientX, val: value };
+    const decimals = (String(step).split('.')[1] || '').length;
+    const move = (ev) => {
+      const dx = ev.clientX - startRef.current.x;
+      const raw = startRef.current.val + dx * step;
+      const snapped = Math.round(raw / step) * step;
+      onChange(clamp(Number(snapped.toFixed(decimals))));
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+  return (
+    <div className="twk-num">
+      <span className="twk-num-lbl" onPointerDown={onScrubStart}>{label}</span>
+      <input type="number" value={value} min={min} max={max} step={step}
+             onChange={(e) => onChange(clamp(Number(e.target.value)))} />
+      {unit && <span className="twk-num-unit">{unit}</span>}
+    </div>
+  );
+}
+
+function TweakColor({ label, value, onChange }) {
+  return (
+    <div className="twk-row twk-row-h">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <input type="color" className="twk-swatch" value={value}
+             onChange={(e) => onChange(e.target.value)} />
+    </div>
+  );
+}
+
+function TweakButton({ label, onClick, secondary = false }) {
+  return (
+    <button type="button" className={secondary ? 'twk-btn secondary' : 'twk-btn'}
+            onClick={onClick}>{label}</button>
+  );
+}
+
+Object.assign(window, {
+  useTweaks, TweaksPanel, TweakSection, TweakRow,
+  TweakSlider, TweakToggle, TweakRadio, TweakSelect,
+  TweakText, TweakNumber, TweakColor, TweakButton,
+});
+</script>
+<script type="text/babel">/* global React */
+// 공간DB — Shared atoms
+
+const { useMemo, useState, useEffect, useRef } = React;
+
+// ---------- Utilities ----------
+const fmt = {
+  n:   (v, d=0) => (v == null ? '-' : Number(v).toLocaleString('ko-KR', { minimumFractionDigits: d, maximumFractionDigits: d })),
+  m2p: (m2)    => m2 * 0.3025,
+};
+
+// ---------- Step Hero ----------
+function StepHero({ num, title, accent, question, answer, desc }) {
+  return (
+    <div className="step-hero">
+      <div className="step-hero-left">
+        <div className="step-tag">STEP {String(num).padStart(2,'0')}</div>
+        <h2>{title}<span className="accent">.</span></h2>
+      </div>
+      <div className="step-hero-right">
+        {question && <div className="q">“{question}”</div>}
+        {desc && <div>{desc}</div>}
+      </div>
+    </div>
+  );
+}
+
+// ---------- Q/A strip ----------
+function QA({ question, answer }) {
+  return (
+    <div className="qa">
+      <div className="q-mark">Q.</div>
+      <div className="q-text">{question}</div>
+      <div className="a-mark">A.</div>
+      <div className="a-text">{answer}</div>
+    </div>
+  );
+}
+
+// ---------- Range Card (범위형) ----------
+function RangeCard({ title, tag, unit, min, med, max, footer, digits=0 }) {
+  return (
+    <div className="c">
+      <div className="c-title">{tag && <span className="tag">{tag}</span>}{title}</div>
+      <div className="rangecard-main">
+        <span className="val tnum">{fmt.n(med, digits)}</span>
+        <span className="unit">{unit}</span>
+      </div>
+      <Dumbbell min={min} med={med} max={max} digits={digits} unit={unit}/>
+      {footer && <div className="c-footer">{footer}</div>}
+    </div>
+  );
+}
+
+function Dumbbell({ min, med, max, unit='', digits=0 }) {
+  const span = max - min || 1;
+  const medX = ((med - min) / span) * 100;
+  return (
+    <div className="dumbbell">
+      <div className="line"/>
+      <div className="seg" style={{ left: '0%', right: '0%' }}/>
+      <div className="dot" style={{ left: '0%' }}/>
+      <div className="dot med" style={{ left: `${medX}%` }}/>
+      <div className="dot" style={{ left: '100%' }}/>
+      <div className="tick" style={{ left: '0%' }}>min <span className="tnum" style={{color:'var(--ink-700)',fontWeight:600}}>{fmt.n(min, digits)}</span></div>
+      <div className="tick" style={{ left: '100%' }}>max <span className="tnum" style={{color:'var(--ink-700)',fontWeight:600}}>{fmt.n(max, digits)}</span></div>
+    </div>
+  );
+}
+
+// ---------- Pct Card (강조 %형) ----------
+function PctCard({ title, tag, value, desc, footer, accent }) {
+  return (
+    <div className="c">
+      <div className="c-title">{tag && <span className="tag">{tag}</span>}{title}</div>
+      <div className="pctcard" style={accent ? { '--step': accent } : null}>
+        <div className="val tnum">{value}<span className="u">%</span></div>
+        {desc && <div className="desc">{desc}</div>}
+      </div>
+      {footer && <div className="c-footer">{footer}</div>}
+    </div>
+  );
+}
+
+// ---------- Value Card (단순 값형) ----------
+function ValCard({ title, tag, value, unit, desc, footer }) {
+  return (
+    <div className="c valcard">
+      <div className="c-title">{tag && <span className="tag">{tag}</span>}{title}</div>
+      <div className="pctcard">
+        <div className="val tnum">{value}{unit && <span className="u">{unit}</span>}</div>
+        {desc && <div className="desc">{desc}</div>}
+      </div>
+      {footer && <div className="c-footer">{footer}</div>}
+    </div>
+  );
+}
+
+// ---------- List Card (리스트형) ----------
+function ListCard({ title, tag, items, footer, subLabel, unit }) {
+  const max = Math.max(...items.map(i => i.pct ?? i.count ?? i.area ?? 0));
+  return (
+    <div className="c listcard">
+      <div className="c-title">{tag && <span className="tag">{tag}</span>}{title}</div>
+      {subLabel && <div className="c-sub">{subLabel}</div>}
+      <ul>
+        {items.map((it, i) => {
+          const n = it.pct ?? it.count ?? it.area;
+          const u = it.pct != null ? '%' : (unit ?? '');
+          return (
+            <li key={i}>
+              <div>
+                <div className="lc-label">{it.label}</div>
+                <div className="hbar"><span style={{ width: `${(n/max)*100}%` }}/></div>
+              </div>
+              <div className="lc-val">{n}<span className="u">{u}</span></div>
+            </li>
+          );
+        })}
+      </ul>
+      {footer && <div className="c-footer">{footer}</div>}
+    </div>
+  );
+}
+
+// ---------- Description Card (설명형) ----------
+function DescCard({ title, tag, value, unit, lines, footer }) {
+  return (
+    <div className="c">
+      <div className="c-title">{tag && <span className="tag">{tag}</span>}{title}</div>
+      <div className="pctcard">
+        <div className="val tnum" style={{fontSize:'clamp(32px, 3.6vw, 44px)'}}>{value}{unit && <span className="u">{unit}</span>}</div>
+        {lines && lines.map((l, i) => (
+          <div key={i} className="desc" style={{marginTop: i === 0 ? 12 : 4}}>{l}</div>
+        ))}
+      </div>
+      {footer && <div className="c-footer">{footer}</div>}
+    </div>
+  );
+}
+
+// ---------- Stacked 100 bar ----------
+const PROG_COLORS = {
+  work:    'var(--prog-work)',
+  exec:    'var(--prog-exec)',
+  meet:    'var(--prog-meet)',
+  social:  'var(--prog-social)',
+  support: 'var(--prog-support)',
+  circ:    'var(--prog-circ)',
+};
+function Stack100({ data, keyMap }) {
+  return (
+    <div className="stack100">
+      {data.map((d, i) => (
+        <div key={i} className="seg" style={{ width: `${d.pct}%`, background: PROG_COLORS[d.key] || 'var(--ink-400)' }}>
+          {d.pct >= 6 ? `${d.pct}%` : ''}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ---------- Donut ----------
+function Donut({ value, color='var(--p6-purple-500)', label, size=120 }) {
+  const R = 46, C = 2 * Math.PI * R;
+  const off = C - (value/100) * C;
+  return (
+    <svg className="donut" width={size} height={size} viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r={R} stroke="var(--ink-100)" strokeWidth="12" fill="none"/>
+      <circle cx="60" cy="60" r={R} stroke={color} strokeWidth="12" fill="none"
+        strokeDasharray={C} strokeDashoffset={off} strokeLinecap="butt"
+        transform="rotate(-90 60 60)"
+      />
+      <text x="60" y="68" textAnchor="middle" className="c-center">{value}<tspan fontSize="12" dx="2">%</tspan></text>
+    </svg>
+  );
+}
+
+// ---------- Person Matrix ----------
+function PersonMatrix({ total, highlight }) {
+  const arr = Array.from({ length: total });
+  return (
+    <div className="person-matrix">
+      {arr.map((_, i) => <span key={i} className={`p ${i < highlight ? 'on' : ''}`}/>)}
+    </div>
+  );
+}
+
+// ---------- Year bar chart ----------
+function YearBars({ data, unit='%', color }) {
+  const max = Math.max(...data.map(d => d.v));
+  return (
+    <div>
+      {data.map(d => (
+        <div className="ybar-row" key={d.year}>
+          <div className="y">{d.year}</div>
+          <div className="track">
+            <div className="fill" style={{ width: `${(d.v/max)*100}%`, background: color || 'var(--step)' }}/>
+          </div>
+          <div className="v">{d.v}{unit}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Expose
+Object.assign(window, {
+  StepHero, QA, RangeCard, Dumbbell, PctCard, ValCard, ListCard, DescCard,
+  Stack100, Donut, PersonMatrix, YearBars, PROG_COLORS, fmt,
+});
+</script>
+<script type="text/babel">/* global React, StepHero, QA, RangeCard, PctCard, ValCard, ListCard, DescCard, Stack100, Donut, PersonMatrix, YearBars, PROG_COLORS, fmt */
+
+// ---------- FLOORPLAN VISUAL ----------
+// Treemap-ish floorplan where each program takes area proportional to pct.
+function FloorPlan({ mix, unit='m²', totalArea = 1180 }) {
+  // Layout: split work + meet on top row; exec + social + support + circ on bottom row, heights proportional.
+  // Use CSS grid with span units.
+  const GRID_W = 100, GRID_H = 56;
+  // Split vertically into 2 rows: top = work+meet+exec (≈64%), bottom = social+support+circ (≈36%)
+  const topKeys = ['work', 'meet', 'exec'];
+  const botKeys = ['social', 'support', 'circ'];
+  const topMix = mix.filter(m => topKeys.includes(m.key));
+  const botMix = mix.filter(m => botKeys.includes(m.key));
+  const topPct = topMix.reduce((s, m) => s + m.pct, 0);
+  const botPct = botMix.reduce((s, m) => s + m.pct, 0);
+
+  // Heights in grid rows (proportional to topPct/totalPct)
+  const total = topPct + botPct;
+  const topRows = Math.round((topPct/total) * GRID_H);
+  const botRows = GRID_H - topRows;
+
+  const colors = PROG_COLORS;
+
+  return (
+    <div>
+      <div className="floorplan" style={{ gridAutoRows: 'unset', gridTemplateRows: `${topRows}fr ${botRows}fr`, minHeight: 380 }}>
+        {/* Top row */}
+        <div style={{ gridRow: '1', gridColumn: '1 / -1', display: 'grid',
+                      gridTemplateColumns: topMix.map(m => `${m.pct}fr`).join(' '), gap: 4, padding: 4 }}>
+          {topMix.map(m => (
+            <div key={m.key} className="fp-zone" style={{
+              background: colors[m.key],
+              minHeight: 60,
+            }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '-0.01em' }}>{m.label}</div>
+                <div style={{ fontSize: 20, fontWeight: 800, marginTop: 4 }}>{m.pct}<span style={{fontSize:11,opacity:0.85,marginLeft:2}}>%</span></div>
+              </div>
+              <div className="pct" style={{fontFamily:'JetBrains Mono, monospace', fontSize: 10}}>
+                {Math.round(totalArea * m.pct / 100)}㎡
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* Bottom row */}
+        <div style={{ gridRow: '2', gridColumn: '1 / -1', display: 'grid',
+                      gridTemplateColumns: botMix.map(m => `${m.pct}fr`).join(' '), gap: 4, padding: 4 }}>
+          {botMix.map(m => (
+            <div key={m.key} className="fp-zone" style={{
+              background: colors[m.key],
+              color: m.key === 'circ' ? 'var(--ink-800)' : '#fff',
+              minHeight: 50,
+            }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 12, fontWeight: 700 }}>{m.label}</div>
+                <div style={{ fontSize: 18, fontWeight: 800, marginTop: 2 }}>{m.pct}<span style={{fontSize:10,opacity:0.85,marginLeft:2}}>%</span></div>
+              </div>
+              <div className="pct" style={{fontFamily:'JetBrains Mono, monospace', fontSize: 10, color: m.key === 'circ' ? 'var(--ink-600)' : '#fff'}}>
+                {Math.round(totalArea * m.pct / 100)}㎡
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="fp-legend">
+        {mix.map(m => (
+          <span key={m.key} className="sw" style={{ color: colors[m.key] }}>
+            <span/><span style={{color: 'var(--ink-700)'}}>{m.label} <span className="tnum" style={{color: 'var(--ink-500)'}}>· {m.pct}%</span></span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ---------- STEP 1: 전체 조닝 ----------
+function Step1({ data, unit }) {
+  const D = data.zoning;
+  const mix = data.programMix;
+  const area = D.areaPerFloor;
+  return (
+    <section id="step-1" className="step-section step-1">
+      <StepHero num={1} title="전체 조닝" />
+      <div className="step-hero" style={{marginTop:-24}}>
+        <div className="step-hero-left" style={{visibility:'hidden', height:0}}/>
+        <div className="step-hero-right">
+          <div className="q">"1개층, 몇 명을 위한 얼마의 공간인가?"</div>
+          <div>이 프로젝트 조건에서 실무 데이터는 이렇게 모여 있어요.</div>
+        </div>
+      </div>
+
+      <div className="grid grid-3" style={{marginBottom: 24}}>
+        <RangeCard tag="범위형" title="1개층 적정 인원" unit="인"
+          min={D.headcountPerFloor.min} med={D.headcountPerFloor.med} max={D.headcountPerFloor.max}
+          footer="인원구간 기준 · 자연수 반올림"
+        />
+        <RangeCard tag="범위형" title="1개층 가용 면적" unit={unit === 'py' ? '평' : '㎡'}
+          min={unit==='py'? Math.round(fmt.m2p(area.min)) : area.min}
+          med={unit==='py'? Math.round(fmt.m2p(area.med)) : area.med}
+          max={unit==='py'? Math.round(fmt.m2p(area.max)) : area.max}
+          footer="가용면적구간 기준"
+        />
+        <RangeCard tag="범위형" title="인당 면적 (전체)" unit={unit === 'py' ? '평/인' : '㎡/인'}
+          digits={1}
+          min={unit==='py'? fmt.m2p(D.areaPerPerson.min) : D.areaPerPerson.min}
+          med={unit==='py'? fmt.m2p(D.areaPerPerson.med) : D.areaPerPerson.med}
+          max={unit==='py'? fmt.m2p(D.areaPerPerson.max) : D.areaPerPerson.max}
+          footer="가용면적 ÷ 인원 · 도면 평균"
+        />
+      </div>
+
+      <div className="c" style={{padding: 24}}>
+        <div className="c-title" style={{marginBottom: 4}}>
+          <span className="tag">비유형</span>
+          공간 프로그램 비중 — 1개층을 이렇게 나눕니다
+        </div>
+        <div className="c-sub" style={{marginBottom: 16}}>
+          전체 도면의 프로그램별 평균 면적 비율을 평면도 형태로 표현. 숫자 대신 눈으로 읽어보세요.
+        </div>
+        <FloorPlan mix={mix} totalArea={D.areaPerFloor.med}/>
+      </div>
+    </section>
+  );
+}
+
+// ---------- STEP 2: 업무공간 ----------
+function Step2({ data, unit }) {
+  const W = data.work;
+  return (
+    <section id="step-2" className="step-section step-2">
+      <StepHero num={2} title="업무공간"/>
+      <QA question="100명이면 업무공간은 몇 ㎡?" answer={
+        <span>인당 <span className="accent tnum">{unit==='py'? fmt.n(fmt.m2p(W.areaPerPerson),2) : W.areaPerPerson}</span> {unit==='py'? '평' : '㎡'} × 100인 = <span className="accent tnum">
+          {unit==='py'? fmt.n(fmt.m2p(W.areaPerPerson) * 100, 0) : fmt.n(W.areaPerPerson * 100, 0)}
+        </span> {unit==='py'? '평' : '㎡'}</span>
+      }/>
+
+      <div className="grid grid-4" style={{marginBottom: 16}}>
+        <PctCard tag="%형" title="업무공간 비중" value={W.share} desc="가용면적 대비 평균"/>
+        <ValCard tag="값형" title="인당 면적 (업무)" value={unit==='py'? fmt.n(fmt.m2p(W.areaPerPerson),2) : W.areaPerPerson} unit={unit==='py'? '평/인' : '㎡/인'} desc="업무공간 한정"/>
+        <PctCard tag="%형" title="자율좌석제 시행" value={42} desc="전체 도면 중"/>
+        <PctCard tag="%형" title="그룹업무공간 보유" value={W.groupWorkRoom} desc="전체 도면 중"/>
+      </div>
+
+      <div className="grid grid-3" style={{marginBottom: 16}}>
+        <ListCard tag="리스트형" title="주요 데스크 형태" items={W.deskShapes}/>
+        <ListCard tag="리스트형" title="주요 데스크 너비" items={W.deskWidths}/>
+        <ListCard tag="리스트형" title="팀장석 구성 유형" items={W.teamLead}/>
+      </div>
+
+      <div className="grid grid-3">
+        <DescCard tag="설명형" title="권장 주통로 너비" value={W.corridor.main.med} unit="mm"
+          lines={[`범위 ${W.corridor.main.min} ~ ${W.corridor.main.max}mm`, '주 이동 동선, 카트·응대 동선 겸용']}
+        />
+        <DescCard tag="설명형" title="권장 부통로 너비" value={W.corridor.sub.med} unit="mm"
+          lines={[`범위 ${W.corridor.sub.min} ~ ${W.corridor.sub.max}mm`, '데스크 열 사이 동선']}
+        />
+        <DescCard tag="설명형" title="권장 등간격 (일자형)" value={W.corridor.desk.med} unit="mm"
+          lines={[`범위 ${W.corridor.desk.min} ~ ${W.corridor.desk.max}mm`, '데스크 후면 간격 기준']}
+        />
+      </div>
+    </section>
+  );
+}
+
+// ---------- STEP 3: 임원공간 ----------
+function Step3({ data, unit }) {
+  const E = data.exec;
+  return (
+    <section id="step-3" className="step-section step-3">
+      <StepHero num={3} title="임원공간"/>
+      <QA question="임원실은 얼마나 필요한가?" answer={
+        <span>전체의 <span className="accent tnum">{E.share}%</span>, 평균 <span className="accent tnum">{unit==='py'? fmt.n(fmt.m2p(E.roomArea),1) : E.roomArea}</span>{unit==='py'?'평':'㎡'} · <span className="accent tnum">{E.openExecRatio}%</span>는 오픈 임원석으로</span>
+      }/>
+
+      <div className="grid grid-3-fr" style={{marginBottom: 16}}>
+        <div className="c">
+          <div className="c-title"><span className="tag">도넛</span>임원 공간 구성 비중</div>
+          <div className="donut-wrap" style={{marginTop: 12}}>
+            <Donut value={E.share} color="var(--prog-exec)" size={130}/>
+            <div style={{display:'flex',flexDirection:'column',gap:8}}>
+              <div><div style={{fontSize:12,color:'var(--ink-500)'}}>전체 가용면적 중</div>
+                <div style={{fontSize:24,fontWeight:800,color:'var(--prog-exec)'}}>{E.share}%</div></div>
+              <div><div style={{fontSize:12,color:'var(--ink-500)'}}>오픈 임원석 보유</div>
+                <div style={{fontSize:18,fontWeight:700,color:'var(--ink-800)'}}>{E.openExecRatio}%</div></div>
+            </div>
+          </div>
+        </div>
+        <ValCard tag="값형" title="임원실 평균 면적 (실형)" value={unit==='py'? fmt.n(fmt.m2p(E.roomArea),1) : E.roomArea} unit={unit==='py'?'평':'㎡'} desc="실형 임원실 한정"/>
+        <PctCard tag="%형" title="오픈 임원석 보유" value={E.openExecRatio} desc="임원공간 보유 도면 중" accent="var(--prog-exec)"/>
+      </div>
+
+      <div className="c">
+        <div className="c-title"><span className="tag">리스트형</span>임원 가구 구성별 평균 면적</div>
+        <div className="c-sub">가장 흔한 구성은 <strong style={{color:'var(--prog-exec)'}}>책상+미팅</strong></div>
+        <ul style={{listStyle:'none',padding:0,margin:0,display:'flex',flexDirection:'column',gap:12}}>
+          {E.furnitureMix.map((f,i) => (
+            <li key={i} style={{display:'grid',gridTemplateColumns:'140px 1fr auto auto',gap:16,alignItems:'center'}}>
+              <div style={{fontSize:14,fontWeight:600}}>{f.label}</div>
+              <div className="hbar" style={{height:10}}><span style={{width:`${f.pct*2.4}%`, background:'var(--prog-exec)'}}/></div>
+              <div className="tnum" style={{fontSize:15,fontWeight:700}}>{f.pct}%</div>
+              <div className="tnum" style={{fontSize:13,color:'var(--ink-600)'}}>{unit==='py'? fmt.n(fmt.m2p(f.area),1) : f.area}{unit==='py'?'평':'㎡'}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+// ---------- STEP 4: 회의공간 ----------
+function Step4({ data, unit }) {
+  const M = data.meet;
+  return (
+    <section id="step-4" className="step-section step-4">
+      <StepHero num={4} title="회의공간"/>
+      <QA question="회의실은 몇 개, 어떤 규모로?" answer={
+        <span>도면당 평균 <span className="accent tnum">{M.avgCount}</span>개소, <span className="accent">소·중·대·특대</span>로 분산됩니다</span>
+      }/>
+
+      <div className="grid grid-4" style={{marginBottom: 16}}>
+        <ValCard tag="값형" title="회의실 평균 개소" value={M.avgCount} unit="개" desc="회의실 보유 도면 평균"/>
+        <PctCard tag="%형" title="회의공간 비중" value={M.share} desc="가용면적 대비" accent="var(--prog-meet)"/>
+        <PctCard tag="%형" title="오픈 회의 비중" value={M.openMeet} desc="회의 면적 중 오픈형" accent="var(--prog-meet)"/>
+        <ValCard tag="값형" title="총 회의 면적" value={unit==='py'? fmt.n(fmt.m2p(M.bySize.reduce((s,b)=>s+b.count*b.area,0)),0) : fmt.n(M.bySize.reduce((s,b)=>s+b.count*b.area,0),0)} unit={unit==='py'?'평':'㎡'} desc="평균 개소 × 평균 면적"/>
+      </div>
+
+      <div className="c" style={{marginBottom: 16}}>
+        <div className="c-title"><span className="tag">비유형</span>규모별 회의실 — 크기가 곧 면적입니다</div>
+        <div className="c-sub">소→특대로 갈수록 개소는 줄고 면적은 커집니다.</div>
+        <div className="meet-sizes" style={{marginTop: 12}}>
+          {M.bySize.map((b, i) => {
+            const areaDisp = unit==='py'? fmt.n(fmt.m2p(b.area),1) : b.area;
+            return (
+              <div key={i} className="meet-box">
+                <svg className="glyph" viewBox="0 0 100 70">
+                  <rect x="20" y="15" width={20 + i*15} height={20 + i*10} fill="var(--prog-meet)" rx="2"/>
+                </svg>
+                <div className="size-label">{b.label}</div>
+                <div className="size-val">{b.count}<span className="u">개소</span></div>
+                <div className="size-meta">평균 {areaDisp}{unit==='py'?'평':'㎡'}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="grid grid-2">
+        <ListCard tag="리스트형" title="회의실 가구 스타일" items={M.furnitureStyle}/>
+        <div className="c">
+          <div className="c-title"><span className="tag">추이</span>연도별 라운지 계획 비율</div>
+          <div className="c-sub">오픈 회의·라운지 계획은 해마다 증가.</div>
+          <YearBars
+            data={data.yearly.years.map((y,i) => ({year:y, v:data.yearly.loungeRatio[i]}))}
+            color="var(--prog-meet)"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ---------- STEP 5: 소셜공간 ----------
+function Step5({ data, unit }) {
+  const S = data.social;
+  return (
+    <section id="step-5" className="step-section step-5">
+      <StepHero num={5} title="소셜공간"/>
+      <QA question="라운지·탕비는 얼마나 만들까?" answer={
+        <span>도면 <span className="accent tnum">{S.loungeRatio}%</span>가 라운지를 계획 · 탕비 평균 <span className="accent tnum">{unit==='py'? fmt.n(fmt.m2p(S.tangbi.avgArea),1) : S.tangbi.avgArea}</span>{unit==='py'?'평':'㎡'}</span>
+      }/>
+
+      <div className="grid grid-3" style={{marginBottom: 16}}>
+        <PctCard tag="%형" title="소셜공간 비중" value={S.share} desc="가용면적 대비" accent="var(--prog-social)"/>
+        <PctCard tag="%형" title="라운지 계획 비율" value={S.loungeRatio} desc="라운지 네모 보유 도면" accent="var(--prog-social)"/>
+        <ValCard tag="값형" title="탕비 평균 면적" value={unit==='py'? fmt.n(fmt.m2p(S.tangbi.avgArea),1) : S.tangbi.avgArea} unit={unit==='py'?'평':'㎡'} desc="세부유형=탕비 평균"/>
+      </div>
+
+      <div className="grid grid-2" style={{marginBottom: 16}}>
+        <div className="c">
+          <div className="c-title"><span className="tag">추이</span>인원 구간별 탕비 평균 면적</div>
+          <div className="c-sub">인원이 많을수록 탕비도 비례적으로 커집니다.</div>
+          <div>
+            {S.tangbi.byHeadcount.map((b,i)=>{
+              const max = Math.max(...S.tangbi.byHeadcount.map(x=>x.area));
+              const v = unit==='py'? +fmt.m2p(b.area).toFixed(1) : b.area;
+              return (
+                <div className="ybar-row" key={i}>
+                  <div className="y" style={{fontFamily:'Pretendard', color:'var(--ink-700)', fontSize:13}}>{b.label}</div>
+                  <div className="track" style={{height:20}}><div className="fill" style={{width:`${(b.area/max)*100}%`, background:'var(--prog-social)'}}/></div>
+                  <div className="v">{v}{unit==='py'?'평':'㎡'}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <ListCard tag="리스트형" title="라운지 유형별 평균 면적" unit={unit==='py'?'평':'㎡'}
+          items={S.loungeType.map(t => ({ label: t.label, area: unit==='py'? +fmt.m2p(t.area).toFixed(1) : t.area }))}
+        />
+      </div>
+
+      <div className="c">
+        <div className="c-title"><span className="tag">리스트형</span>라운지 내 세부 프로그램 선택 비율</div>
+        <div className="c-sub">복수 응답 · 커피바와 좌석 다양성이 기본, 미디어·게임은 선택적.</div>
+        <div className="grid grid-3" style={{marginTop:12, gap:14}}>
+          {S.loungePrograms.map((p,i)=>(
+            <div key={i} style={{padding:'10px 14px', border:'1px solid var(--ink-200)', borderRadius:4, background:'var(--bg-soft)'}}>
+              <div style={{fontSize:13,color:'var(--ink-700)',marginBottom:6}}>{p.label}</div>
+              <div style={{display:'flex',alignItems:'baseline',gap:8}}>
+                <div className="tnum" style={{fontSize:26,fontWeight:800,color:'var(--prog-social)'}}>{p.pct}<span style={{fontSize:12,color:'var(--ink-500)',fontWeight:500,marginLeft:2}}>%</span></div>
+              </div>
+              <div className="hbar" style={{marginTop:6}}><span style={{width:`${p.pct}%`, background:'var(--prog-social)'}}/></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ---------- STEP 6: 지원공간 ----------
+function Step6({ data, unit }) {
+  const P = data.support;
+  return (
+    <section id="step-6" className="step-section step-6">
+      <StepHero num={6} title="지원공간"/>
+      <QA question="폰부스는 몇 개 필요한가?" answer={
+        <span>도면 <span className="accent tnum">{P.phoneBooth.ratio}%</span>가 조성 · 인원 100명 기준 약 <span className="accent tnum">4~5</span>개소</span>
+      }/>
+
+      <div className="grid grid-4" style={{marginBottom: 16}}>
+        <PctCard tag="%형" title="지원공간 비중" value={P.share} desc="가용면적 대비" accent="var(--prog-support)"/>
+        <PctCard tag="%형" title="폰부스+선택업무 조성 비율" value={P.phoneBooth.ratio} desc="실형 기준" accent="var(--prog-support)"/>
+        <ValCard tag="값형" title="폰부스 평균 개소" value={P.phoneBooth.avgCount} unit="개" desc="조성 도면 기준"/>
+        <ValCard tag="값형" title="OA 평균 개소" value={P.oaCount} unit="개" desc="전체 도면 평균"/>
+      </div>
+
+      <div className="grid grid-2">
+        <div className="c">
+          <div className="c-title"><span className="tag">추이</span>인원 구간별 폰부스 평균 개소</div>
+          <div className="c-sub">인원 증가에 거의 선형으로 증가.</div>
+          <div>
+            {P.phoneBooth.byHeadcount.map((b,i)=>{
+              const max = Math.max(...P.phoneBooth.byHeadcount.map(x=>x.count));
+              return (
+                <div className="ybar-row" key={i}>
+                  <div className="y" style={{fontFamily:'Pretendard', color:'var(--ink-700)', fontSize:13}}>{b.label}</div>
+                  <div className="track" style={{height:22}}><div className="fill" style={{width:`${(b.count/max)*100}%`, background:'var(--prog-support)'}}/></div>
+                  <div className="v">{b.count}개</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="c">
+          <div className="c-title"><span className="tag">추이</span>연도별 폰부스 조성 비율</div>
+          <div className="c-sub">팬데믹 이후 급증, 2022년 이후 안정화.</div>
+          <YearBars
+            data={data.yearly.years.map((y,i) => ({year:y, v:data.yearly.phoneBoothRatio[i]}))}
+            color="var(--prog-support)"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+Object.assign(window, { FloorPlan, Step1, Step2, Step3, Step4, Step5, Step6 });
+</script>
+<script type="text/babel">/* global React, ReactDOM, Step1, Step2, Step3, Step4, Step5, Step6, TweaksPanel, useTweaks, TweakSection, TweakRadio, TweakToggle, TweakSelect */
+
+const { useState, useEffect, useMemo, useRef } = React;
+
+const STEPS = [
+  { id: 1, label: '전체 조닝', color: 'var(--p6-purple-500)' },
+  { id: 2, label: '업무',     color: 'var(--prog-work)' },
+  { id: 3, label: '임원',     color: 'var(--prog-exec)' },
+  { id: 4, label: '회의',     color: 'var(--prog-meet)' },
+  { id: 5, label: '소셜',     color: 'var(--prog-social)' },
+  { id: 6, label: '지원',     color: 'var(--prog-support)' },
+];
+
+function TopBar() {
+  return (
+    <div className="topbar">
+      <div className="topbar-inner">
+        <div className="brand">
+          <span className="dot"/> 공간DB
+          <span className="sub">v2.8 · 퍼플식스 디자인 시스템</span>
+        </div>
+        <div className="tabs">
+          <button className="tab active">G · 설계 가이드</button>
+          <button className="tab">개괄</button>
+          <button className="tab">업무</button>
+          <button className="tab">임원</button>
+          <button className="tab">회의</button>
+          <button className="tab">소셜</button>
+          <button className="tab">지원</button>
+        </div>
+        <div className="topbar-meta">
+          <span className="pill">540건 · 2002–2025</span>
+          <span>퍼시스·퍼플식스 스튜디오</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FilterChips({ label, options, selected, onChange }) {
+  return (
+    <div className="filter-group">
+      <div className="filter-group-label">{label}</div>
+      <div className="filter-chips">
+        {options.map(o => {
+          const isAll = o === '전체';
+          const isActive = isAll ? selected.length === 0 : selected.includes(o);
+          return (
+            <button key={o}
+              className={`chip ${isActive ? 'active' : ''} ${isAll ? 'all' : ''}`}
+              onClick={() => {
+                if (isAll) { onChange([]); return; }
+                const next = selected.includes(o)
+                  ? selected.filter(x => x !== o)
+                  : [...selected, o];
+                onChange(next);
+              }}
+            >{o}</button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function FilterBar({ filters, sel, setSel, matched, showExtra, setShowExtra }) {
+  return (
+    <div className="filterbar">
+      <div className="filter-row">
+        <FilterChips label="가용면적" options={filters.area} selected={sel.area} onChange={v=>setSel({...sel, area:v})}/>
+        <FilterChips label="인원" options={filters.headcount} selected={sel.headcount} onChange={v=>setSel({...sel, headcount:v})}/>
+        <FilterChips label="업종" options={filters.industry} selected={sel.industry} onChange={v=>setSel({...sel, industry:v})}/>
+      </div>
+      <button className="filter-expand" onClick={()=>setShowExtra(!showExtra)}>
+        {showExtra ? '− 추가 필터 접기' : '+ 추가 필터 펼치기 (권역·연도·프라임·기업유형)'}
+      </button>
+      {showExtra && (
+        <div className="filter-row" style={{marginTop:12}}>
+          <FilterChips label="권역" options={filters.region} selected={sel.region} onChange={v=>setSel({...sel, region:v})}/>
+          <FilterChips label="연도" options={filters.year} selected={sel.year} onChange={v=>setSel({...sel, year:v})}/>
+          <FilterChips label="프라임" options={filters.primeOffice} selected={sel.primeOffice} onChange={v=>setSel({...sel, primeOffice:v})}/>
+          <FilterChips label="기업유형" options={filters.corpType} selected={sel.corpType} onChange={v=>setSel({...sel, corpType:v})}/>
+        </div>
+      )}
+      <div className="filter-summary">
+        <div>적용된 도면 <span className="count">{matched}</span>건 / 전체 540건</div>
+        <div style={{color:'var(--ink-500)',fontSize:12}}>동일 필드 다중선택 OR · 필드 간 AND</div>
+        {matched < 30 && <div className="warn">⚠ 30건 미만 · 지표 신뢰도 낮음</div>}
+      </div>
+    </div>
+  );
+}
+
+function StepNav({ active, onJump }) {
+  return (
+    <div className="stepnav">
+      {STEPS.map(s => (
+        <button key={s.id}
+          className={`stepnav-item step-${s.id} ${active === s.id ? 'active' : ''}`}
+          onClick={() => onJump(s.id)}
+        >
+          <span className="stepnav-num">{String(s.id).padStart(2,'0')}</span>
+          <span className="stepnav-label">{s.label}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function App() {
+  const data = window.SPACE_DB;
+
+  const [tweaks, setTweak] = useTweaks(/*EDITMODE-BEGIN*/{
+    "unit": "m2",
+    "variation_step1": "floorplan",
+    "showStep1": true,
+    "showStep2": true,
+    "showStep3": true,
+    "showStep4": true,
+    "showStep5": true,
+    "showStep6": true
+  }/*EDITMODE-END*/);
+
+  const [sel, setSel] = useState({
+    area: [], headcount: [], industry: [],
+    region: [], year: [], primeOffice: [], corpType: [],
+  });
+  const [showExtra, setShowExtra] = useState(false);
+  const [active, setActive] = useState(1);
+
+  // "matched count" mock: base 540 scaled by active filter breadth
+  const matched = useMemo(() => {
+    const totalFilters = Object.values(sel).reduce((s, arr) => s + arr.length, 0);
+    if (totalFilters === 0) return 540;
+    const factor = Math.max(0.12, Math.pow(0.68, totalFilters));
+    return Math.max(18, Math.round(540 * factor));
+  }, [sel]);
+
+  // Scroll spy
+  useEffect(() => {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const id = parseInt(e.target.id.replace('step-', ''), 10);
+          if (!isNaN(id)) setActive(id);
+        }
+      });
+    }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+    STEPS.forEach(s => {
+      const el = document.getElementById(`step-${s.id}`);
+      if (el) obs.observe(el);
+    });
+    return () => obs.disconnect();
+  }, []);
+
+  const jump = (id) => {
+    const el = document.getElementById(`step-${id}`);
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  const unit = tweaks.unit;
+
+  return (
+    <div>
+      <TopBar/>
+      <FilterBar filters={data.filters} sel={sel} setSel={setSel} matched={matched}
+        showExtra={showExtra} setShowExtra={setShowExtra}/>
+      <StepNav active={active} onJump={jump}/>
+
+      {/* Inline unit toggle */}
+      <div style={{display:'flex', justifyContent:'flex-end', padding:'12px 32px 0', gap:8, alignItems:'center'}}>
+        <span style={{fontSize:12, color:'var(--ink-500)'}}>단위</span>
+        <div style={{display:'inline-flex', border:'1px solid var(--ink-200)', borderRadius:2, overflow:'hidden'}}>
+          <button onClick={()=>setTweak({unit:'m2'})}
+            style={{padding:'6px 14px', fontSize:12, fontWeight:600, background: unit==='m2'?'var(--ink-900)':'var(--bg)', color: unit==='m2'?'#fff':'var(--ink-600)', border:'none', cursor:'pointer'}}>㎡</button>
+          <button onClick={()=>setTweak({unit:'py'})}
+            style={{padding:'6px 14px', fontSize:12, fontWeight:600, background: unit==='py'?'var(--ink-900)':'var(--bg)', color: unit==='py'?'#fff':'var(--ink-600)', border:'none', cursor:'pointer'}}>평</button>
+        </div>
+      </div>
+
+      {tweaks.showStep1 && <Step1 data={data} unit={unit} variation={tweaks.variation_step1}/>}
+      {tweaks.showStep2 && <Step2 data={data} unit={unit}/>}
+      {tweaks.showStep3 && <Step3 data={data} unit={unit}/>}
+      {tweaks.showStep4 && <Step4 data={data} unit={unit}/>}
+      {tweaks.showStep5 && <Step5 data={data} unit={unit}/>}
+      {tweaks.showStep6 && <Step6 data={data} unit={unit}/>}
+
+      <footer style={{padding:'32px', background:'var(--ink-900)', color:'var(--ink-400)', fontSize:12}}>
+        <div style={{display:'flex', justifyContent:'space-between', flexWrap:'wrap', gap:16}}>
+          <div>
+            <div style={{color:'#fff', fontSize:14, fontWeight:700, marginBottom:4}}>공간DB v2.8</div>
+            <div>퍼시스·퍼플식스 스튜디오 · 2002–2025 오피스 도면 540건</div>
+          </div>
+          <div style={{textAlign:'right'}}>
+            <div>Tableau와 동일 계산 원칙 · 매년 1회 업데이트</div>
+            <div style={{marginTop:4, fontSize:11}}>사내 자료 · 외부 공유 시 출처 표기 필요</div>
+          </div>
+        </div>
+      </footer>
+
+      <TweaksPanel title="Tweaks — 공간DB">
+        <TweakSection title="표시 스텝">
+          <TweakToggle label="STEP 1 전체 조닝" value={tweaks.showStep1} onChange={v=>setTweak({showStep1:v})}/>
+          <TweakToggle label="STEP 2 업무" value={tweaks.showStep2} onChange={v=>setTweak({showStep2:v})}/>
+          <TweakToggle label="STEP 3 임원" value={tweaks.showStep3} onChange={v=>setTweak({showStep3:v})}/>
+          <TweakToggle label="STEP 4 회의" value={tweaks.showStep4} onChange={v=>setTweak({showStep4:v})}/>
+          <TweakToggle label="STEP 5 소셜" value={tweaks.showStep5} onChange={v=>setTweak({showStep5:v})}/>
+          <TweakToggle label="STEP 6 지원" value={tweaks.showStep6} onChange={v=>setTweak({showStep6:v})}/>
+        </TweakSection>
+        <TweakSection title="단위">
+          <TweakRadio value={tweaks.unit} onChange={v=>setTweak({unit:v})}
+            options={[{label:'㎡ (제곱미터)', value:'m2'},{label:'평', value:'py'}]}/>
+        </TweakSection>
+      </TweaksPanel>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

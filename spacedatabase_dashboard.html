@@ -259,14 +259,19 @@ body.mobile-overlay-open .mobile-backdrop{display:block}
 body.guide-active .toc-panel,
 body.guide-active #mobile-toc-toggle{display:none!important}
 #sec-G.guide-fit-active{overflow:hidden}
-#sec-G.guide-fit-active .guide-fit-frame{transform:scale(var(--guide-fit-scale,1));transform-origin:top left;width:calc(100% / var(--guide-fit-scale,1))}
+#sec-G.guide-fit-active .guide-fit-frame{transform:none;width:100%}
+#sec-G.guide-fit-active .guide-index-stage.single .guide-step-body{
+  transform:scale(var(--guide-fit-scale,1));
+  transform-origin:top left;
+  width:calc(100% / var(--guide-fit-scale,1));
+}
 #sec-G.guide-fit-active .sec-hd{margin-bottom:6px}
 #sec-G.guide-fit-active .guide-step-flow{padding:6px 0 8px}
 #sec-G.guide-fit-active .guide-step-header{padding:14px 18px 12px}
 #sec-G.guide-fit-active .guide-step-body,
 #sec-G.guide-fit-active .guide-index-stage.single .guide-step-body{padding:14px 14px 16px}
 #sec-G.guide-fit-active .guide-metric-grid,
-#sec-G.guide-fit-active .guide-index-stage.single .guide-metric-grid{gap:8px}
+#sec-G.guide-fit-active .guide-index-stage.single .guide-metric-grid{gap:8px;overflow:hidden}
 #sec-G.guide-fit-active .guide-metric,
 #sec-G.guide-fit-active .guide-index-stage.single .guide-metric{padding:14px 12px 16px}
 #sec-G.guide-fit-active .guide-metric.range-card,
@@ -357,7 +362,7 @@ body.guide-active #mobile-toc-toggle{display:none!important}
 .guide-range-separator{display:none}
 .guide-single-block{justify-content:flex-start;min-height:220px}
 .guide-single-value{font-size:clamp(24px,2vw,36px);font-weight:500;color:#111827;line-height:1.15;letter-spacing:-.03em;white-space:nowrap;word-break:keep-all}
-.guide-single-value span{font-size:clamp(10px,0.8vw,11px);font-weight:500;color:#6B7280;margin-left:2px}
+.guide-single-value .guide-value-unit{font-size:clamp(10px,0.8vw,11px);font-weight:500;color:#6B7280;margin-left:2px}
 .guide-metric.program-share .guide-single-value,
 .guide-metric.card-type-list .guide-single-value{display:flex;flex-direction:column;gap:10px;margin-top:2px}
 .guide-metric.program-share .guide-single-value .share-row,
@@ -781,6 +786,21 @@ body.guide-active #mobile-toc-toggle{display:none!important}
   border-radius: var(--ds-radius-sm);
   margin-top: 10px; line-height: 1.8;
 }
+#sec-G .guide-answer-lines{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+#sec-G .guide-answer-line{
+  line-height:1.7;
+  color:#1f1c2e;
+  word-break:keep-all;
+  overflow-wrap:anywhere;
+}
+#sec-G .guide-answer-line b{
+  color:var(--step-color, var(--ds-primary));
+  font-weight:800;
+}
 
 /* ── 경고 배너 ── */
 #sec-G .guide-warning {
@@ -839,6 +859,827 @@ body.guide-active #mobile-toc-toggle{display:none!important}
   line-height: 1;
   font-family: var(--ds-font);
 }
+
+/* G tab reference-style refresh */
+#sec-G .guide-step-nav {
+  gap: 0;
+  padding: 6px 0 14px;
+  border-bottom: 1px solid var(--ds-border);
+}
+#sec-G .guide-step-btn {
+  flex: 1;
+  min-width: 96px;
+  padding: 8px 10px 10px;
+  text-align: left;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+}
+#sec-G .guide-step-btn .num {
+  display: block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #b5aec7;
+  margin-bottom: 4px;
+}
+#sec-G .guide-step-btn .name {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: inherit;
+}
+#sec-G .guide-step-btn.active {
+  background: transparent;
+  color: var(--ds-text-primary);
+  border-bottom-color: var(--step-color, var(--ds-primary));
+}
+#sec-G .guide-step-btn.active .num {
+  color: var(--step-color, var(--ds-primary));
+}
+#sec-G .card.guide-step-block {
+  border: 1px solid #ebe4f6;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(20, 8, 50, 0.06);
+  background: #fff;
+}
+#sec-G .guide-step-header {
+  display: grid;
+  grid-template-columns: minmax(320px, 1.15fr) minmax(280px, 0.85fr);
+  gap: 24px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid #f0ebf7;
+  align-items: center;
+}
+#sec-G .guide-step-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--step-color, var(--ds-primary));
+}
+#sec-G .guide-step-kicker-title{
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: #6f6884;
+}
+#sec-G .guide-step-kicker::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: currentColor;
+}
+#sec-G .guide-step-title {
+  font-size: clamp(20px, 2.3vw, 32px);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  color: #15111f;
+}
+#sec-G .guide-step-title .accent {
+  color: var(--step-color, var(--ds-primary));
+}
+#sec-G .guide-step-subtitle {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6f6884;
+}
+#sec-G .guide-step-desc {
+  max-width: 520px;
+  font-size: 13px;
+  color: #5d566f;
+  line-height: 1.65;
+}
+#sec-G .guide-step-state {
+  display: none;
+}
+#sec-G .guide-step-body {
+  padding: 0 20px 20px;
+}
+#sec-G .guide-qa {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px 20px;
+  align-items: baseline;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  background: #fff;
+  border: 1px solid #ebe4f6;
+  border-left: 3px solid var(--step-color, var(--ds-primary));
+  border-radius: 4px;
+}
+#sec-G .guide-qa-mark {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+#sec-G .guide-qa-mark.q {
+  color: var(--step-color, var(--ds-primary));
+}
+#sec-G .guide-qa-mark.a {
+  color: #8a84a0;
+}
+#sec-G .guide-qa-text.q {
+  font-size: 13px;
+  color: #5d566f;
+  font-weight: 500;
+}
+#sec-G .guide-qa-text.a {
+  font-size: 15px;
+  color: #15111f;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+#sec-G .guide-metric-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  overflow: visible;
+}
+#sec-G .guide-metric {
+  min-width: 0;
+  min-height: 180px;
+  padding: 16px 16px 18px;
+  border: 1px solid #ebe4f6;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(20, 8, 50, 0.06);
+}
+#sec-G .guide-metric.wide {
+  grid-column: span 2;
+}
+#sec-G .guide-metric .title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #5d566f;
+  line-height: 1.45;
+}
+#sec-G .guide-metric .hint {
+  margin-top: auto;
+  font-size: 10px;
+  line-height: 1.6;
+  color: #a19ab5;
+}
+#sec-G .guide-range-block,
+#sec-G .guide-single-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 100%;
+}
+#sec-G .guide-range-median {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+#sec-G .guide-range-median-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8a84a0;
+}
+#sec-G .guide-range-median-value,
+#sec-G .guide-single-value {
+  font-size: clamp(26px, 2.6vw, 38px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--step-color, #15111f);
+}
+#sec-G .guide-range-median-value .guide-dynamic-value,
+#sec-G .guide-single-value .guide-dynamic-value {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+#sec-G .guide-range-median-value .guide-value-unit,
+#sec-G .guide-single-value .guide-value-unit {
+  font-size: 0.28em;
+  font-weight: 600;
+  color: #8a84a0;
+}
+#sec-G .guide-dumbbell {
+  position: relative;
+  height: 40px;
+  margin: 0 0 4px;
+}
+#sec-G .guide-dumbbell-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  background: #ebe4f6;
+  transform: translateY(-50%);
+}
+#sec-G .guide-dumbbell-seg {
+  position: absolute;
+  top: 50%;
+  height: 4px;
+  background: var(--step-color, var(--ds-primary));
+  opacity: 0.25;
+  transform: translateY(-50%);
+}
+#sec-G .guide-dumbbell-dot {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #c6bfd6;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px #d8d1e6;
+  transform: translate(-50%, -50%);
+}
+#sec-G .guide-dumbbell-dot.med {
+  width: 14px;
+  height: 14px;
+  background: var(--step-color, var(--ds-primary));
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--step-color, var(--ds-primary));
+  z-index: 2;
+}
+#sec-G .guide-dumbbell-tick {
+  position: absolute;
+  top: 100%;
+  margin-top: 4px;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: #8a84a0;
+  white-space: nowrap;
+}
+#sec-G .guide-dumbbell-tick.med {
+  font-size: 11px;
+  font-weight: 700;
+  color: #15111f;
+}
+#sec-G .guide-dumbbell-tick .guide-dynamic-value {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  margin-left: 4px;
+}
+#sec-G .guide-dumbbell-tick .guide-dynamic-value span {
+  font-size: 0.9em;
+  color: #8a84a0;
+}
+#sec-G .guide-metric.card-type-percent .guide-single-value {
+  color: var(--step-color, var(--ds-primary));
+}
+#sec-G .guide-metric.card-type-percent .guide-range-median-label,
+#sec-G .guide-metric.card-type-value .guide-range-median-label,
+#sec-G .guide-metric.card-type-narrative .guide-range-median-label,
+#sec-G .guide-metric.card-type-list .guide-range-median-label {
+  text-transform: uppercase;
+}
+#sec-G .guide-metric.card-type-narrative .guide-single-value,
+#sec-G .guide-metric.card-type-value .guide-single-value {
+  font-size: clamp(22px, 2.1vw, 32px);
+  color: #15111f;
+}
+#sec-G .guide-metric-sub {
+  margin-top: 8px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #8a84a0;
+}
+#sec-G .guide-metric.program-share .guide-single-value,
+#sec-G .guide-metric.card-type-list .guide-single-value {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+#sec-G .guide-metric.program-share .guide-single-value .share-row,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-row {
+  display: grid;
+  grid-template-columns: minmax(72px, auto) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+#sec-G .guide-metric.program-share .guide-single-value .share-label,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #3e3750;
+}
+#sec-G .guide-share-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: #f2edf8;
+  overflow: hidden;
+}
+#sec-G .guide-share-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--step-color, var(--ds-primary));
+}
+#sec-G .guide-metric.program-share .guide-single-value .share-value-stack,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-value-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+#sec-G .guide-metric.program-share .guide-single-value .share-num,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-num {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  color: #15111f;
+  white-space: nowrap;
+}
+#sec-G .guide-metric.program-share .guide-single-value .share-sub,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-sub {
+  font-size: 11px;
+  line-height: 1.4;
+  color: #8a84a0;
+  text-align: right;
+}
+#sec-G .guide-step-note {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 4px;
+  background: #faf8fd;
+  border: 1px solid #eee8f7;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #8a84a0;
+}
+#sec-G .guide-index-stage.single .guide-step-note {
+  display: block;
+}
+@media (max-width: 1180px) {
+  #sec-G .guide-step-header {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px 16px 12px;
+  }
+  #sec-G .guide-step-body {
+    padding: 0 16px 16px;
+  }
+  #sec-G .guide-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #sec-G .guide-metric.wide {
+    grid-column: auto;
+  }
+}
+@media (max-width: 720px) {
+  #sec-G .guide-step-btn {
+    min-width: 88px;
+    padding: 8px 8px 10px;
+  }
+  #sec-G .guide-step-btn .name {
+    font-size: 11px;
+  }
+  #sec-G .guide-step-title {
+    font-size: 22px;
+  }
+  #sec-G .guide-step-desc {
+    font-size: 12px;
+  }
+  #sec-G .guide-qa {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 16px;
+  }
+  #sec-G .guide-metric-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #sec-G .guide-metric {
+    padding: 18px 16px;
+  }
+}
+
+/* G tab layout restore: keep old screen structure, only refresh card internals */
+#sec-G .guide-step-nav {
+  padding: 4px 0 14px;
+}
+#sec-G .guide-step-btn {
+  min-width: 82px;
+  padding: 7px 8px 8px;
+  text-align: center;
+}
+#sec-G .guide-step-btn .num {
+  font-size: 9px;
+  margin-bottom: 3px;
+}
+#sec-G .guide-step-btn .name {
+  font-size: 11px;
+}
+#sec-G .guide-step-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px 12px;
+}
+#sec-G .guide-step-kicker {
+  margin-bottom: 6px;
+  font-size: 10px;
+}
+#sec-G .guide-step-title {
+  font-size: 22px;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+#sec-G .guide-step-subtitle {
+  margin-top: 4px;
+  font-size: 11px;
+}
+#sec-G .guide-step-desc {
+  max-width: 360px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+#sec-G .guide-step-state {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: #b0aac0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+#sec-G .guide-step-body {
+  padding: 0 20px 20px;
+}
+#sec-G .guide-qa {
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+#sec-G .guide-qa-text.q {
+  font-size: 13px;
+}
+#sec-G .guide-qa-text.a {
+  font-size: 15px;
+}
+#sec-G .guide-metric-grid {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 10px;
+  overflow-x: auto;
+  align-items: stretch;
+}
+#sec-G .guide-metric {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  padding: 16px 14px 16px;
+}
+#sec-G .guide-metric.wide {
+  flex: 2.35 1 0;
+}
+#sec-G .guide-metric .title {
+  font-size: 11px;
+  min-height: 32px;
+  word-break: keep-all;
+}
+#sec-G .guide-range-median-value,
+#sec-G .guide-single-value {
+  font-size: clamp(22px, 2vw, 32px);
+}
+#sec-G .guide-metric.card-type-narrative .guide-single-value,
+#sec-G .guide-metric.card-type-value .guide-single-value {
+  font-size: clamp(18px, 1.6vw, 26px);
+}
+#sec-G .guide-dumbbell {
+  height: 34px;
+}
+#sec-G .guide-dumbbell-tick {
+  font-size: 9px;
+}
+#sec-G .guide-dumbbell-tick.med {
+  font-size: 10px;
+}
+#sec-G .guide-metric.program-share .guide-single-value .share-label,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-label {
+  font-size: 11px;
+}
+#sec-G .guide-metric.program-share .guide-single-value .share-num,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-num {
+  font-size: 13px;
+}
+#sec-G .guide-step-note {
+  margin-top: 10px;
+  padding: 10px 12px;
+  font-size: 11px;
+}
+/* Card alignment refresh */
+#sec-G .guide-metric{
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  overflow:hidden;
+}
+#sec-G .guide-range-block,
+#sec-G .guide-single-block{
+  display:flex;
+  flex-direction:column;
+  min-height:100%;
+  gap:10px;
+}
+#sec-G .guide-range-median{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  text-align:center;
+  gap:6px;
+  flex:0 0 auto;
+  min-height:0;
+  min-width:0;
+}
+#sec-G .guide-range-median-label{
+  width:100%;
+  text-align:left;
+  font-size:10px;
+}
+#sec-G .guide-range-median-value,
+#sec-G .guide-single-value{
+  width:100%;
+  min-width:0;
+  text-align:center;
+  word-break:keep-all;
+}
+#sec-G .guide-range-median-value .guide-dynamic-value,
+#sec-G .guide-single-value .guide-dynamic-value{
+  justify-content:center;
+  max-width:100%;
+}
+#sec-G .guide-single-value{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+#sec-G .guide-metric-sub{
+  width:100%;
+  text-align:center;
+}
+#sec-G .guide-dumbbell{
+  margin-top:8px;
+  height:34px;
+  padding-bottom:12px;
+  overflow:visible;
+}
+#sec-G .guide-dumbbell-tick{
+  top:auto;
+  bottom:0;
+  margin-top:0;
+  min-width:96px;
+  max-width:none;
+  padding-inline:2px;
+  overflow:visible;
+  white-space:nowrap;
+}
+#sec-G .guide-dumbbell-tick .tick-label{
+  color:#8a84a0;
+  font-weight:600;
+  margin-right:2px;
+}
+#sec-G .guide-dumbbell-tick.med{
+  display:none;
+}
+#sec-G .guide-dumbbell-tick:first-of-type{
+  text-align:left;
+  transform:none;
+}
+#sec-G .guide-dumbbell-tick:last-of-type{
+  text-align:right;
+  transform:translateX(-100%);
+}
+#sec-G .guide-dumbbell-tick .guide-dynamic-value{
+  margin-left:2px;
+  gap:2px;
+}
+#sec-G .guide-metric.program-share .guide-single-value,
+#sec-G .guide-metric.card-type-list .guide-single-value{
+  align-items:stretch;
+  justify-content:flex-start;
+  text-align:left;
+  width:100%;
+}
+#sec-G .guide-metric.card-type-percent .guide-range-median,
+#sec-G .guide-metric.card-type-value .guide-range-median,
+#sec-G .guide-metric.card-type-narrative .guide-range-median{
+  justify-content:flex-start;
+  padding-top:0;
+  align-items:flex-start;
+  text-align:left;
+}
+#sec-G .guide-metric.card-type-percent .guide-range-median-label,
+#sec-G .guide-metric.card-type-value .guide-range-median-label,
+#sec-G .guide-metric.card-type-narrative .guide-range-median-label{
+  text-align:left;
+}
+#sec-G .guide-metric.range-card:not(.single-card) .guide-range-median{
+  justify-content:center;
+  flex:0 0 auto;
+  min-height:52px;
+}
+#sec-G .guide-metric.card-type-list .guide-range-median{
+  align-items:stretch;
+  text-align:left;
+  padding-top:8px;
+  justify-content:flex-start;
+  flex:0 0 auto;
+  min-height:0;
+}
+#sec-G .guide-metric.card-type-list .guide-range-median-label{
+  text-align:left;
+}
+#sec-G .guide-metric.card-type-list .guide-single-value{
+  margin-top:2px;
+}
+#sec-G .guide-metric.card-type-percent .guide-single-value,
+#sec-G .guide-metric.card-type-value .guide-single-value,
+#sec-G .guide-metric.card-type-narrative .guide-single-value{
+  padding-top:0;
+  justify-content:flex-start;
+  text-align:left;
+}
+#sec-G .guide-metric.card-type-percent .guide-range-median,
+#sec-G .guide-metric.card-type-value .guide-range-median,
+#sec-G .guide-metric.card-type-narrative .guide-range-median{
+  flex:0 0 auto;
+  min-height:0;
+}
+#sec-G .guide-metric.program-share .guide-single-value .share-row,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-row{
+  min-width:0;
+}
+#sec-G .guide-metric.program-share .guide-single-value .share-label,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-label,
+#sec-G .guide-metric.program-share .guide-single-value .share-num,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-num,
+#sec-G .guide-metric.program-share .guide-single-value .share-sub,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-sub{
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+#sec-G .guide-metric .hint{
+  margin-top:auto;
+}
+#sec-G .guide-metric.hero-card{
+  justify-content:flex-start;
+}
+#sec-G .guide-metric.hero-card .guide-hero-block{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:flex-start;
+  gap:8px;
+  flex:1 1 auto;
+  min-height:88px;
+}
+#sec-G .guide-metric.hero-card .guide-hero-label{
+  width:100%;
+  font-size:10px;
+  color:#8a84a0;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+#sec-G .guide-metric.hero-card .guide-hero-value{
+  width:100%;
+  min-width:0;
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-start;
+  text-align:left;
+  font-size:clamp(28px,2.4vw,40px);
+  font-weight:800;
+  line-height:1;
+  letter-spacing:-.03em;
+  color:#15111f;
+}
+#sec-G .guide-metric.hero-card .guide-hero-value .guide-dynamic-value{
+  display:inline-flex;
+  align-items:flex-end;
+  justify-content:flex-start;
+  gap:4px;
+  max-width:100%;
+}
+#sec-G .guide-metric.hero-card .guide-hero-value .guide-dynamic-value span{
+  font-size:.42em;
+  color:#8a84a0;
+}
+#sec-G .guide-metric.hero-card .guide-hero-sub{
+  width:100%;
+  font-size:11px;
+  line-height:1.5;
+  color:#8a84a0;
+  text-align:left;
+}
+#sec-G .guide-metric.hero-card.card-type-percent .guide-hero-value{
+  color:var(--step-color, var(--ds-primary));
+}
+#sec-G .guide-metric.hero-card.compound-card .guide-hero-value{
+  font-size:clamp(18px,1.55vw,24px);
+  line-height:1.28;
+  flex-wrap:wrap;
+}
+#sec-G .guide-metric.hero-card.compound-card .guide-hero-value .guide-dynamic-value{
+  white-space:normal;
+}
+#sec-G .guide-metric.list-card .guide-list-block{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  flex:1 1 auto;
+  justify-content:flex-start;
+  min-height:0;
+}
+#sec-G .guide-metric.list-card .guide-list-label{
+  font-size:10px;
+  color:#8a84a0;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+#sec-G .guide-metric.list-card .guide-single-value{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:flex-start;
+  text-align:left;
+  width:100%;
+  gap:10px;
+}
+#sec-G .guide-metric.range-card .guide-range-median-label{
+  color:#8a84a0;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+#sec-G .guide-metric.range-card .guide-range-median-value{
+  width:100%;
+  min-width:0;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  text-align:center;
+  font-size:clamp(28px,2.4vw,40px);
+  font-weight:800;
+  line-height:1;
+  letter-spacing:-.03em;
+  color:var(--step-color, var(--ds-primary));
+}
+#sec-G .guide-metric.range-card .guide-range-median-value .guide-dynamic-value{
+  display:inline-flex;
+  align-items:flex-end;
+  justify-content:center;
+  gap:4px;
+  max-width:100%;
+}
+#sec-G .guide-metric.range-card .guide-range-median-value .guide-value-main{
+  color:var(--step-color, var(--ds-primary));
+  font-weight:800;
+}
+#sec-G .guide-metric.range-card .guide-range-median-value .guide-value-unit{
+  font-size:.42em;
+  font-weight:600;
+  color:#8a84a0;
+  margin-left:0;
+}
+@media (max-width: 1180px) {
+  #sec-G .guide-step-header {
+    display: block;
+    padding: 16px 16px 12px;
+  }
+  #sec-G .guide-step-desc {
+    max-width: none;
+    margin-top: 8px;
+  }
+  #sec-G .guide-step-body {
+    padding: 0 16px 16px;
+  }
+  #sec-G .guide-metric-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+  }
+}
+@media (max-width: 720px) {
+  #sec-G .guide-step-title {
+    font-size: 17px;
+  }
+  #sec-G .guide-step-btn .name {
+    font-size: 10px;
+  }
+  #sec-G .guide-metric-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+  }
+}
 #sec-G .guide-count-label {
   font-size: 12px;
   font-weight: 400;
@@ -855,7 +1696,7 @@ body.guide-active #mobile-toc-toggle{display:none!important}
 
 .guide-range-item-value .guide-value-main{color:#6B7280;font-size:1em;font-weight:600}
 .guide-range-item-value .guide-value-unit{color:#9CA3AF;font-size:.72em;font-weight:600;margin-left:1px}
-.guide-single-value span,.guide-single-value .guide-value-unit,.guide-range-median-value .guide-value-unit{font-size:clamp(10px,0.8vw,11px);font-weight:500;color:#6B7280;margin-left:2px}
+.guide-single-value .guide-value-unit,.guide-range-median-value .guide-value-unit{font-size:clamp(10px,0.8vw,11px);font-weight:500;color:#6B7280;margin-left:2px}
 .guide-range-median-value .guide-value-main{color:#111827}
 .guide-detail-stack{display:flex;flex-direction:column;gap:10px}
 .guide-detail-block{display:flex;flex-direction:column;gap:3px;padding:10px 12px;border:1px solid #EEE9F5;border-radius:8px;background:#fff}
@@ -871,6 +1712,264 @@ body.guide-active #mobile-toc-toggle{display:none!important}
 #sec-G .guide-range-item-value .guide-value-unit{color:#9CA3AF;font-size:.72em;font-weight:600}
 #sec-G .guide-single-value .guide-value-unit,
 #sec-G .guide-range-median-value .guide-value-unit{color:#6B7280;font-size:clamp(10px,0.8vw,11px);font-weight:500}
+
+/* Final priority: unify core value design across card types */
+#sec-G .guide-metric.range-card .guide-range-median-value{
+  font-size:clamp(38px,3vw,54px) !important;
+  font-weight:800 !important;
+  color:var(--step-color, var(--ds-primary)) !important;
+  line-height:1 !important;
+  letter-spacing:-.03em !important;
+}
+#sec-G .guide-metric.range-card .guide-range-median-value .guide-value-main{
+  color:var(--step-color, var(--ds-primary)) !important;
+  font-size:1em !important;
+  font-weight:800 !important;
+}
+#sec-G .guide-metric.range-card .guide-range-median-value .guide-value-unit{
+  font-size:.42em !important;
+  font-weight:600 !important;
+  color:#8a84a0 !important;
+  margin-left:2px !important;
+}
+#sec-G.guide-fit-active .guide-metric.range-card .guide-range-median-value{
+  font-size:clamp(38px,3vw,54px) !important;
+  font-weight:800 !important;
+  color:var(--step-color, var(--ds-primary)) !important;
+}
+#sec-G.guide-fit-active .guide-metric.range-card .guide-range-median-value .guide-value-main{
+  color:var(--step-color, var(--ds-primary)) !important;
+  font-weight:800 !important;
+}
+#sec-G.guide-fit-active .guide-metric.range-card .guide-range-median-value .guide-value-unit{
+  font-size:.42em !important;
+  font-weight:600 !important;
+  color:#8a84a0 !important;
+}
+
+/* Final system: align G-tab card hierarchy to g_tab_card_ui_rules.md */
+#sec-G .guide-metric .title{
+  min-height:40px;
+  margin-bottom:14px;
+  font-size:14px;
+  font-weight:700;
+  line-height:1.45;
+  letter-spacing:-.01em;
+  color:#15111f;
+  word-break:keep-all;
+  overflow-wrap:anywhere;
+}
+#sec-G .guide-metric.hero-card .guide-hero-block,
+#sec-G .guide-metric.list-card .guide-list-block,
+#sec-G .guide-metric.range-card .guide-range-block{
+  gap:10px;
+}
+#sec-G .guide-metric.hero-card .guide-hero-label,
+#sec-G .guide-metric.list-card .guide-list-label,
+#sec-G .guide-metric.range-card .guide-range-median-label{
+  font-size:10px;
+  font-weight:700;
+  line-height:1.2;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:#8a84a0;
+}
+#sec-G .guide-metric.hero-card .guide-hero-block{
+  min-height:96px;
+  align-items:flex-start;
+  justify-content:flex-start;
+}
+#sec-G .guide-metric.hero-card .guide-hero-value{
+  width:100%;
+  min-width:0;
+  font-size:clamp(34px,2.7vw,46px);
+  font-weight:800;
+  line-height:.98;
+  letter-spacing:-.035em;
+  color:var(--step-color, var(--ds-primary));
+}
+#sec-G .guide-metric.hero-card .guide-hero-value .guide-value-main{
+  color:inherit;
+  font-size:1em;
+  font-weight:800;
+}
+#sec-G .guide-metric.hero-card .guide-hero-value .guide-value-unit{
+  font-size:.38em;
+  font-weight:600;
+  color:#8a84a0;
+  margin-left:3px;
+}
+#sec-G .guide-metric.hero-card.compound-card .guide-hero-value,
+#sec-G .guide-metric.hero-card.card-type-narrative .guide-hero-value{
+  font-size:clamp(22px,1.9vw,30px);
+  line-height:1.22;
+  letter-spacing:-.025em;
+  flex-wrap:wrap;
+  color:#1f1c2e;
+}
+#sec-G .guide-metric.hero-card.compound-card .guide-hero-value .guide-dynamic-value,
+#sec-G .guide-metric.hero-card.card-type-narrative .guide-hero-value .guide-dynamic-value{
+  white-space:normal;
+}
+#sec-G .guide-metric.hero-card .guide-hero-sub{
+  font-size:11px;
+  line-height:1.5;
+  color:#8a84a0;
+  word-break:keep-all;
+  overflow-wrap:anywhere;
+}
+#sec-G .guide-metric.list-card .guide-list-block{
+  min-height:96px;
+}
+#sec-G .guide-metric.list-card .guide-single-value{
+  gap:8px;
+}
+#sec-G .guide-metric.list-card .share-row,
+#sec-G .guide-metric.program-share .guide-single-value .share-row,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-row{
+  display:grid;
+  grid-template-columns:minmax(72px,auto) minmax(0,1fr) auto;
+  align-items:center;
+  gap:12px;
+  min-height:34px;
+  padding:6px 0;
+}
+#sec-G .guide-metric.program-share:not(.compact-share) .guide-single-value .share-row{
+  grid-template-columns:minmax(88px,auto) auto;
+  justify-content:space-between;
+}
+#sec-G .guide-metric.list-card .share-label,
+#sec-G .guide-metric.program-share .guide-single-value .share-label,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-label{
+  min-width:0;
+  font-size:12px;
+  font-weight:700;
+  line-height:1.35;
+  color:#4a425f;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+#sec-G .guide-metric.list-card .share-value-stack,
+#sec-G .guide-metric.program-share .guide-single-value .share-value-stack,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-value-stack{
+  min-width:0;
+  max-width:100%;
+  align-items:flex-end;
+}
+#sec-G .guide-metric.list-card .share-num,
+#sec-G .guide-metric.program-share .guide-single-value .share-num,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-num{
+  min-width:0;
+  font-size:15px;
+  font-weight:800;
+  line-height:1.1;
+  letter-spacing:-.02em;
+  color:#15111f;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+#sec-G .guide-metric.list-card .share-sub,
+#sec-G .guide-metric.program-share .guide-single-value .share-sub,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-sub{
+  font-size:11px;
+  font-weight:500;
+  line-height:1.35;
+  color:#8a84a0;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+#sec-G .guide-metric.range-card .guide-range-median{
+  min-height:84px;
+}
+#sec-G .guide-metric.range-card .guide-range-median-label{
+  margin-bottom:6px;
+}
+#sec-G .guide-metric.range-extents-card .guide-range-extents{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+  margin-top:10px;
+}
+#sec-G .guide-metric.range-extents-card .guide-range-extent{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+#sec-G .guide-metric.range-extents-card .guide-range-extent.is-max{
+  align-items:flex-end;
+  text-align:right;
+}
+#sec-G .guide-metric.range-extents-card .guide-range-extent-label{
+  font-size:10px;
+  font-weight:700;
+  line-height:1.2;
+  letter-spacing:.04em;
+  text-transform:none;
+  color:#8a84a0;
+}
+#sec-G .guide-metric.range-extents-card .guide-range-extent-value{
+  color:#4b5563;
+  font-size:15px;
+  font-weight:700;
+  line-height:1.25;
+  white-space:nowrap;
+}
+#sec-G .guide-metric.range-extents-card .guide-range-extent-value .guide-value-main{
+  color:#4b5563;
+  font-size:1em;
+  font-weight:700;
+}
+#sec-G .guide-metric.range-extents-card .guide-range-extent-value .guide-value-unit{
+  color:#6b7280;
+  font-size:.9em;
+  font-weight:600;
+}
+#sec-G .guide-metric.treemap-share .guide-single-value{
+  display:block;
+  margin-top:0;
+}
+#sec-G .guide-metric.treemap-share .guide-treemap{
+  height:240px;
+  border:1px solid #ece6f7;
+  border-radius:14px;
+  overflow:hidden;
+  background:#faf8ff;
+}
+#sec-G .guide-metric.treemap-share .guide-treemap-svg{
+  display:block;
+  width:100%;
+  height:100%;
+  background:#f7f2fd;
+}
+#sec-G .guide-metric.treemap-share .guide-treemap-svg-label{
+  font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif;
+  font-weight:700;
+  fill:#2a2538;
+}
+#sec-G .guide-metric.treemap-share .guide-treemap-svg-value{
+  font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif;
+  font-weight:800;
+  fill:#1b1528;
+}
+#sec-G .guide-metric.treemap-share .guide-treemap-empty{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:240px;
+  border:1px dashed #ded5f0;
+  border-radius:14px;
+  color:#8a84a0;
+  font-size:12px;
+  font-weight:600;
+}
+#sec-G .guide-metric.range-card .guide-dumbbell-tick{
+  font-size:9px;
+}
 
 .guide-metric-sub{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;line-height:1.4}
 </style>
@@ -1352,6 +2451,32 @@ const GUIDE_STEPS = [
     ]
   }
 ];
+const GUIDE_QA = {
+  1: {
+    question: '한 개층 안에 어떤 프로그램을 어느 정도 비중으로 담아야 할까요?',
+    answer: '먼저 층당 적정 인원과 면적 범위를 잡고, 그 안에서 업무·임원·회의·소셜·지원 공간 비중을 배분하는 방식이 가장 안정적입니다.'
+  },
+  2: {
+    question: '업무 공간은 얼마나 넓게, 어떤 기준으로 배치하면 될까요?',
+    answer: '업무 공간 비중과 인당 면적을 먼저 정하고, 그 다음 데스크 유형·통로 폭·배치 간격을 맞추는 순서가 가장 실무적입니다.'
+  },
+  3: {
+    question: '임원 공간은 어느 정도 규모와 분위기로 잡는 것이 적절할까요?',
+    answer: '평균 면적과 가장 자주 쓰이는 가구 조합을 함께 보면, 크기와 인상 모두 과하거나 부족하지 않게 맞출 수 있습니다.'
+  },
+  4: {
+    question: '회의실은 몇 개를 어떤 규모로 구성하는 게 좋을까요?',
+    answer: '총 개소만 보기보다 소형실부터 대형실까지 규모별 조합을 함께 보는 편이 실제 운영 밀도에 더 잘 맞습니다.'
+  },
+  5: {
+    question: '소셜 공간은 얼마나 확보하고 어떤 프로그램을 우선해야 할까요?',
+    answer: '라운지·탕비 비중을 먼저 잡고, 가장 자주 선택되는 타입을 기준으로 휴게 경험의 방향을 정리하는 방식이 효과적입니다.'
+  },
+  6: {
+    question: '폰부스·선택업무·OA 같은 지원 공간은 어느 정도가 적정할까요?',
+    answer: '지원 공간은 과도하게 키우기보다, 평균 개소와 최소 면적 기준을 먼저 확보해 업무 보조 기능이 끊기지 않게 만드는 것이 핵심입니다.'
+  }
+};
 
 function normalizeFlag(v) {
   return String(v ?? '').trim() === 'O' ? 'O' : 'X';
@@ -1572,7 +2697,7 @@ function summarizeGuideFilter(key) {
 }
 function guideValueMarkup(value, unit='') {
   if (value == null || value === '') return '&mdash;';
-  return `${guideValueEscaped(value)}${unit ? `<span class="guide-value-unit">${guideValueEscaped(unit)}</span>` : ''}`;
+  return `<span class="guide-value-main">${guideValueEscaped(value)}</span>${unit ? `<span class="guide-value-unit">${guideValueEscaped(unit)}</span>` : ''}`;
 }
 function guideValueHtml(value, unit='') {
   return guideValueMarkup(value, unit);
@@ -1861,6 +2986,87 @@ function guideProgramShareRows(spaces, idxs) {
     return { label, value: `${fmt1(mean(ratios))}%` };
   });
 }
+function guideProgramTreemapHtml(spaces, idxs) {
+  const items = guideProgramShareRows(spaces, idxs)
+    .map(item => ({
+      label: item.label,
+      valueText: item.value,
+      ratio: Math.max(0, parseFloat(item.value) || 0)
+    }))
+    .filter(item => item.ratio > 0)
+    .sort((a, b) => b.ratio - a.ratio);
+  if (!items.length) return '<div class="guide-treemap-empty">데이터 없음</div>';
+  const total = items.reduce((sum, item) => sum + item.ratio, 0) || 1;
+  const norm = items.map(item => ({ ...item, weight: item.ratio / total }));
+  const WIDTH = 1000;
+  const HEIGHT = 380;
+  const GAP = 6;
+  const rects = [];
+  const esc = value => guideValueEscaped(value);
+  const pushLeaf = (item, x, y, w, h, depth) => {
+    rects.push({ item, x, y, w, h, depth });
+  };
+  const layout = (list, x, y, w, h, depth=0) => {
+    if (!list.length || w <= 0 || h <= 0) return;
+    if (list.length === 1) {
+      pushLeaf(list[0], x, y, w, h, depth);
+      return;
+    }
+    let acc = 0;
+    let splitIndex = 1;
+    for (let i = 0; i < list.length; i += 1) {
+      acc += list[i].weight;
+      if (acc >= 0.5) {
+        splitIndex = Math.min(Math.max(i + 1, 1), list.length - 1);
+        break;
+      }
+    }
+    const first = list.slice(0, splitIndex);
+    const second = list.slice(splitIndex);
+    const firstWeight = first.reduce((sum, item) => sum + item.weight, 0);
+    const horizontal = w >= h;
+    if (horizontal) {
+      const firstW = Math.max(0, (w - GAP) * firstWeight);
+      const secondW = Math.max(0, w - GAP - firstW);
+      layout(first, x, y, firstW, h, depth + 1);
+      layout(second, x + firstW + GAP, y, secondW, h, depth + 1);
+    } else {
+      const firstH = Math.max(0, (h - GAP) * firstWeight);
+      const secondH = Math.max(0, h - GAP - firstH);
+      layout(first, x, y, w, firstH, depth + 1);
+      layout(second, x, y + firstH + GAP, w, secondH, depth + 1);
+    }
+  };
+  layout(norm, 0, 0, WIDTH, HEIGHT, 0);
+  const fills = [
+    'rgba(117,88,196,0.26)',
+    'rgba(117,88,196,0.22)',
+    'rgba(117,88,196,0.18)',
+    'rgba(117,88,196,0.14)'
+  ];
+  const svgRects = rects.map(({ item, x, y, w, h, depth }) => {
+    const area = w * h;
+    const pad = w > 180 && h > 120 ? 18 : w > 120 && h > 86 ? 14 : 10;
+    const showValue = area > 18000;
+    const showLabel = area > 6000;
+    const labelSize = area > 50000 ? 28 : area > 25000 ? 24 : area > 12000 ? 20 : 16;
+    const valueSize = area > 50000 ? 42 : area > 25000 ? 34 : area > 12000 ? 26 : 20;
+    return `
+      <g>
+        <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="18" ry="18" fill="${fills[Math.min(depth, fills.length - 1)]}"></rect>
+        ${showLabel ? `<text x="${x + pad}" y="${y + pad + labelSize - 8}" class="guide-treemap-svg-label" font-size="${labelSize}">${esc(item.label)}</text>` : ''}
+        ${showValue ? `<text x="${x + pad}" y="${y + h - pad}" class="guide-treemap-svg-value" font-size="${valueSize}">${esc(item.valueText)}</text>` : ''}
+      </g>
+    `;
+  }).join('');
+  return `
+    <div class="guide-treemap">
+      <svg viewBox="0 0 ${WIDTH} ${HEIGHT}" class="guide-treemap-svg" preserveAspectRatio="xMidYMid meet" aria-label="공간 프로그램 면적 비중 트리맵">
+        ${svgRects}
+      </svg>
+    </div>
+  `;
+}
 function guideProgramShareValueHtml(spaces, idxs) {
   return guideProgramShareRows(spaces, idxs).map(item => `
     <div class="share-row">
@@ -1880,6 +3086,282 @@ function guideShareValueHtml(items) {
     </div>
   `).join('');
 }
+function guideReferenceDumbbellHtml({ min, med, max, valueType='number', unit='', suffix='' }) {
+  const nums = [min, med, max].map(v => Number(v)).filter(v => isFinite(v));
+  if (!nums.length) return `<div class="guide-dumbbell"><div class="guide-dumbbell-line"></div></div>`;
+  const low = Math.min(...nums);
+  const high = Math.max(...nums);
+  const span = high - low || 1;
+  const pos = value => ((Number(value) - low) / span) * 100;
+  const valueHtml = value => {
+    if (valueType === 'area') return guideAreaValueHtml(value, suffix);
+    if (valueType === 'integer') return guideIntegerValueHtml(value, unit);
+    return guideNumberValueHtml(value, unit);
+  };
+  return `
+    <div class="guide-dumbbell">
+      <div class="guide-dumbbell-line"></div>
+      <div class="guide-dumbbell-seg" style="left:${pos(min)}%;width:${Math.max(pos(max) - pos(min), 0)}%;"></div>
+      <div class="guide-dumbbell-dot" style="left:${pos(min)}%;"></div>
+      <div class="guide-dumbbell-dot med" style="left:${pos(med)}%;"></div>
+      <div class="guide-dumbbell-dot" style="left:${pos(max)}%;"></div>
+      <div class="guide-dumbbell-tick" style="left:${pos(min)}%;"><span class="tick-label">min</span> ${valueHtml(min)}</div>
+      <div class="guide-dumbbell-tick med" style="left:${pos(med)}%;"><span class="tick-label">med</span> ${valueHtml(med)}</div>
+      <div class="guide-dumbbell-tick" style="left:${pos(max)}%;"><span class="tick-label">max</span> ${valueHtml(max)}</div>
+    </div>
+  `;
+}
+function guideRangeExtentsHtml({ min, max, valueType='number', unit='', suffix='' }) {
+  const valueHtml = value => {
+    if (valueType === 'area') return guideAreaValueHtml(value, suffix);
+    if (valueType === 'integer') return guideIntegerValueHtml(value, unit);
+    return guideNumberValueHtml(value, unit);
+  };
+  return `
+    <div class="guide-range-extents">
+      <div class="guide-range-extent">
+        <span class="guide-range-extent-label">min</span>
+        <span class="guide-range-extent-value">${valueHtml(min)}</span>
+      </div>
+      <div class="guide-range-extent is-max">
+        <span class="guide-range-extent-label">max</span>
+        <span class="guide-range-extent-value">${valueHtml(max)}</span>
+      </div>
+    </div>
+  `;
+}
+guideRangeMetricCard = function({ title, medianM2, minM2, maxM2, suffix='', className='' }) {
+  return `
+    <article class="guide-metric range-card ${className}">
+      <div class="title">${title}</div>
+      <div class="guide-range-block">
+        <div class="guide-range-median">
+          <div class="guide-range-median-label">범위형</div>
+          <div class="guide-range-median-value">${guideAreaValueHtml(medianM2, suffix)}</div>
+        </div>
+        ${guideReferenceDumbbellHtml({ min:minM2, med:medianM2, max:maxM2, valueType:'area', suffix })}
+      </div>
+    </article>
+  `;
+};
+guideNumberRangeMetricCard = function({ title, median, min, max, unit='', className='' }) {
+  return `
+    <article class="guide-metric range-card ${className}">
+      <div class="title">${title}</div>
+      <div class="guide-range-block">
+        <div class="guide-range-median">
+          <div class="guide-range-median-label">범위형</div>
+          <div class="guide-range-median-value">${guideNumberValueHtml(median, unit)}</div>
+        </div>
+        ${guideReferenceDumbbellHtml({ min, med:median, max, valueType:'number', unit })}
+      </div>
+    </article>
+  `;
+};
+guideIntegerRangeMetricCard = function({ title, median, min, max, unit='', className='' }) {
+  return `
+    <article class="guide-metric range-card ${className}">
+      <div class="title">${title}</div>
+      <div class="guide-range-block">
+        <div class="guide-range-median">
+          <div class="guide-range-median-label">범위형</div>
+          <div class="guide-range-median-value">${guideIntegerValueHtml(median, unit)}</div>
+        </div>
+        ${guideReferenceDumbbellHtml({ min, med:median, max, valueType:'integer', unit })}
+      </div>
+    </article>
+  `;
+};
+guideRangeExtentsMetricCard = function({ title, medianM2, minM2, maxM2, suffix='', className='' }) {
+  return guideRangeShell({
+    title,
+    label:'중앙값',
+    mainHtml:guideAreaValueHtml(medianM2, suffix),
+    dumbbellHtml:guideRangeExtentsHtml({ min:minM2, max:maxM2, valueType:'area', suffix }),
+    className:joinGuideClasses(className, 'range-extents-card')
+  });
+};
+guideIntegerRangeExtentsMetricCard = function({ title, median, min, max, unit='', className='' }) {
+  return guideRangeShell({
+    title,
+    label:'중앙값',
+    mainHtml:guideIntegerValueHtml(median, unit),
+    dumbbellHtml:guideRangeExtentsHtml({ min, max, valueType:'integer', unit }),
+    className:joinGuideClasses(className, 'range-extents-card')
+  });
+};
+guideMetricCard = function({ title, value, unit='', detail='', hint='', className='', valueLabel='', subValue='', valueIsHtml=false }) {
+  const lbl = valueLabel || (className.includes('program-share') || unit === '%' ? '%' : '핵심값');
+  const hasValue = value != null && value !== '';
+  const valueHtml = valueIsHtml ? value : guideValueHtml(value, unit);
+  return `
+    <article class="guide-metric single-card ${className}">
+      <div class="title">${title}</div>
+      <div class="guide-range-block guide-single-block">
+        ${hasValue ? `
+        <div class="guide-range-median">
+          <div class="guide-range-median-label">${lbl}</div>
+          <div class="guide-single-value">${valueHtml}</div>
+          ${subValue ? `<div class="guide-metric-sub">${subValue}</div>` : ''}
+        </div>` : ''}
+        ${detail ? `<div class="guide-metric-detail">${detail}</div>` : ''}
+        ${hint ? `<div class="hint">${hint}</div>` : ''}
+      </div>
+    </article>
+  `;
+};
+guideProgramShareValueHtml = function(spaces, idxs) {
+  return guideProgramShareRows(spaces, idxs).map(item => `
+    <div class="share-row">
+      <span class="share-label">${item.label}</span>
+      <span class="share-num">${item.value}</span>
+    </div>
+  `).join('');
+};
+guideShareValueHtml = function(items) {
+  const values = items.map(item => {
+    const parsed = parseFloat(item.value);
+    if (item.ratio != null && isFinite(item.ratio)) return item.ratio;
+    if (isFinite(parsed)) return parsed;
+    return 1;
+  });
+  const max = Math.max(...values, 1);
+  return items.map(item => `
+    <div class="share-row">
+      <span class="share-label">${item.label}</span>
+      <span class="guide-share-bar"><span class="guide-share-bar-fill" style="width:${(((item.ratio != null && isFinite(item.ratio)) ? item.ratio : (isFinite(parseFloat(item.value)) ? parseFloat(item.value) : 1)) / max) * 100}%;"></span></span>
+      <span class="share-value-stack">
+        <span class="share-num">${item.value}</span>
+        ${item.sub ? `<span class="share-sub">${item.sub}</span>` : ''}
+      </span>
+    </div>
+  `).join('');
+};
+function guideRangeShell({ title, label='범위형', mainHtml, dumbbellHtml, hint='', className='' }) {
+  return `
+    <article class="guide-metric range-card ${className}">
+      <div class="title">${title}</div>
+      <div class="guide-range-block">
+        <div class="guide-range-median">
+          <div class="guide-range-median-label">${label}</div>
+          <div class="guide-range-median-value">${mainHtml}</div>
+        </div>
+        ${dumbbellHtml}
+        ${hint ? `<div class="hint">${hint}</div>` : ''}
+      </div>
+    </article>
+  `;
+}
+function guideHeroShell({ title, label='핵심값', valueHtml, subValue='', hint='', className='' }) {
+  return `
+    <article class="guide-metric hero-card ${className}">
+      <div class="title">${title}</div>
+      <div class="guide-hero-block">
+        <div class="guide-hero-label">${label}</div>
+        <div class="guide-hero-value">${valueHtml}</div>
+        ${subValue ? `<div class="guide-hero-sub">${subValue}</div>` : ''}
+      </div>
+      ${hint ? `<div class="hint">${hint}</div>` : ''}
+    </article>
+  `;
+}
+function guideListShell({ title, label='%', valueHtml, hint='', className='' }) {
+  return `
+    <article class="guide-metric list-card ${className}">
+      <div class="title">${title}</div>
+      <div class="guide-list-block">
+        <div class="guide-list-label">${label}</div>
+        <div class="guide-single-value">${valueHtml}</div>
+      </div>
+      ${hint ? `<div class="hint">${hint}</div>` : ''}
+    </article>
+  `;
+}
+guideRangeMetricCard = function({ title, medianM2, minM2, maxM2, suffix='', className='', hint='' }) {
+  return guideRangeShell({
+    title,
+    label:'범위형',
+    mainHtml:guideAreaValueHtml(medianM2, suffix),
+    dumbbellHtml:guideReferenceDumbbellHtml({ min:minM2, med:medianM2, max:maxM2, valueType:'area', suffix }),
+    hint,
+    className
+  });
+};
+guideNumberRangeMetricCard = function({ title, median, min, max, unit='', className='', hint='' }) {
+  return guideRangeShell({
+    title,
+    label:'범위형',
+    mainHtml:guideNumberValueHtml(median, unit),
+    dumbbellHtml:guideReferenceDumbbellHtml({ min, med:median, max, valueType:'number', unit }),
+    hint,
+    className
+  });
+};
+guideIntegerRangeMetricCard = function({ title, median, min, max, unit='', className='', hint='' }) {
+  return guideRangeShell({
+    title,
+    label:'범위형',
+    mainHtml:guideIntegerValueHtml(median, unit),
+    dumbbellHtml:guideReferenceDumbbellHtml({ min, med:median, max, valueType:'integer', unit }),
+    hint,
+    className
+  });
+};
+guideMetricCard = function({ title, value, unit='', hint='', className='', valueLabel='', subValue='', valueIsHtml=false }) {
+  const label = valueLabel || (unit === '%' ? '%' : '핵심값');
+  const valueHtml = valueIsHtml ? value : guideValueHtml(value, unit);
+  const extraClass = valueIsHtml ? joinGuideClasses(className, 'compound-card') : className;
+  return guideHeroShell({
+    title,
+    label,
+    valueHtml,
+    subValue,
+    hint,
+    className:extraClass
+  });
+};
+guidePercentMetricCard = function({ title, value, className='', hint='' }) {
+  return guideHeroShell({
+    title,
+    label:'%',
+    valueHtml:guideValueHtml(value, '%'),
+    hint,
+    className:joinGuideClasses('card-type-percent', className)
+  });
+};
+guideValueOnlyMetricCard = function({ title, value, unit='', valueLabel='', subValue='', className='', valueIsHtml=false, hint='' }) {
+  const valueHtml = valueIsHtml ? value : guideValueHtml(value, unit);
+  const extraClass = joinGuideClasses('card-type-value', className, valueIsHtml ? 'compound-card' : '');
+  return guideHeroShell({
+    title,
+    label:valueLabel || '핵심값',
+    valueHtml,
+    subValue,
+    hint,
+    className:extraClass
+  });
+};
+guideNarrativeMetricCard = function({ title, value, unit='', valueLabel='', subValue='', className='', valueIsHtml=false, hint='' }) {
+  const valueHtml = valueIsHtml ? value : guideValueHtml(value, unit);
+  const extraClass = joinGuideClasses('card-type-narrative', className, 'compound-card');
+  return guideHeroShell({
+    title,
+    label:valueLabel || '핵심값',
+    valueHtml,
+    subValue,
+    hint,
+    className:extraClass
+  });
+};
+guideListMetricCard = function({ title, valueHtml, valueLabel='%', className='', wide=false, hint='' }) {
+  return guideListShell({
+    title,
+    label:valueLabel,
+    valueHtml,
+    hint,
+    className:joinGuideClasses('card-type-list', wide ? 'wide' : '', className)
+  });
+};
 function renderGuideTab() {
   const filterHost = document.getElementById('guide-filter-host');
   const summaryHost = document.getElementById('guide-summary-host');
@@ -2081,20 +3563,20 @@ function renderGuideTab() {
 
   _stepCards = {
     1: [
-      guideRangeMetricCard({
+      guideRangeExtentsMetricCard({
         title:'1개층의 적정 가용 면적',
         medianM2:zoningAreaStat?.q2,
         minM2:zoningAreaStat?.q1,
         maxM2:zoningAreaStat?.q3
       }),
-      guideIntegerRangeMetricCard({
+      guideIntegerRangeExtentsMetricCard({
         title:'1개층의 적정 인원 수',
         median:zoningPersonStat?.q2,
         min:zoningPersonStat?.q1,
         max:zoningPersonStat?.q3,
         unit:'인'
       }),
-      guideRangeMetricCard({
+      guideRangeExtentsMetricCard({
         title:'인당 면적',
         medianM2:zoningPpaStat?.q2,
         minM2:zoningPpaStat?.q1,
@@ -2104,6 +3586,7 @@ function renderGuideTab() {
       guideListMetricCard({
         title:'1개층 공간 프로그램별 면적 비중',
         valueHtml:guideProgramShareValueHtml(guideSp, guideIdx),
+        valueLabel:'평균 비중(%)',
         className:'program-share',
         wide:true
       })
@@ -2239,6 +3722,17 @@ function renderGuideTab() {
     4:'회의 공간은 전체 개소보다도 규모별 조합이 중요하므로, 소형실부터 대형실까지 평균 개소와 면적을 묶어 설계 기준으로 사용합니다.',
     5:'소셜 공간은 비중뿐 아니라 라운지 조성 여부, 라운지 유형, 탕비 규모까지 함께 봐야 실제 체감 품질을 맞출 수 있습니다.',
     6:'지원 공간은 업무 보조 역할이 강해 과도하게 키우기보다, 필요한 개소와 최소 확보 면적을 안정적으로 맞추는 쪽이 설계 포인트입니다.'
+  };
+  const step1ProgramRows = guideProgramShareRows(guideSp, guideIdx);
+  _stepQaAnswers = {
+    1: buildGuideStep1Answer({
+      selectedArea,
+      selectedPeople,
+      zoningAreaStat,
+      zoningPersonStat,
+      zoningPpaStat,
+      programRows: step1ProgramRows
+    })
   };
 
   navHost.innerHTML = GUIDE_STEPS.map((step, idx) => {
@@ -2383,6 +3877,7 @@ function scheduleGuideViewportFit() {
 function updateGuideViewportFit() {
   const section = document.getElementById('sec-G');
   const frame = section?.querySelector('.guide-fit-frame');
+  const stepBody = section?.querySelector('.guide-index-stage.single .guide-step-body');
   if (!section || !frame) return;
 
   const desktopGuide = activeSec === 'G' && !isTabletViewport();
@@ -2393,11 +3888,19 @@ function updateGuideViewportFit() {
   }
 
   section.style.setProperty('--guide-fit-scale', '1');
+  if (!stepBody) return;
+
   const sectionTop = section.getBoundingClientRect().top;
-  const viewportBudget = window.innerHeight - sectionTop - 12;
-  const naturalHeight = Math.ceil(frame.scrollHeight);
-  const scale = naturalHeight > 0 ? Math.min(1, viewportBudget / naturalHeight) : 1;
-  const fitted = Math.max(0.6, Number.isFinite(scale) ? scale : 1);
+  const viewportHeightBudget = window.innerHeight - sectionTop - 12;
+  const frameStaticHeight = Math.ceil(frame.scrollHeight - stepBody.scrollHeight);
+  const bodyHeightBudget = Math.max(120, viewportHeightBudget - frameStaticHeight);
+  const bodyWidthBudget = Math.max(240, stepBody.parentElement?.clientWidth || section.clientWidth);
+  const naturalHeight = Math.ceil(stepBody.scrollHeight);
+  const naturalWidth = Math.ceil(stepBody.scrollWidth);
+  const heightScale = naturalHeight > 0 ? bodyHeightBudget / naturalHeight : 1;
+  const widthScale = naturalWidth > 0 ? bodyWidthBudget / naturalWidth : 1;
+  const scale = Math.min(1, heightScale, widthScale);
+  const fitted = Math.max(0.96, Number.isFinite(scale) ? scale : 1);
   section.style.setProperty('--guide-fit-scale', fitted.toFixed(4));
 }
 
@@ -2673,6 +4176,38 @@ function slugify(text) {
 // ─── 설계 가이드 탭 캐시 (스텝 전환 고속화) ───
 let _stepCards = {};
 let _stepNotes = {};
+let _stepQaAnswers = {};
+function formatGuidePersonText(value) {
+  return value == null || !isFinite(value) ? '—' : `${Math.round(value)}인`;
+}
+function guideStep1ProgramGuideText(rows) {
+  const findValue = label => rows.find(item => item.label === label)?.value || '—';
+  return `가용 면적의 <b>${findValue('업무')}</b>는 업무 공간으로, <b>${findValue('임원')}</b>는 임원 공간으로, <b>${findValue('회의')}</b>는 회의 공간으로, <b>${findValue('소셜')}</b>는 소셜 공간으로, <b>${findValue('지원')}</b>는 지원 공간으로 배분합니다.`;
+}
+function buildGuideStep1Answer({ selectedArea, selectedPeople, zoningAreaStat, zoningPersonStat, zoningPpaStat, programRows }) {
+  const hasArea = Array.isArray(selectedArea) && selectedArea.length > 0;
+  const hasPeople = Array.isArray(selectedPeople) && selectedPeople.length > 0;
+  const areaText = formatGuideAreaText(zoningAreaStat?.q2) || '—';
+  const personText = formatGuidePersonText(zoningPersonStat?.q2);
+  const ppaText = formatGuideAreaText(zoningPpaStat?.q2, '/인') || '—';
+  const programGuide = guideStep1ProgramGuideText(programRows || []);
+  let firstLine = '';
+  if (hasArea && !hasPeople) {
+    firstLine = `설정하신 가용 면적 구간을 고려했을 때, 1개층에는 <b>${personText}</b>의 배치가 적당하며, 이 때의 인당면적은 <b>${ppaText}</b>이 적당합니다.`;
+  } else if (!hasArea && hasPeople) {
+    firstLine = `설정하신 인원 구간을 고려했을 때, 1개층은 <b>${areaText}</b> 규모로 조성해야 하며, 이 때의 인당면적은 <b>${ppaText}</b>이 적당합니다.`;
+  } else if (hasArea && hasPeople) {
+    firstLine = `설정하신 인원 구간과 가용 면적 구간을 고려했을 때, 1개층의 인당면적은 <b>${ppaText}</b>이 적당합니다.`;
+  } else {
+    firstLine = `설정하신 도면의 조건을 고려했을 때, 1개층은 <b>${areaText}</b> 규모로, 1개층에는 <b>${personText}</b>의 배치가 적당하며, 1개층의 인당면적은 <b>${ppaText}</b>이 적당합니다.`;
+  }
+  return `
+    <div class="guide-answer-lines">
+      <div class="guide-answer-line">• ${firstLine}</div>
+      <div class="guide-answer-line">• ${programGuide}</div>
+    </div>
+  `;
+}
 function _renderStepPanel(step, mode='single') {
   const cleanStepTitle = String(step.title || '').replace(/^Step\s*\d+\.\s*/i, '');
   return `
@@ -2693,6 +4228,40 @@ function _renderStepPanel(step, mode='single') {
       </section>
     `;
 }
+_renderStepPanel = function(step, mode='single') {
+  const cleanStepTitle = String(step.title || '').replace(/^Step\s*\d+\.\s*/i, '');
+  const qa = GUIDE_QA[step.id] || {};
+  const qaAnswer = _stepQaAnswers[step.id] || qa.answer || (_stepNotes[step.id] || '');
+  const accentTitle = cleanStepTitle.replace(step.short, `<span class="accent">${step.short}</span>`);
+  const stepLabel = step.subtitle || step.short || '';
+  const currentStepText = step.desc || '';
+  return `
+      <section class="card guide-step-block guide-step-anchor open" id="guide-step-${step.id}" style="--step-color:${step.color}">
+        <div class="guide-step-header"${mode === 'all' ? ` onclick="jumpGuideStep(${step.id})"` : ''}>
+          <div class="guide-step-header-main">
+            <div class="guide-step-kicker">STEP ${String(step.id).padStart(2, '0')}<span class="guide-step-kicker-title">${stepLabel}</span></div>
+            <div class="guide-step-title">${accentTitle}</div>
+            <div class="guide-step-subtitle">${currentStepText}</div>
+          </div>
+          <div class="guide-step-header-side">
+            <div class="guide-step-state">${mode === 'all' ? 'All Steps' : 'Current Step'}</div>
+          </div>
+        </div>
+        <div class="guide-step-body">
+          <div class="guide-qa">
+            <div class="guide-qa-mark q">Q</div>
+            <div class="guide-qa-text q">${qa.question || cleanStepTitle}</div>
+            <div class="guide-qa-mark a">A</div>
+            <div class="guide-qa-text a">${qaAnswer}</div>
+          </div>
+          <div class="guide-metric-grid">
+            ${(_stepCards[step.id] || []).join('')}
+          </div>
+          <div class="guide-step-note">${_stepNotes[step.id] || ''}</div>
+        </div>
+      </section>
+    `;
+};
 let activeSec = 'G';
 let tocObserver = null;
 let tocPreviewCardId = null;
