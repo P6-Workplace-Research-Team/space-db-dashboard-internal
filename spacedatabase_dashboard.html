@@ -3523,7 +3523,8 @@ function renderGuideTab() {
     const countAvg = meanPositive(guideIdx, i => guideSp.filter(s => s[S_DID]===i && isMeetingRoom(s) && s[S_SUB]===sub).length);
     return guideMetricCard({
       title:meetingLabels[sub],
-      value:guideCountAreaValueHtml(countAvg, areaM2)
+      value:guideCountAreaValueHtml(countAvg, areaM2),
+      valueIsHtml:true
     });
   });
 
