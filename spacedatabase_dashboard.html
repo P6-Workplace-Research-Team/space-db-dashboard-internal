@@ -703,7 +703,7 @@ body.guide-active #mobile-toc-toggle{display:none!important}
   min-width: 140px;
   border: 1px solid #ECE5F7;
   border-radius: 12px;
-  background: linear-gradient(180deg,#FFFFFF 0%,#FCFAFF 100%);
+  background: #fff;
   min-height: 342px;
   padding: 18px 16px 24px;
   box-shadow: 0 1px 2px rgba(17,24,39,.04);
@@ -732,7 +732,7 @@ body.guide-active #mobile-toc-toggle{display:none!important}
 }
 #sec-G .guide-metric.range-card{
   border-color:#E9E0F7;
-  background:linear-gradient(180deg,#FFFFFF 0%,#FBF9FF 100%);
+  background:#fff;
 }
 #sec-G .guide-metric.range-card .title{
   color:#1F1C2E;
@@ -1171,18 +1171,6 @@ body.guide-active #mobile-toc-toggle{display:none!important}
   font-size: 12px;
   font-weight: 600;
   color: #3e3750;
-}
-#sec-G .guide-share-bar {
-  height: 6px;
-  border-radius: 999px;
-  background: #f2edf8;
-  overflow: hidden;
-}
-#sec-G .guide-share-bar-fill {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--step-color, var(--ds-primary));
 }
 #sec-G .guide-metric.program-share .guide-single-value .share-value-stack,
 #sec-G .guide-metric.card-type-list .guide-single-value .share-value-stack {
@@ -1972,6 +1960,158 @@ body.guide-active #mobile-toc-toggle{display:none!important}
 }
 
 .guide-metric-sub{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;line-height:1.4}
+
+/* ============================================================
+   #sec-G 카드 — Purple6 Design System v2.0 반영
+   g-tab-card-system.md 3영역 구조 유지
+   색상·형태·타이포·모션 → purple6_design_system.json 기준
+============================================================ */
+
+/* ── P6 토큰: 6종 타입 액센트 (chart color palette 기반) ── */
+#sec-G{
+  --gm-a-range:  #7800f5;   /* P6 primary           — 범위형  */
+  --gm-a-value:  #b8a2f9;   /* P6 primary_light      — 단일값  */
+  --gm-a-fixed:  #a7a7a7;   /* P6 gray-400           — 고정 가이드 */
+  --gm-a-top:    #000000;   /* P6 black              — 최다 선택 */
+  --gm-a-level:  #868686;   /* P6 gray-500           — 판단형  */
+  --gm-a-combo:  #515151;   /* P6 gray-600           — 복합값  */
+}
+
+/* ── 카드 공통 기반 ──
+   stat_card: bg #FFF, border none, radius 4px,
+              shadow 0 2px 8px rgba(0,0,0,.06), padding 24px,
+              accent_bar_width 4px (left only)              */
+#sec-G .guide-metric{
+  display:flex!important;
+  flex-direction:column!important;
+  min-height:152px!important;
+  padding:18px 18px 14px!important;
+  background:#fff!important;
+  border:1px solid #e8e8e8!important;
+  border-radius:4px!important;
+  box-shadow:0 2px 8px rgba(0,0,0,.06)!important;
+  overflow:hidden;
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+#sec-G .guide-metric:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(120,0,245,.12)!important;
+}
+
+/* 타입별 액센트 (CSS 변수만 교체, 레이아웃 고정) */
+#sec-G .guide-metric[data-type="range"]      {--_gm-accent:var(--gm-a-range)}
+#sec-G .guide-metric[data-type="value"]      {--_gm-accent:var(--gm-a-value)}
+#sec-G .guide-metric[data-type="fixed-guide"]{--_gm-accent:var(--gm-a-fixed)}
+#sec-G .guide-metric[data-type="top-choice"] {--_gm-accent:var(--gm-a-top)}
+#sec-G .guide-metric[data-type="level"]      {--_gm-accent:var(--gm-a-level)}
+#sec-G .guide-metric[data-type="combo"]      {--_gm-accent:var(--gm-a-combo)}
+
+/* ── 제목 영역: P6 label 스타일 (11px / 500 / uppercase / .08em) ── */
+#sec-G .gm-title{
+  font-size:11px;
+  font-weight:500;
+  color:#868686;                /* P6 text_tertiary */
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  line-height:1.5;
+  min-height:33px;              /* 11px × 1.5 × 2줄 */
+  flex-shrink:0;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+
+/* ── 핵심값 영역: 수직 중앙, 최대 강조 ── */
+#sec-G .gm-main{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  text-align:center;min-height:0;padding:8px 0 6px;
+}
+
+/* range — P6 display 스타일 (숫자형, letter-spacing -.02em) */
+#sec-G .guide-metric[data-type="range"] .gm-main .guide-range-median-value{
+  font-size:clamp(24px,2vw,34px);
+  font-weight:500;
+  color:#000;                   /* P6 text_primary */
+  letter-spacing:-.02em;
+  line-height:1;
+}
+
+/* value / fixed-guide / level */
+#sec-G .guide-metric[data-type="value"] .gm-main .guide-single-value,
+#sec-G .guide-metric[data-type="fixed-guide"] .gm-main .guide-single-value,
+#sec-G .guide-metric[data-type="level"] .gm-main .guide-single-value{
+  font-size:clamp(18px,1.6vw,28px);
+  font-weight:500;
+  color:#000;
+  letter-spacing:-.02em;
+  line-height:1.1;
+}
+
+/* top-choice — 왼쪽 정렬, P6 body_sm 계열 */
+#sec-G .guide-metric[data-type="top-choice"] .gm-main{
+  align-items:flex-start;justify-content:flex-start;flex-direction:column;overflow:hidden;
+}
+#sec-G .guide-metric[data-type="top-choice"] .gm-main .guide-single-value{
+  font-size:clamp(11px,.9vw,15px);
+  font-weight:600;
+  color:#000;
+  line-height:1.4;
+  text-align:left;
+  overflow:hidden;
+}
+
+/* combo — 왼쪽 정렬, 중간 크기 */
+#sec-G .guide-metric[data-type="combo"] .gm-main{
+  align-items:flex-start;justify-content:flex-start;flex-direction:column;overflow:hidden;
+}
+#sec-G .guide-metric[data-type="combo"] .gm-main .guide-single-value{
+  font-size:clamp(10px,.85vw,14px);
+  font-weight:400;
+  color:#515151;                /* P6 text_secondary */
+  line-height:1.6;
+  text-align:left;
+}
+
+/* ── 보조값 영역: 하단 고정, P6 border_default 구분선 ── */
+#sec-G .gm-sub{
+  margin-top:auto;
+  padding-top:8px;
+  border-top:1px solid #e8e8e8;   /* P6 border_default */
+  font-size:10px;
+  color:#868686;                   /* P6 text_tertiary */
+  display:flex;justify-content:space-between;align-items:center;
+  gap:4px;flex-shrink:0;flex-wrap:wrap;
+}
+#sec-G .gm-sub-text{font-size:10px;color:#868686}
+#sec-G .gm-sub-label{
+  font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  color:#a7a7a7;                   /* P6 text_disabled */
+}
+#sec-G .gm-hint{font-size:9px;color:#a7a7a7;font-style:normal}
+
+/* range 보조: min/max extents */
+#sec-G .guide-metric[data-type="range"] .gm-sub{align-items:center}
+#sec-G .gm-range-extents{display:flex;align-items:center}
+#sec-G .gm-range-extents .guide-range-extents{display:flex;gap:10px;align-items:center}
+#sec-G .gm-range-extents .guide-range-extent{display:flex;flex-direction:column;align-items:center;gap:1px}
+#sec-G .gm-range-extents .guide-range-extent-label{
+  font-size:8px;color:#a7a7a7;
+  text-transform:uppercase;letter-spacing:.08em;
+}
+#sec-G .gm-range-extents .guide-range-extent-value{
+  font-size:11px;color:#515151;font-weight:500;white-space:nowrap;
+}
+#sec-G .gm-range-extents .guide-dumbbell{display:none}
+
+/* wide span 유지 */
+#sec-G .guide-metric.wide{grid-column:span 2}
+
+/* guide-value-main / unit — P6 타이포 */
+#sec-G .guide-value-main{font-weight:inherit;color:inherit}
+#sec-G .guide-value-unit{
+  font-size:.5em;font-weight:400;
+  color:#868686;                   /* P6 text_tertiary */
+  margin-left:4px;vertical-align:baseline;
+  letter-spacing:0;
+}
 </style>
 </head>
 <body>
@@ -3219,17 +3359,9 @@ guideProgramShareValueHtml = function(spaces, idxs) {
   `).join('');
 };
 guideShareValueHtml = function(items) {
-  const values = items.map(item => {
-    const parsed = parseFloat(item.value);
-    if (item.ratio != null && isFinite(item.ratio)) return item.ratio;
-    if (isFinite(parsed)) return parsed;
-    return 1;
-  });
-  const max = Math.max(...values, 1);
   return items.map(item => `
     <div class="share-row">
       <span class="share-label">${item.label}</span>
-      <span class="guide-share-bar"><span class="guide-share-bar-fill" style="width:${(((item.ratio != null && isFinite(item.ratio)) ? item.ratio : (isFinite(parseFloat(item.value)) ? parseFloat(item.value) : 1)) / max) * 100}%;"></span></span>
       <span class="share-value-stack">
         <span class="share-num">${item.value}</span>
         ${item.sub ? `<span class="share-sub">${item.sub}</span>` : ''}
@@ -3238,42 +3370,53 @@ guideShareValueHtml = function(items) {
   `).join('');
 };
 function guideRangeShell({ title, label='범위형', mainHtml, dumbbellHtml, hint='', className='' }) {
+  /* range-card: 제목 / 중앙값(핵심) / 범위(보조) */
   return `
-    <article class="guide-metric range-card ${className}">
-      <div class="title">${title}</div>
-      <div class="guide-range-block">
-        <div class="guide-range-median">
-          <div class="guide-range-median-label">${label}</div>
-          <div class="guide-range-median-value">${mainHtml}</div>
-        </div>
-        ${dumbbellHtml}
-        ${hint ? `<div class="hint">${hint}</div>` : ''}
+    <article class="guide-metric ${className}" data-type="range">
+      <header class="gm-title">${title}</header>
+      <div class="gm-main">
+        <div class="guide-range-median-value">${mainHtml}</div>
       </div>
+      <footer class="gm-sub">
+        <span class="gm-sub-label">${label}</span>
+        <span class="gm-range-extents">${dumbbellHtml}</span>
+      </footer>
     </article>
   `;
 }
 function guideHeroShell({ title, label='핵심값', valueHtml, subValue='', hint='', className='' }) {
+  /* ── 6종 타입 분류: className 기반 ── */
+  let type = 'value';
+  if      (className.includes('card-type-guidance'))                                             type = 'fixed-guide';
+  else if (className.includes('program-share') &&
+           !className.includes('compact') && !className.includes('corridor'))                    type = 'combo';
+  /* 보조값: subValue → hint 순으로 조합 */
+  const subParts = [subValue, hint].filter(Boolean);
+  const subContent = subParts.join(' · ');
   return `
-    <article class="guide-metric hero-card ${className}">
-      <div class="title">${title}</div>
-      <div class="guide-hero-block">
-        <div class="guide-hero-label">${label}</div>
-        <div class="guide-hero-value">${valueHtml}</div>
-        ${subValue ? `<div class="guide-hero-sub">${subValue}</div>` : ''}
+    <article class="guide-metric hero-card ${className}" data-type="${type}">
+      <header class="gm-title">${title}</header>
+      <div class="gm-main">
+        ${valueHtml
+          ? `<div class="guide-single-value">${valueHtml}</div>`
+          : `<span style="color:#C8C0D5;font-size:24px">—</span>`}
       </div>
-      ${hint ? `<div class="hint">${hint}</div>` : ''}
+      ${subContent ? `<footer class="gm-sub"><span class="gm-sub-text">${subContent}</span></footer>` : ''}
     </article>
   `;
 }
 function guideListShell({ title, label='%', valueHtml, hint='', className='' }) {
+  /* program-share → combo, 그 외(compact/corridor/기타) → top-choice */
+  const type = (className.includes('program-share') &&
+                !className.includes('compact') && !className.includes('corridor'))
+    ? 'combo' : 'top-choice';
   return `
-    <article class="guide-metric list-card ${className}">
-      <div class="title">${title}</div>
-      <div class="guide-list-block">
-        <div class="guide-list-label">${label}</div>
-        <div class="guide-single-value">${valueHtml}</div>
+    <article class="guide-metric list-card ${className}" data-type="${type}">
+      <header class="gm-title">${title}</header>
+      <div class="gm-main">
+        <div class="guide-single-value">${valueHtml || '—'}</div>
       </div>
-      ${hint ? `<div class="hint">${hint}</div>` : ''}
+      ${hint ? `<footer class="gm-sub"><span class="gm-hint">${hint}</span></footer>` : ''}
     </article>
   `;
 }
