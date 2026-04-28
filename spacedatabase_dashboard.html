@@ -2051,11 +2051,21 @@ body.guide-active #mobile-toc-toggle{display:none!important}
 }
 #sec-G .guide-metric[data-type="top-choice"] .gm-main .guide-single-value{
   font-size:clamp(11px,.9vw,15px);
-  font-weight:600;
+  font-weight:500;
   color:#000;
   line-height:1.4;
   text-align:left;
   overflow:hidden;
+}
+#sec-G .guide-metric.list-card .share-num,
+#sec-G .guide-metric.program-share .guide-single-value .share-num,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-num{
+  font-weight:500;
+}
+#sec-G .guide-metric.list-card .share-label,
+#sec-G .guide-metric.program-share .guide-single-value .share-label,
+#sec-G .guide-metric.card-type-list .guide-single-value .share-label{
+  font-weight:500;
 }
 
 /* combo — 왼쪽 정렬, 중간 크기 */
@@ -2110,6 +2120,29 @@ body.guide-active #mobile-toc-toggle{display:none!important}
   font-size:.5em;font-weight:400;
   color:#868686;                   /* P6 text_tertiary */
   margin-left:4px;vertical-align:baseline;
+  letter-spacing:0;
+}
+#sec-G .guide-stacked-value{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:flex-start;
+  width:100%;
+  gap:4px;
+  line-height:1.05;
+  text-align:left;
+}
+#sec-G .guide-stacked-value .guide-value-support{
+  font-size:11px;
+  font-weight:400;
+  color:#868686;
+  line-height:1.2;
+  letter-spacing:0;
+}
+#sec-G .guide-stacked-value .guide-value-main{
+  font-size:inherit;
+  font-weight:500;
+  color:inherit;
+  line-height:1;
   letter-spacing:0;
 }
 </style>
@@ -3764,10 +3797,11 @@ function renderGuideTab() {
       }),
       guideNarrativeMetricCard({
         title:'권장 등간격 너비',
-        value:'2000mm(3열배치시)',
+        value:'<span class="guide-stacked-value"><span class="guide-value-support">3열 배치시</span><span class="guide-value-main">2000mm</span></span>',
         valueLabel:'권장값',
         subValue:'*4열 이상, 데스크 중앙 내 회의 테이블 배치시 2200mm을 따릅니다.',
-        className:'card-type-guidance'
+        className:'card-type-guidance',
+        valueIsHtml:true
       }),
       guideValueOnlyMetricCard({
         title:'권장 열 배치',
