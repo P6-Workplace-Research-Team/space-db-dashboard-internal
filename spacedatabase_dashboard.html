@@ -2302,6 +2302,29 @@ body.guide-active #mobile-toc-toggle{display:none!important}
 </head>
 <body>
 
+<!-- ========== SUPABASE 로그인 오버레이 ========== -->
+<div id="sb-loading" style="position:fixed;inset:0;background:#fff;display:flex;justify-content:center;align-items:center;z-index:9999;font-family:'Pretendard',sans-serif;color:#7800f5;font-size:15px;letter-spacing:-.01em;">인증 확인 중…</div>
+
+<div id="sb-login" style="display:none;position:fixed;inset:0;background:linear-gradient(135deg,#7800f5 0%,#b8a2f9 100%);z-index:9998;justify-content:center;align-items:center;font-family:'Pretendard',sans-serif;">
+  <div style="background:#fff;padding:2.5rem;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.25);width:100%;max-width:380px;">
+    <div style="text-align:center;margin-bottom:1.8rem;">
+      <div style="font-size:22px;font-weight:800;color:#7800f5;letter-spacing:-.03em;">Purple⁶Studio</div>
+      <div style="font-size:13px;color:#868686;margin-top:4px;">오피스 공간DB 대시보드</div>
+    </div>
+    <div id="sb-err" style="display:none;background:#fee;border:1px solid #fcc;color:#c33;padding:.65rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:13px;"></div>
+    <div style="margin-bottom:1.4rem;">
+      <label style="display:block;font-size:12px;font-weight:700;color:#515151;margin-bottom:.35rem;">비밀번호</label>
+      <input id="sb-pw" type="password" placeholder="비밀번호 입력" autocomplete="current-password"
+        style="width:100%;padding:.7rem 1rem;border:2px solid #e8e8e8;border-radius:8px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;"
+        onfocus="this.style.borderColor='#7800f5'" onblur="this.style.borderColor='#e8e8e8'">
+    </div>
+    <button id="sb-btn" onclick="sbLogin()"
+      style="width:100%;padding:.8rem;background:#7800f5;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .2s;"
+      onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">로그인</button>
+  </div>
+</div>
+<!-- ========================================== -->
+
 <header class="hdr">
   <div class="hdr-main">
     <div class="logo">Purple<sup>6</sup>Studio <em>오피스 공간DB</em></div>
@@ -5688,5 +5711,66 @@ window.addEventListener('keydown', event => {
   if (event.key === 'Escape') closeMobilePanels();
 });
 </script>
+
+<!-- ========== SUPABASE 인증 스크립트 ========== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL      = "https://mctxfrxlukoqtnaltrvu.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_k7RDnEzIBGUdi8nwMQo_hw_i6JCcsm1"; // ⚠️ API Keys 페이지의 Publishable key로 교체!
+
+  const { createClient } = supabase;
+  const sbClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // 인증 상태 감지 (새로고침에도 로그인 유지)
+  sbClient.auth.onAuthStateChange((event, session) => {
+    document.getElementById('sb-loading').style.display = 'none';
+    if (session) {
+      document.getElementById('sb-login').style.display = 'none';
+    } else {
+      document.getElementById('sb-login').style.display = 'flex';
+    }
+  });
+
+  // 로그인 함수
+  window.sbLogin = async function() {
+    const email    = "jinseul_park@fursys.com"; // 고정 계정
+    const password = document.getElementById('sb-pw').value;
+    const btn      = document.getElementById('sb-btn');
+    const errDiv   = document.getElementById('sb-err');
+
+    if (!password) {
+      errDiv.textContent = '비밀번호를 입력해주세요.';
+      errDiv.style.display = 'block';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = '로그인 중…';
+    errDiv.style.display = 'none';
+
+    const { error } = await sbClient.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      btn.disabled = false;
+      btn.textContent = '로그인';
+      const msgs = {
+        'Invalid login credentials' : '이메일 또는 비밀번호가 올바르지 않습니다.',
+        'Too many requests'         : '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.',
+        'Email not confirmed'       : '이메일 인증이 필요합니다.',
+        'Network request failed'    : '네트워크 오류가 발생했습니다.',
+      };
+      errDiv.textContent = msgs[error.message] || `오류: ${error.message}`;
+      errDiv.style.display = 'block';
+    }
+  };
+
+  // Enter 키로 로그인
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && document.getElementById('sb-login').style.display === 'flex') {
+      window.sbLogin();
+    }
+  });
+</script>
+<!-- ============================================ -->
 </body>
 </html>
